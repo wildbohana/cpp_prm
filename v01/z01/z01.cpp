@@ -19,12 +19,12 @@ int main()
 	int rezultat_inicijalizacije = WSAStartup(MAKEWORD(2,2), &wsaData);
 	if (rezultat_inicijalizacije != NO_ERROR)
 	{
-		printf("Greška pri pozivu WSAStartup().\n");
+		printf("Greska pri pozivu WSAStartup().\n");
 		return 1;
 	}
 	else
 	{
-		printf("WSA biblioteka je uspešno incijalizovana.\n");
+		printf("WSA biblioteka je uspesno incijalizovana.\n");
 	}
 
 	// 2. Kreirati adresnu strukturu koja koristi 
@@ -41,20 +41,20 @@ int main()
 	SOCKET serverSoket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (serverSoket == INVALID_SOCKET)
 	{
-		printf("Greška pri pozivu socket().\n");
+		printf("Greska pri pozivu socket().\n");
 		WSACleanup();
 		return 1;
 	}
 	else
 	{
-		printf("\nTCP soket je uspešno napravljen.\n");
+		printf("\nTCP soket je uspesno napravljen.\n");
 	}
 
 	// 4. Povezati soket sa kreiranom adresnom strukturom
 	if (bind(serverSoket, (SOCKADDR*) &adresaServera, sizeof(adresaServera)) == SOCKET_ERROR)
 	{
 		int kodGreske = WSAGetLastError();
-		printf("Neuspešan poziv funkcije bind().\n");
+		printf("Neuspesan poziv funkcije bind().\n");
 		printf("ERROR: %d\n", kodGreske);
 
 		closesocket(serverSoket);
@@ -63,7 +63,7 @@ int main()
 	}
 	else
 	{
-		printf("\nSoket je uspešno spojen sa adresom.\n");
+		printf("\nSoket je uspesno spojen sa adresom.\n");
 	}
 
 	// 5. Zatvoriti soket

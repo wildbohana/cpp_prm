@@ -1,0 +1,39 @@
+TCP - ima stanje, stream
+UDP - nema stanje, dgram
+
+-- Biblioteka
+WSAStartup();
+WSACleanup();
+WSAGetLastError();
+
+-- Konverzija host-network
+htonl();	(long - 4 bajta)
+ntohl();
+htons();	(short - 2 bajta)
+ntohs();
+
+-- "192.0.0.1" u unsigned long
+inet_addr();
+-- unsigned long u "192.0.0.1"
+inet_ntoa();
+
+-- Struktura za zadavanje IPv4 adrese i porta
+sockaddr_in.sin_family
+sockaddr_in.sin_port
+sockaddr_in.sin_addr.s_addr
+
+-- Kreiranje utičnice
+socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+
+-- Povezivanje utičnice sa adresom
+bind(serverSoket, (SOCKADDR*) &adresaServera, sizeof(adresaServera));
+
+-- Dobijanje informacija o utičnici
+getsockname();
+
+-- Dobijanje informacija o lokalnom računaru:
+gethostname();
+
+-- Zatvaranje utičnice
+closesocket();

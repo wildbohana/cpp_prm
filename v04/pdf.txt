@@ -1,0 +1,21 @@
+(Ne)blokirajući režim
+
+Režimi operacija:
+1. Operacije čitanja (recv, recvfrom) 
+	- primalac poruke će biti blokiran dokle god poruka koju očekuje ne pristigne sa mreže
+2. Operacije pisanja (send, sendto) 
+	- pošiljaoc poruke će biti blokiran ukoliko nema dovoljno slobodnog mesta u baferu za slanje poruke
+3. Operacija prijema konekcija (accept) 
+	- server će biti blokiran do trenutka prispeća novog zahteva za uspostavom konekcije
+4. Operacija iniciranja konekcije (connect) 
+	- klijent će biti blokiran do trenutka uspešnog uspostavljanja konekcije (protokol rukovanja)
+
+Režimi soketa:
+Ako je soket postavljen u neblokirajući režim:
+	- neblokirajuće funkcije će se izvršiti
+	- blokirajuće funkcije će generisati grešku
+
+Pooling model - ponavljanje operacije nad neblokirajućim soketom dok se operacija ne izvrši uspešno
+
+-- Postavljanje soketa u neblokirajući režim (greška WSAEWOULDBLOCK !)
+ioctlsocket(SOCKET sock,long command,unsigned long *mode);

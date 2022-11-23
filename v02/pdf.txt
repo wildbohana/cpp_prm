@@ -1,0 +1,16 @@
+UDP - User Datagram Protocol
+
+-- UDP soket
+SOCKET serverSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+
+-- Slanje podataka
+- (klijent šalje serveru)
+sendto(clientSocket, dataBuffer, strlen(dataBuffer), 0, (SOCKADDR*) &serverAddress, sizeof(serverAddress));
+- (server šalje klijentu)
+sendto(serverSocket, dataBuffer, strlen(dataBuffer), 0, (SOCKADDR*) &clientAddress, sockAddrSize);
+
+-- Prijem podataka
+- (klijent prima od servera)
+recvfrom(clientSocket, dataBuffer, BUFFER_SIZE, 0, (SOCKADDR*) &serverAddress, &sockAddrLen);
+- (server prima od klijenta)
+recvfrom(serverSocket, dataBuffer, BUFFER_SIZE, 0, (SOCKADDR*) &clientAddress, &sockAddrSize);

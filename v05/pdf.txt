@@ -1,0 +1,19 @@
+Multipleksiranje
+
+Funkcija select omogućava praćenje stanja čitanja, pisanja i grešaka na jednom ili više soketa
+Na ovaj način, izbegava se potreba za periodičnom proverom stanja objekata od interesa
+
+fd_set struktura - navodimo skup soketa koji će se grupisati za neku posebnu namenu
+typedef struct fd_set {
+	unsigned int fd_count;          - broj soketa u setu
+	SOCKET fd_array[FD_SETSIZE];    - niz soketa koji se nalaze u setu
+} fd_set;
+
+Ako se funkcija uspešno izvršila pre tajmauta, funkcija select će vratiti broj soketa na kojima se desio događaj
+select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, const struct timeval *timeout);
+
+Parametar timeout kontroliše maksimalno dozvoljeno vreme koje će funkcija select čekati
+Postoje tri mogućnosti:
+1. Čekati koliko god je potrebno (timeout = NULL)
+2. Čekati definisani period vremena
+3. Ne čekati uopšte (0 sekundi, 0 milisekundi)

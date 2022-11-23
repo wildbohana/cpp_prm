@@ -1,0 +1,46 @@
+TCP - Transport Control Protocol
+
+Mora postojati handshaking, pa tek posle toga se šalju podaci
+Ovim se dodaje "stanje" veze
+
+Klijentska strana inicira uspostavu veze
+Serverska strana pasivno čeka pozive za uspostavu veze (osluškuje)
+
+-- Serverska strana
+- napravi utičnicu
+SOCKET serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+- poveži utičnicu
+bind(serverSoket, (struct sockaddr*)&adresaServera, sizeof(adresaServera));
+- stavi utičnicu u stanje osluškivanja
+listen(serverSocket, maxReq);
+- kada klijent zatraži konekciju, prihvati je
+prihvaceniSoket = accept(serverSoket, (struct sockaddr*) &klijentskaAdresa, &velicinaKlijentskeAdrese);
+
+-- Klijentska strana
+- napravi soket
+SOCKET clientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+- napravi strukturu adrese
+sockaddr_in serverAddress;
+serverAddress.sin_family = AF_INET;
+serverAddress.sin_addr.s_addr = inet_addr(SERVER_IP_ADDRESS);
+serverAddress.sin_port = htons(SERVER_PORT);
+- iniciraj uspostavu veze
+int connect(SOCKET s, const struct sockaddr *name, int namelen);
+
+-- Slanje podataka
+- klijent salje poruku serveru
+send(klijentSoket, dataBuffer, (int) strlen(dataBuffer), 0);
+- server salje poruku klijentu
+send(prihvaceniSoket1, dataBuffer1, (int) strlen(dataBuffer1), 0);
+
+-- Prijem podataka
+- klijent prima poruku od servera
+recv(klijentSoket, dataBuffer, BUFFER_SIZE, 0);
+- server prima poruku od klijenta
+recv(prihvaceniSoket1, dataBuffer1, BUFFER_SIZE, 0);
+
+-- Sprečavanje slanja/prijema podataka
+shutdown(klijentSoket, SD_BOTH);
+
+-- Dobijanje informacija o utičnici
+getpeername();

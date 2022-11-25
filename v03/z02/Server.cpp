@@ -1,3 +1,4 @@
+// TCP server
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define WIN32_LEAN_AND_MEAN
 
@@ -18,14 +19,11 @@
 // TCP server that use blocking sockets
 int main()
 {
-	// Socket used for listening for new clients 
-	SOCKET serverSoket = INVALID_SOCKET;
+	SOCKET serverskaUticnica = INVALID_SOCKET;
 
-	// Socket used for communication with clients
-	SOCKET prihvaceniSoket1 = INVALID_SOCKET;
-	SOCKET prihvaceniSoket2 = INVALID_SOCKET;
+	SOCKET prihvacenaUticnica1 = INVALID_SOCKET;
+	SOCKET prihvacenaUticnica2 = INVALID_SOCKET;
 
-	// Variable used to store function return value
 	int iResult;
 
 	// DODATO ZA LOGIKU IGRE
@@ -36,100 +34,86 @@ int main()
 	int duzina1, duzina2;
 
 	// PRAVIMO DVA BAFERA - JER IMAMO DVA IGRAČA
-	// Buffer used for storing incoming data
 	char dataBuffer1[BUFFER_SIZE];
 	char dataBuffer2[BUFFER_SIZE];
 
-	// WSADATA data structure that is to receive details of the Windows Sockets implementation
 	WSADATA wsaData;
 
-	// Initialize windows sockets library for this process
 	if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
 	{
-		printf("WSAStartup nije uspeo.\nGreska: %d\n", WSAGetLastError());
+		printf("Pokretanje winsock bibilioteke neuspesno.\nGRESKA: %d\n", WSAGetLastError());
 		return 1;
 	}
 
-	// Initialize adresaServera structure used by bind
 	sockaddr_in adresaServera;
 	memset((char*) &adresaServera, 0, sizeof(adresaServera));
-	adresaServera.sin_family = AF_INET;				// IPv4 address family
-	adresaServera.sin_addr.s_addr = INADDR_ANY;		// Use all available addresses
-	adresaServera.sin_port = htons(SERVER_PORT);	// Use specific port
 
-	// Create a SOCKET for connecting to server
-	serverSoket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	adresaServera.sin_family = AF_INET;
+	adresaServera.sin_addr.s_addr = INADDR_ANY;
+	adresaServera.sin_port = htons(SERVER_PORT);
 
-	// Check if socket is successfully created
-	if (serverSoket == INVALID_SOCKET)
+	serverskaUticnica = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if (serverskaUticnica == INVALID_SOCKET)
 	{
-		printf("Otvaranje serverskog soketa neuspesno.\nGreska: %ld\n", WSAGetLastError());
+		printf("Otvaranje serverske uticnice neuspesno.\nGreska: %ld\n", WSAGetLastError());
 		WSACleanup();
 		return 1;
 	}
 
-	// Setup the TCP listening socket - bind port number and local address to socket
-	iResult = bind(serverSoket, (struct sockaddr*)&adresaServera, sizeof(adresaServera));
-
-	// Check if socket is successfully binded to address and port from sockaddr_in structure
+	iResult = bind(serverskaUticnica, (SOCKADDR*) &adresaServera, sizeof(adresaServera));
 	if (iResult == SOCKET_ERROR)
 	{
-		printf("bind failed with error: %d\n", WSAGetLastError());
-		closesocket(serverSoket);
+		printf("Povezivanje serverske uticnice sa adresom neuspesno.\nGRESKA: %d\n", WSAGetLastError());
+		closesocket(serverskaUticnica);
 		WSACleanup();
 		return 1;
 	}
 
-	// Set serverSoket in listening mode
 	// SOMAXCON - maksimalan broj zahteva
-	iResult = listen(serverSoket, SOMAXCONN);
+	iResult = listen(serverskaUticnica, SOMAXCONN);
 	if (iResult == SOCKET_ERROR)
 	{
-		printf("listen neuspesan.\nGreska: %d\n", WSAGetLastError());
-		closesocket(serverSoket);
+		printf("Postavljanje serveske uticnice u rezim prisluskivanja neuspesan.\nGreska: %d\n", WSAGetLastError());
+		closesocket(serverskaUticnica);
 		WSACleanup();
 		return 1;
 	}
 
-	printf("Soket za server je postavljen u mod za prisluskivanje. Cekanje na nove zahteve za konekcijom.\n");
+	printf("Serverska uticnica je postavljena u rezim prisluskivanja.\n");
+	printf("Cekanje na nove zahteve za uspostavu veze od klijenata...\n");
 
 	do
 	{
-		// Struct for information about connected client
-		sockaddr_in klijentskaAdresa;
-
+		sockaddr_in adresaKlijenta;
 		int velicinaKlijentskeAdrese = sizeof(struct sockaddr_in);
 
-		// Accept new connections from clients 
-		prihvaceniSoket1 = accept(serverSoket, (struct sockaddr*) &klijentskaAdresa, &velicinaKlijentskeAdrese);
-
-		// Check if accepted socket is valid 
-		if (prihvaceniSoket1 == INVALID_SOCKET)
+		// Prihvati prvog klijenta
+		prihvacenaUticnica1 = accept(serverskaUticnica, (SOCKADDR*) &adresaKlijenta, &velicinaKlijentskeAdrese);
+		if (prihvacenaUticnica1 == INVALID_SOCKET)
 		{
-			printf("accept neuspesan.\nGreska: %d\n", WSAGetLastError());
-			closesocket(serverSoket);
+			printf("Povezivanje sa klijentom neuspesno.\nGRESKA: %d\n", WSAGetLastError());
+			closesocket(serverskaUticnica);
+			closesocket(prihvacenaUticnica1);
 			WSACleanup();
 			return 1;
 		}
 
-		printf("\nPrvi klijent uspesno prihvacen. Adresa klijenta: %s : %d\n", 
-			inet_ntoa(klijentskaAdresa.sin_addr), ntohs(klijentskaAdresa.sin_port));
+		printf("\nPrvi klijent uspesno povezan. Adresa klijenta: %s : %d\n", 
+			inet_ntoa(adresaKlijenta.sin_addr), ntohs(adresaKlijenta.sin_port));
 
-		// Accept the second client
-		prihvaceniSoket2 = accept(serverSoket, (struct sockaddr*) &klijentskaAdresa, &velicinaKlijentskeAdrese);
-
-		// Check if accepted socket is valid 
-		if (prihvaceniSoket2 == INVALID_SOCKET)
+		// Prihvati drugog klijenta
+		prihvacenaUticnica2 = accept(serverskaUticnica, (SOCKADDR*) &adresaKlijenta, &velicinaKlijentskeAdrese);
+		if (prihvacenaUticnica2 == INVALID_SOCKET)
 		{
-			printf("accept neuspesan.\nGreska: %d\n", WSAGetLastError());
-			closesocket(serverSoket);
-			closesocket(prihvaceniSoket1);
+			printf("Povezivanje sa klijentom neuspesno.\nGRESKA: %d\n", WSAGetLastError());
+			closesocket(serverskaUticnica);
+			closesocket(prihvacenaUticnica2);
 			WSACleanup();
 			return 1;
 		}
 
 		printf("\nDrugi klijent uspesno prihvacen. Adresa klijenta: %s : %d\n", 
-			inet_ntoa(klijentskaAdresa.sin_addr), ntohs(klijentskaAdresa.sin_port));
+			inet_ntoa(adresaKlijenta.sin_addr), ntohs(adresaKlijenta.sin_port));
 
 		// Nakon uspešnog konektovanja na server, na serveru se zadaje slovo na koje će se igrati.
 		printf("Unesite slovo na koje pocinje igra: ");
@@ -139,73 +123,57 @@ int main()
 		sprintf(dataBuffer1, "Pocinje igra na slovo na slovo %c. Posaljite vasu rec!\n", slovo);
 		sprintf(dataBuffer2, "Pocinje igra na slovo na slovo %c. Posaljite vasu rec!\n", slovo);
 		
-		// Count number of correct words of prvi and drugi player
 		tacneReci1 = tacneReci2 = 0;
-		// Total length of correct words of prvi and drugi player
 		duzina1 = duzina2 = 0;
-		// Indicates if player quits the game
 		odustaje1 = odustaje2 = false;
-		// Indicator of the game end
 		bool kraj = false;
 
 		do
 		{
-			// Send message to client1 using connected socket
-			iResult = send(prihvaceniSoket1, dataBuffer1, (int) strlen(dataBuffer1), 0);
-
-			// Check result of send function
+			iResult = send(prihvacenaUticnica1, dataBuffer1, (int) strlen(dataBuffer1), 0);
 			if (iResult == SOCKET_ERROR)
 			{
-				printf("Slanje poruke od servera ka klijentu neuspesno.\nGreska: %d\n", WSAGetLastError());
-				shutdown(prihvaceniSoket1, SD_BOTH);
-				shutdown(prihvaceniSoket2, SD_BOTH);
-				closesocket(prihvaceniSoket1);
-				closesocket(prihvaceniSoket2);
+				printf("Slanje poruke ka klijentu neuspesno.\nGRESKA: %d\n", WSAGetLastError());
+				shutdown(prihvacenaUticnica1, SD_BOTH);
+				shutdown(prihvacenaUticnica2, SD_BOTH);
+				closesocket(prihvacenaUticnica1);
+				closesocket(prihvacenaUticnica2);
 				break;
 			}
 
-			// Send message to client2 using connected socket
-			iResult = send(prihvaceniSoket2, dataBuffer2, (int)strlen(dataBuffer2), 0);
-
-			// Check result of send function
+			iResult = send(prihvacenaUticnica2, dataBuffer2, (int) strlen(dataBuffer2), 0);
 			if (iResult == SOCKET_ERROR)
 			{
-				printf("Slanje poruke od servera ka klijentu neuspesno.\nGreska: %d\n", WSAGetLastError());
-				shutdown(prihvaceniSoket1, SD_BOTH);
-				shutdown(prihvaceniSoket2, SD_BOTH);
-				closesocket(prihvaceniSoket1);
-				closesocket(prihvaceniSoket2);
+				printf("Slanje poruke ka klijentu neuspesno.\nGRESKA: %d\n", WSAGetLastError());
+				shutdown(prihvacenaUticnica1, SD_BOTH);
+				shutdown(prihvacenaUticnica2, SD_BOTH);
+				closesocket(prihvacenaUticnica1);
+				closesocket(prihvacenaUticnica2);
 				break;
 			}
 
-			// If the play between two players ends
+			// Da li je zavrsila igra?
 			if (kraj)
 			{
 				break;
 			}
 
-			// Receive data from prvi client 
-			iResult = recv(prihvaceniSoket1, dataBuffer1, BUFFER_SIZE, 0);
-			
-			// Check if message is successfully received
+			iResult = recv(prihvacenaUticnica1, dataBuffer1, BUFFER_SIZE, 0);
 			if (iResult > 0)
 			{
-				// iResult - duzina poruke, ovim dodajemo kraj na kraj stringa
 				dataBuffer1[iResult] = '\0';
 
-				// Log message text
 				printf("Klijent 1 je poslao: %s.\n", dataBuffer1);
 				
-				// First player is quitting the game
+				// Da li prvi igrac zavrsava sa igrom
 				if (!strcmp(dataBuffer1, "Kraj"))  
 				{
 					odustaje1 = true;
 					prvi = false;
 				}
-				// Check if player sent word on selected letter.
+				// Da li je prvi igrac poslao rec na zadato slovo
 				else
 				{
-					// Change letter in upper-case to include both small and big letters
 					if (toupper(dataBuffer1[0]) == toupper(slovo))
 					{
 						printf("Tacna rec!\n");
@@ -220,48 +188,42 @@ int main()
 					}
 				}
 			}
-			// Check if shutdown command is received
+			// Da li je poslata komanda za gasenje
 			else if (iResult == 0)	
 			{
-				// Connection was closed successfully
-				printf("Konekcija sa prvim klijentom je zatvorena.\n");
-				shutdown(prihvaceniSoket2, SD_BOTH);
-				closesocket(prihvaceniSoket1);
-				closesocket(prihvaceniSoket2);
+				printf("Veza sa prvim klijentom je zatvorena.\n");
+				shutdown(prihvacenaUticnica2, SD_BOTH);
+				closesocket(prihvacenaUticnica1);
+				closesocket(prihvacenaUticnica2);
 				break;
 			}
-			// There was an error during recv
+			// Desila se greska u prenosu
 			else	
 			{
-				printf("Primanje poruke od klijenta neuspesno.\nGreska: %d\n", WSAGetLastError());
-				shutdown(prihvaceniSoket1, SD_BOTH);
-				shutdown(prihvaceniSoket2, SD_BOTH);
-				closesocket(prihvaceniSoket1);
-				closesocket(prihvaceniSoket2);
+				printf("Primanje poruke od prvog klijenta neuspesno.\nGRESKA: %d\n", WSAGetLastError());
+				shutdown(prihvacenaUticnica1, SD_BOTH);
+				shutdown(prihvacenaUticnica2, SD_BOTH);
+				closesocket(prihvacenaUticnica1);
+				closesocket(prihvacenaUticnica2);
 				break;
 			}
 
-			// Receive data from second client 
-			iResult = recv(prihvaceniSoket2, dataBuffer2, BUFFER_SIZE, 0);
-			
-			// Check if message is successfully received
+			iResult = recv(prihvacenaUticnica2, dataBuffer2, BUFFER_SIZE, 0);
 			if (iResult > 0)	
 			{
 				dataBuffer2[iResult] = '\0';
 
-				// Log message text
 				printf("Klijent 2 je poslao: %s.\n", dataBuffer2);
 				
-				// drugi player is quitting
+				// Da li drugi igrac zavrsava sa igrom
 				if (!strcmp(dataBuffer2, "Kraj"))    
 				{
 					odustaje2 = true;
 					drugi = false;
 				}
-				// Check if player sent word on selected letter
+				// Da li je drugi igrac poslao rec na zadato slovo
 				else
 				{
-					// Change letter in upper-case to include both small and big letters
 					if (toupper(dataBuffer2[0]) == toupper(slovo))
 					{
 						printf("Tacna rec!\n");
@@ -276,103 +238,103 @@ int main()
 					}
 				}
 			}
-			// Check if shutdown command is received
+			// Da li je poslata komanda za gasenje
 			else if (iResult == 0)	
 			{
 				// Connection was closed successfully
-				printf("Veza sa klijentom je uspesno zatvorena.\n");
-				shutdown(prihvaceniSoket1, SD_BOTH);
-				closesocket(prihvaceniSoket1);
-				closesocket(prihvaceniSoket2);
+				printf("Veza sa drugim klijentom je zatvorena.\n");
+				shutdown(prihvacenaUticnica1, SD_BOTH);
+				closesocket(prihvacenaUticnica1);
+				closesocket(prihvacenaUticnica2);
 				break;
 			}
-			// There was an error during recv
+			// Desila se greska u prenosu
 			else	
 			{
-				printf("Primanje poruke od klijenta neuspesno.\nGreska: %d\n", WSAGetLastError());
-				shutdown(prihvaceniSoket1, SD_BOTH);
-				shutdown(prihvaceniSoket2, SD_BOTH);
-				closesocket(prihvaceniSoket1);
-				closesocket(prihvaceniSoket2);
+				printf("Primanje poruke od klijenta neuspesno.\nGRESKA: %d\n", WSAGetLastError());
+				shutdown(prihvacenaUticnica1, SD_BOTH);
+				shutdown(prihvacenaUticnica2, SD_BOTH);
+				closesocket(prihvacenaUticnica1);
+				closesocket(prihvacenaUticnica2);
 				break;
 			}
 			
-			// The play continues if both clients have good words or both mistake
+			// Ako su oba pogodili, ili oba omasili, igra se nastavlja
 			if (prvi == drugi)
 			{
 				strcpy(dataBuffer1, "Molimo Vas posaljite sledecu rec na zadato slovo.");
 				strcpy(dataBuffer2, "Molimo Vas posaljite sledecu rec na zadato slovo.");
 			}
-			// One has mistaken, other has right word (he is the winner)
+			// Jedan je omasio, drugi je pogodio (on je pobedio)
 			else
 			{
-				// first player wins
+				// Prvi igrac je pobedio
 				if (prvi)
 				{
 					sprintf(dataBuffer1, "Prvi igrac je poslao %d ispravnih reci, drugi igrac je poslao %d ispravnih reci. Vi ste POBEDILI!\n", tacneReci1, tacneReci2);
 					sprintf(dataBuffer2, "Prvi igrac je poslao %d ispravnih reci, drugi igrac je poslao %d ispravnih reci. Vi ste IZGUBILI!\n", tacneReci1, tacneReci2);
+					
 					kraj = true;
 				}
-				// drugi player wins
+
+				// Drugi igrac je pobedio
 				if (drugi)
 				{
 					sprintf(dataBuffer1, "Prvi igrac je poslao %d ispravnih reci, drugi igrac je poslao %d ispravnih reci. Vi ste IZGUBILI!\n", tacneReci1, tacneReci2);
 					sprintf(dataBuffer2, "Prvi igrac je poslao %d ispravnih reci, drugi igrac je poslao %d ispravnih reci. Vi ste POBEDILI!\n", tacneReci1, tacneReci2);
+					
 					kraj = true;
 				}
 			}
 
-			// If both players quit at the same time
+			// Ako oba igraca odustanu u isto vreme, pobedjuje onaj cija rec je duza
 			if (odustaje1 && odustaje2)
 			{
 				if (duzina1 > duzina2)
 				{
 					sprintf(dataBuffer1, "Prvi igrac je poslao %d ispravnih reci, drugi igrac je poslao %d ispravnih reci.\nUkupna duzina vasih reci je veca. Vi ste POBEDILI!\n", tacneReci1, tacneReci2);
 					sprintf(dataBuffer2, "Prvi igrac je poslao %d ispravnih reci, drugi igrac je poslao %d ispravnih reci.\nUkupna duzina vasih reci je kraca.Vi ste IZGUBILI!\n", tacneReci1, tacneReci2);
+					
 					kraj = true;
 				}
 				else
 				{
 					sprintf(dataBuffer1, "Prvi igrac je poslao %d ispravnih reci, drugi igrac je poslao %d ispravnih reci.\nUkupna duzina vasih reci je kraca. Vi ste IZGUBILI!\n", tacneReci1, tacneReci2);
 					sprintf(dataBuffer2, "Prvi igrac je poslao %d ispravnih reci, drugi igrac je poslao %d ispravnih reci.\nUkupna duzina vasih reci je veca. Vi ste POBEDILI!\n", tacneReci1, tacneReci2);
+					
 					kraj = true;
 				}
 			}
+
 		} while (true);
+
 	} while (true);
 
-	// Shutdown the connection since we're done - PRVI SOKET
-	iResult = shutdown(prihvaceniSoket1, SD_BOTH);
-
-	// Check if connection is succesfully shut down.
+	// Gasenje veze sa klijentima
+	iResult = shutdown(prihvacenaUticnica1, SD_BOTH);
 	if (iResult == SOCKET_ERROR)
 	{
-		printf("shutdown neuspesan.\nGreska: %d\n", WSAGetLastError());
-		closesocket(prihvaceniSoket1);
-		closesocket(prihvaceniSoket2);
+		printf("Gasenje prve prihvatne uticnice neuspesno.\nGRESKA: %d\n", WSAGetLastError());
+		closesocket(prihvacenaUticnica1);
+		closesocket(prihvacenaUticnica2);
 		WSACleanup();
 		return 1;
 	}
 
-	// Shutdown the connection since we're done - DRUGI SOKET
-	iResult = shutdown(prihvaceniSoket2, SD_BOTH);
-
-	// Check if connection is succesfully shut down.
+	iResult = shutdown(prihvacenaUticnica2, SD_BOTH);
 	if (iResult == SOCKET_ERROR)
 	{
-		printf("shutdown neuspesan.\nGreska: %d\n", WSAGetLastError());
-		closesocket(prihvaceniSoket1);
-		closesocket(prihvaceniSoket2);
+		printf("Gasenje druge prihvatne uticnice neuspesno.\nGRESKA: %d\n", WSAGetLastError());
+		closesocket(prihvacenaUticnica1);
+		closesocket(prihvacenaUticnica2);
 		WSACleanup();
 		return 1;
 	}
 
-	// Close listen and accepted sockets
-	closesocket(serverSoket);
-	closesocket(prihvaceniSoket1);
-	closesocket(prihvaceniSoket2);
+	closesocket(serverskaUticnica);
+	closesocket(prihvacenaUticnica1);
+	closesocket(prihvacenaUticnica2);
 
-	// Deinitialize WSA library
 	WSACleanup();
 
 	return 0;

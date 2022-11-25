@@ -1,3 +1,4 @@
+// TCP klijent, neblokirajuce uticnice
 #define WIN32_LEAN_AND_MEAN
 
 #include <windows.h>
@@ -24,55 +25,46 @@ struct studentInfo {
 	short poeni;
 };
 
-// TCP client that uses non-blocking sockets
 int main() 
 {
-    // Socket used to communicate with server
-    SOCKET klijentSoket = INVALID_SOCKET;
+    SOCKET klijentskaUticnica = INVALID_SOCKET;
 
-    // Variable used to store function return value
     int iResult;
 
-    // Buffer we will use to store message
     char dataBuffer[BUFFER_SIZE];
 
-	// WSADATA data structure that is to receive details of the Windows Sockets implementation
     WSADATA wsaData;
 
-	// Initialize windows sockets library for this process
     if (WSAStartup(MAKEWORD(2,2), &wsaData) != 0)
     {
-        printf("WSAStartup neuspesan.\nGreska: %d\n", WSAGetLastError());
+        printf("Pokretanje winsock biblioteke neuspesno.\nGRESKA: %d\n", WSAGetLastError());
         return 1;
     }
 
-    // create a socket
-    klijentSoket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-
-    if (klijentSoket == INVALID_SOCKET)
+    klijentskaUticnica = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (klijentskaUticnica == INVALID_SOCKET)
     {
-        printf("Otvaranje soketa neuspesno.\nGreska: %ld\n", WSAGetLastError());
+        printf("Otvaranje klijentske uticnice neuspesno.\nGRESKA: %ld\n", WSAGetLastError());
         WSACleanup();
         return 1;
     }
 
-    // Create and initialize address structure
     sockaddr_in adresaServera;
     adresaServera.sin_family = AF_INET;
 	adresaServera.sin_addr.s_addr = inet_addr(SERVER_IP_ADDRESS);
     adresaServera.sin_port = htons(SERVER_PORT);
 
-    // Connect to server specified in adresaServera and socket klijentSoket
-	iResult = connect(klijentSoket, (SOCKADDR*) &adresaServera, sizeof(adresaServera));
+	iResult = connect(klijentskaUticnica, (SOCKADDR*) &adresaServera, sizeof(adresaServera));
     if (iResult == SOCKET_ERROR)
     {
-        printf("Povezivanje sa serverom nije uspelo.\n");
-        closesocket(klijentSoket);
+        printf("Povezivanje korisnicke uticnice sa adresom servera nije uspelo.\n");
+        closesocket(klijentskaUticnica);
         WSACleanup();
 		return 1;
     }
-        
-    // Promenljiva tipa studentInfo cija ce se polja popunuti i cela struktura poslati u okviru jedne poruke
+    
+    // Promenljiva tipa studentInfo cija ce se polja popunuti
+	// i cela struktura poslati u okviru jedne poruke
 	studentInfo student;  
 	short poeni;
  
@@ -87,22 +79,19 @@ int main()
 
 		printf("Unesite osvojene poene na testu: ");
 		scanf("%d", &poeni);
-		
-		// Obavezno je pozvati funkciju htons() jer cemo slati podatak tipa short 
 		student.poeni = htons(poeni);  
-		// Pokupiti enter karakter iz bafera tastature
 		getchar();    
 
 		// Slanje pripremljene poruke zapisane unutar strukture studentInfo
 		// prosleđujemo adresu promenljive student u memoriji, jer se na toj adresi nalaze podaci koje saljemo
 		// kao i velicinu te strukture (jer je to duzina poruke u bajtima)
-		iResult = send(klijentSoket, (char*) &student, (int) sizeof(studentInfo), 0);
+		iResult = send(klijentskaUticnica, (char*) &student, (int) sizeof(studentInfo), 0);
 
 		// Check result of send function
 		if (iResult == SOCKET_ERROR)
 		{
 			printf("Slanje poruke serveru neuspesno.\nGreska: %d\n", WSAGetLastError());
-			closesocket(klijentSoket);
+			closesocket(klijentskaUticnica);
 			WSACleanup();
 			return 1;
 		}
@@ -116,24 +105,21 @@ int main()
 		}
 	}
 
-	// Shutdown the connection since we're done
-	iResult = shutdown(klijentSoket, SD_BOTH);
-
-	// Check if connection is succesfully shut down.
+	// Gasenje uticnice
+	iResult = shutdown(klijentskaUticnica, SD_BOTH);
 	if (iResult == SOCKET_ERROR)
 	{
 		printf("Shutdown klijentskog soketa neuspesan.\nBreak: %d\n", WSAGetLastError());
-		closesocket(klijentSoket);
+		closesocket(klijentskaUticnica);
 		WSACleanup();
 		return 1;
 	}
-
+	
+	// Sacekaj pre nego što zatvoriš utičnicu
 	Sleep(1000);
 
-    // Close connected socket
-    closesocket(klijentSoket);
+    closesocket(klijentskaUticnica);
 
-	// Deinitialize WSA library
     WSACleanup();
 
     return 0;

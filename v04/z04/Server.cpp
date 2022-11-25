@@ -1,3 +1,4 @@
+// TCP server, blokirajuce uticnice
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 #define WIN32_LEAN_AND_MEAN
@@ -19,76 +20,62 @@
 // TCP server that use blocking sockets
 int main()
 {
-    // Socket used for listening for new clients 
-    SOCKET serverSoket = INVALID_SOCKET;
+    SOCKET serverskaUticnica = INVALID_SOCKET;
 
-    // Socket used for communication with client
-    SOCKET prihvaceniSoket[2];
-    prihvaceniSoket[0] = INVALID_SOCKET;
-    prihvaceniSoket[1] = INVALID_SOCKET;
+    SOCKET prihvacenaUticnica[2];
+    prihvacenaUticnica[0] = INVALID_SOCKET;
+    prihvacenaUticnica[1] = INVALID_SOCKET;
 
-    // Variable used to store function return value
     int iResult;
 
-    // Buffer used for storing incoming data
     char dataBuffer[BUFFER_SIZE];
 
-    // WSADATA data structure that is to receive details of the Windows Sockets implementation
     WSADATA wsaData;
 
-    // Initialize windows sockets library for this process
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
     {
-        printf("WSAStartup neuspesan.\nGreska: %d\n", WSAGetLastError());
+        printf("Pokretanje winsock biblioteke neuspesno.\nGRESKA: %d\n", WSAGetLastError());
         return 1;
     }
 
-    // Initialize adresaServera structure used by bind
     sockaddr_in adresaServera;
     memset((char*)&adresaServera, 0, sizeof(adresaServera));
+
     adresaServera.sin_family = AF_INET;	
     adresaServera.sin_addr.s_addr = INADDR_ANY;	
     adresaServera.sin_port = htons(SERVER_PORT);
 
-    // Create a SOCKET for connecting to server
-    serverSoket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-
-    // Check if socket is successfully created
-    if (serverSoket == INVALID_SOCKET)
+    serverskaUticnica = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (serverskaUticnica == INVALID_SOCKET)
     {
-        printf("Otvaranje server soketa neuspesno.\nGreska: %ld\n", WSAGetLastError());
+        printf("Otvaranje serverske uticnice neuspesno.\nGRESKA: %ld\n", WSAGetLastError());
         WSACleanup();
         return 1;
     }
 
-    // Setup the TCP listening socket - bind port number and local address to socket
-    iResult = bind(serverSoket, (struct sockaddr*) &adresaServera, sizeof(adresaServera));
-
-    // Check if socket is successfully binded to address and port from sockaddr_in structure
+    iResult = bind(serverskaUticnica, (SOCKADDR*) &adresaServera, sizeof(adresaServera));
     if (iResult == SOCKET_ERROR)
     {
-        printf("bind utcnice za server nesupesno.\nGreska: %d\n", WSAGetLastError());
-        closesocket(serverSoket);
+        printf("Povezivanje serverske uticnice sa adresom neuspesno.\nGRESKA: %d\n", WSAGetLastError());
+        closesocket(serverskaUticnica);
         WSACleanup();
         return 1;
     }
 
-    // Set serverSoket in listening mode
-    iResult = listen(serverSoket, SOMAXCONN);
+    iResult = listen(serverskaUticnica, SOMAXCONN);
     if (iResult == SOCKET_ERROR)
     {
-        printf("listen neuspesan.\nGreska: %d\n", WSAGetLastError());
-        closesocket(serverSoket);
+        printf("Postavljanje serverske uticnice u rezim prisluskivanja neuspesno.\nGRESKA: %d\n", WSAGetLastError());
+        closesocket(serverskaUticnica);
         WSACleanup();
         return 1;
     }
 
-    // Stavljanje uticnice serverSoket u neblokirajuci rezim (mode = 1)
 	unsigned long mode = 1; 
-    iResult = ioctlsocket(serverSoket, FIONBIO, &mode);
+    iResult = ioctlsocket(serverskaUticnica, FIONBIO, &mode);
     if (iResult != NO_ERROR)
 	{
-        printf("ioctlsocket neuspesan.\nGreska: %ld\n", iResult);
+        printf("Postavljanje serverske uticnice u neblokirajuci rezim neuspesno.\nGreska: %ld\n", iResult);
 	}
 
 	printf("Serverska uticnica je u rezimu prisluskivanja. Cekanje na nove zahteve za povezivanje.\n");
@@ -98,36 +85,34 @@ int main()
 
     do
     {
-        // Struct for information about povezano client
         sockaddr_in adresaKlijenta;
         int velicinaAdreseKlijenta = sizeof(struct sockaddr_in);
         
-        // pozivamo accept() za prijem konekcije 
-        prihvaceniSoket[povezano] = accept(serverSoket, (struct sockaddr*) &adresaKlijenta, &velicinaAdreseKlijenta);
+        // Pozivamo accept() za prijem konekcije 
+        prihvacenaUticnica[povezano] = accept(serverskaUticnica, (SOCKADDR*) &adresaKlijenta, &velicinaAdreseKlijenta);
 
-        // proveramo da li se accept() funkcija uspesno izvrsila
-        if (prihvaceniSoket[povezano] != INVALID_SOCKET)
+        // Proveramo da li se accept() funkcija uspesno izvrsila
+        if (prihvacenaUticnica[povezano] != INVALID_SOCKET)
         {
             // Ispis poruke o uspesnoj konekciji
             printf("\nPrihvacen novi zahtev od klijenta. Adresa klijenta: %s : %d\n", inet_ntoa(adresaKlijenta.sin_addr), ntohs(adresaKlijenta.sin_port));
 
             // Postavljanje uticnica namenjenih klijentima u neblokirajuci rezim (mode = 1)
             unsigned long mode = 1; 
-            iResult = ioctlsocket(prihvaceniSoket[povezano], FIONBIO, &mode);
+            iResult = ioctlsocket(prihvacenaUticnica[povezano], FIONBIO, &mode);
 
             if (iResult != NO_ERROR)
 			{
                 printf("ioctlsocket neuspesan.\nGreska: %ld\n", iResult);
 			}
 			
-			// Uvecavamo brojac konektovanih klijenata
+			// Uvecavamo brojac spojenih klijenata
 			povezano++;
         }
 		// Funkcija je vratila INVALID_SOCKET
         else 
         {
             // Obavezno proveriti da li je razlog WSAEWOULDBLOCK
-            // tj. zahtev za vezom jos nije stigao
             if (WSAGetLastError() == WSAEWOULDBLOCK) 
 			{
                 Sleep(2000);
@@ -135,8 +120,8 @@ int main()
 			// Ili je neka druga greska zbog koje cemo ugasiti server
             else  
             {
-                printf("accept failed with error: %d\n", WSAGetLastError());
-                closesocket(serverSoket);
+                printf("Neuspesno spajanje sa klijentom.\nGRESKA: %d\n", WSAGetLastError());
+                closesocket(serverskaUticnica);
                 WSACleanup();
                 return 1;
             }
@@ -151,25 +136,23 @@ int main()
 		// Kad se spoje 2 klijenta program nastavlje dalje
         // Ocekuje se razmena poruka sa ta dva klijenta
 	
-		// Pokazivac na primljen niz celobrojnih vrednosti
         int* primljenNiz; 
-		// Maksimalni (najveci) broj iz primljenog niza
-        int max = 0; 
+		int max = 0; 
         
         // Polling model prijema poruka
         do
         {
-            // For petljom prolazimo kroz niz prihvaceniSoket od dve uticnice 
+            // For petljom prolazimo kroz niz prihvacenaUticnica od dve uticnice 
             // i proveravamo da li su primile poruku primenom polling modela 
             for (int i = 0; i < 2; i++)
             {
-                iResult = recv(prihvaceniSoket[i], dataBuffer, BUFFER_SIZE, 0);
+                iResult = recv(prihvacenaUticnica[i], dataBuffer, BUFFER_SIZE, 0);
 				
 				// Poruka je uspesno primljena
-                if (iResult > 0)	
+                if (iResult > 0)
                 {
                 	// Pristupamo adresi gde je smestena primljena poruka, adekvatno kastujemo pokazivac
-                    primljenNiz = (int*)dataBuffer;
+                    primljenNiz = (int*) dataBuffer;
                     printf("Klijent br. [%d] je poslao: %d %d %d.\n", i+1, ntohl(primljenNiz[0]), ntohl(primljenNiz[1]), ntohl(primljenNiz[2]));
                     
                     // Pronalazenje najvece vrednosti, inicijalno uzimamo prvi element niza
@@ -179,7 +162,7 @@ int main()
 					// Klasična pretraga najvećeg elementa u nizu
                     for (int i = 1; i < 3; i++)
                     {
-                        if (ntohl(primljenNiz[i])> max)  
+                        if (ntohl(primljenNiz[i]) > max)  
 						{
                             max = ntohl(primljenNiz[i]); 
 						}
@@ -189,23 +172,22 @@ int main()
                     sprintf_s(dataBuffer, "Najveci poslati broj je %d.", max);
                     
 					// Slanje poruke ka klijentu
-                    iResult = send(prihvaceniSoket[i], dataBuffer, strlen(dataBuffer), 0);
+                    iResult = send(prihvacenaUticnica[i], dataBuffer, strlen(dataBuffer), 0);
 
                     // Check result of send function
                     if (iResult == SOCKET_ERROR)
                     {
-                        printf("Slanje poruke ka klijentu je neuspesno.\nGreska: %d\n", WSAGetLastError());
-                        closesocket(prihvaceniSoket[i]);
+                        printf("Slanje poruke ka klijentu je neuspesno.\nGRESKA: %d\n", WSAGetLastError());
+                        closesocket(prihvacenaUticnica[i]);
                         povezano--;
                         break;
-                    }   
+                    } 
                 }
-				// Check if shutdown command is received
+				// Da li je poslata komanda za gasenje
                 else if (iResult == 0)	
                 {
-                    // Connection was closed successfully
                     printf("Veza sa klijentom je uspesno zatvorena.\n");
-                    closesocket(prihvaceniSoket[i]);
+                    closesocket(prihvacenaUticnica[i]);
                     povezano--;
                     break;
                 }
@@ -218,9 +200,8 @@ int main()
                     }
                     else 
 					{
-                        // Desila se neka druga greska prilikom poziva operacije
                         printf("Poruka od klijenta nije stigla.\nGreska: %d\n", WSAGetLastError());
-                        closesocket(prihvaceniSoket[i]);
+                        closesocket(prihvacenaUticnica[i]);
                         povezano--;
                         break;
                     }
@@ -242,12 +223,10 @@ int main()
 
     } while (true);
 
-    // Close listen and accepted sockets
-    closesocket(serverSoket);
-    closesocket(prihvaceniSoket[0]);
-    closesocket(prihvaceniSoket[1]);
+    closesocket(serverskaUticnica);
+    closesocket(prihvacenaUticnica[0]);
+    closesocket(prihvacenaUticnica[1]);
 
-    // Deinitialize WSA library
     WSACleanup();
 
     return 0;

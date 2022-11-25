@@ -1,3 +1,4 @@
+// TCP server, neblokirajuce uticnice
 #define WIN32_LEAN_AND_MEAN
 
 #include <windows.h>
@@ -24,190 +25,181 @@ struct studentInfo{
 	short poeni;
 };
 
-// TCP server that use non-blocking sockets
 int main() 
 {
-	// Socket used for listening for new clients 
-	SOCKET serverSoket = INVALID_SOCKET;
+	SOCKET uticnicaServera = INVALID_SOCKET;
 
-	// Sockets used for communication with client
-	SOCKET klijentSoketi[MAX_CLIENTS];
+	SOCKET uticniceKlijenata[MAX_CLIENTS];
 	short poslednjiIndeks = 0;
 
-	// Variable used to store function return value
 	int iResult;
 
-	// Buffer used for storing incoming data
 	char dataBuffer[BUFFER_SIZE];
 
-	// WSADATA data structure that is to receive details of the Windows Sockets implementation
 	WSADATA wsaData;
 
-	// Initialize windows sockets library for this process
 	if (WSAStartup(MAKEWORD(2,2), &wsaData) != 0)
 	{
-		printf("WSAStartup neuspesan.\nGreska: %d\n", WSAGetLastError());
+		printf("Pokretanje winsock biblioteke neuspesno.\nGRESKA: %d\n", WSAGetLastError());
 		return 1;
 	}
 
-	// Initialize adresaServera structure used by bind
 	sockaddr_in adresaServera;
 	memset((char*) &adresaServera, 0, sizeof(adresaServera));
+
 	adresaServera.sin_family = AF_INET;
 	adresaServera.sin_addr.s_addr = INADDR_ANY;
 	adresaServera.sin_port = htons(SERVER_PORT);
 
-	// Initialise all client_socket[] to 0 so not checked
-	memset(klijentSoketi, 0, MAX_CLIENTS * sizeof(SOCKET));
+	memset(uticniceKlijenata, 0, MAX_CLIENTS * sizeof(SOCKET));
 
-	// Create a SOCKET for connecting to server
-	serverSoket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-
-	// Check if socket is successfully created
-	if (serverSoket == INVALID_SOCKET)
+	uticnicaServera = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if (uticnicaServera == INVALID_SOCKET)
 	{
-		printf("Otvaranje serverskog soketa nije uspelo.\nGreska: %ld\n", WSAGetLastError());
+		printf("Otvaranje serverske uticnice neuspesno.\nGRESKA: %ld\n", WSAGetLastError());
 		WSACleanup();
 		return 1;
 	}
 
-	// Setup the TCP listening socket - bind port number and local address to socket
-	iResult = bind(serverSoket,(struct sockaddr*) &adresaServera, sizeof(adresaServera));
-
-	// Check if socket is successfully binded to address and port from sockaddr_in structure
+	// Not sure, ali mislim da ovde bas mora (struct sockaddr*)
+	iResult = bind(uticnicaServera,(SOCKADDR*) &adresaServera, sizeof(adresaServera));
 	if (iResult == SOCKET_ERROR)
 	{
-		printf("bind soketa za server nije uspelo.\nGreska: %d\n", WSAGetLastError());
-		closesocket(serverSoket);
+		printf("Povezivanje serverske uticnice sa adresom neuspesno.\nGRESKA: %d\n", WSAGetLastError());
+		closesocket(uticnicaServera);
 		WSACleanup();
 		return 1;
 	}
 	
-	// BITNO ???!!!?!?!
-	// All connections are by default accepted by protocol stek if socket is in listening mode
-	// With SO_CONDITIONAL_ACCEPT parameter set to true, connections will not be accepted by default
-	bool bOptVal = true;
-	int bOptLen = sizeof (bool);
+	// Sve veze se automatski spajaju ako je uticnica u listen rezimu
+	// Sa SO_CONDITIONAL_ACCEPT parametrom koji je true, veze se neće automatski spojiti
+	bool uslov = true;
+	int duzinaUslova = sizeof(bool);
 	
-	iResult = setsockopt(serverSoket, SOL_SOCKET, SO_CONDITIONAL_ACCEPT, (char*) &bOptVal, bOptLen);
-	if (iResult == SOCKET_ERROR) 
-	{
-	    printf("setsockopt za SO_CONDITIONAL_ACCEPT nije uspela.\nGreska: %u\n", WSAGetLastError());
-	}
-
-	unsigned long  mode = 1;
-	if (ioctlsocket(serverSoket, FIONBIO, &mode) != 0)
-	{
-		printf("ioctlsocket nesupesan.");
-	}
-
-	// Set serverSoket in listening mode
-	iResult = listen(serverSoket, SOMAXCONN);
+	iResult = setsockopt(uticnicaServera, SOL_SOCKET, SO_CONDITIONAL_ACCEPT, (char*) &uslov, duzinaUslova);
 	if (iResult == SOCKET_ERROR)
 	{
-		printf("listen za server neuspesan.\nGreska: %d\n", WSAGetLastError());
-		closesocket(serverSoket);
+	    printf("Podesavanje parametra za serversku uticnicu neuspesno.\nGRESKA: %u\n", WSAGetLastError());
+	}
+
+	unsigned long mode = 1;
+	if (ioctlsocket(uticnicaServera, FIONBIO, &mode) != 0)
+	{
+		printf("Promena rezima uticnice neuspesan.\nGRESKA: %d\n", WSAGetLastError());
+		closesocket(uticnicaServera);
 		WSACleanup();
 		return 1;
 	}
 
-	printf("Soket za server je u rezimu prisluskivanja. Cekanje na nove zahteve za povezivanje.\n");
+	iResult = listen(uticnicaServera, SOMAXCONN);
+	if (iResult == SOCKET_ERROR)
+	{
+		printf("Postavljanje servera u rezim prisluskivanja neuspesan.\nGRESKA: %d\n", WSAGetLastError());
+		closesocket(uticnicaServera);
+		WSACleanup();
+		return 1;
+	}
 
-	// Set of socket descriptors
+	printf("Serverska uticnica je u rezimu prisluskivanja. Cekanje na nove zahteve za povezivanje.\n");
+
+	// Set descriptora za uticnice
 	fd_set fdCitanje;
 
-	// Timeout for select function
+	// Timeout za funkcije
 	timeval vreme;
 	vreme.tv_sec = 1;
 	vreme.tv_usec = 0;
 	
+	// Struktura za studenta
 	studentInfo *student;
 
 	while (true)
 	{
-		// Initialize socket set
+		// Inicijalizacija seta za uticnicu
 		FD_ZERO(&fdCitanje);
 
-		// Add server's socket and clients' sockets to set
+		// Dodavanje serverskih uticnica u set
 		if (poslednjiIndeks != MAX_CLIENTS)
 		{
-			FD_SET(serverSoket, &fdCitanje);
+			FD_SET(uticnicaServera, &fdCitanje);
 		}
 
-		for (int i = 0 ; i < poslednjiIndeks ; i++) 
+		// Dodavanje klijentskih uticnica u set
+		for (int i = 0; i < poslednjiIndeks; i++) 
 		{
-			FD_SET(klijentSoketi[i], &fdCitanje);
+			FD_SET(uticniceKlijenata[i], &fdCitanje);
 		}
 
-		// Wait for events on set
-		int selectResult = select( 0 , &fdCitanje , NULL , NULL , &vreme);
-
+		// Cekanje da se dese događaji
+		int selectResult = select(0, &fdCitanje, NULL, NULL, &vreme);
+		
 		if (selectResult == SOCKET_ERROR)
 		{
-			printf("Select neuspesan.\nGreska: %d\n", WSAGetLastError());
-			closesocket(serverSoket);
+			printf("Select neuspesan.\nGRESKA: %d\n", WSAGetLastError());
+			closesocket(uticnicaServera);
 			WSACleanup();
 			return 1;
 		}
-		// Timeout expired
 		else if (selectResult == 0) 
 		{
-			// Check if some key is pressed
+			// Isteklo vreme; proveri da li je neki taster pritisnut
 			if (_kbhit()) 
 			{
 				getch();
-				printf("Primena racunarskih mreza u infrstrukturnim sistemima 2022/2023\n");
+				printf("PRMuIS 2022/2023\n");
 			}
 			continue;
 		}
-		else if (FD_ISSET(serverSoket, &fdCitanje)) 
+		else if (FD_ISSET(uticnicaServera, &fdCitanje)) 
 		{
-			// Struct for information about connected client
-			sockaddr_in clientAddr;
-			int clientAddrSize = sizeof(struct sockaddr_in);
+			// Klijent se povezao
+			sockaddr_in adresaKlijenta;
+			int velicinaAdreseKlijenta = sizeof(struct sockaddr_in);
 
-			// New connection request is received. Add new socket in array on first free position.
-			klijentSoketi[poslednjiIndeks] = accept(serverSoket, (struct sockaddr*) &clientAddr, &clientAddrSize);
+			// Novi zahtev za povezivanje. Dodaj novu uticnicu na prvo slobodno mesto u nizu
+			uticniceKlijenata[poslednjiIndeks] = accept(uticnicaServera, (SOCKADDR*) &adresaKlijenta, &velicinaAdreseKlijenta);
 
-			if (klijentSoketi[poslednjiIndeks] == INVALID_SOCKET)
+			if (uticniceKlijenata[poslednjiIndeks] == INVALID_SOCKET)
 			{
 				if (WSAGetLastError() == WSAECONNRESET)
 				{
-					printf("accept neuspesan, jer je timeout za zahtev klijenta istekao.\n");
+					printf("Prihvatanje neuspesno, jer je timeout za zahtev klijenta istekao.\n");
 				}
 				else
 				{
-					printf("accept neuspesan.\nGreska: %d\n", WSAGetLastError());
+					printf("Prihvatanje neuspesno.\nGRESKA: %d\n", WSAGetLastError());
 				}
 			}
 			else
 			{
-				if (ioctlsocket(klijentSoketi[poslednjiIndeks], FIONBIO, &mode) != 0)
+				if (ioctlsocket(uticniceKlijenata[poslednjiIndeks], FIONBIO, &mode) != 0)
 				{
-					printf("ioctlsocket neuspesan.\n");
+					printf("Podesavanje uticnice neuspesno.\n");
 					continue;
 				}
 
 				poslednjiIndeks++;
-				printf("Prihvacen novi zahtev klijenta (%d). Adresa klijenta: %s : %d\n", poslednjiIndeks, inet_ntoa(clientAddr.sin_addr), ntohs(clientAddr.sin_port));
+				printf("Prihvacen novi zahtev klijenta (%d). Adresa klijenta: %s : %d\n", 
+				poslednjiIndeks, inet_ntoa(adresaKlijenta.sin_addr), ntohs(adresaKlijenta.sin_port));
 			}
 		}
 		else
 		{
-			// Check if new message is received from connected clients
+			// STIZE NOVA PORUKA
+			// Provera da li je nova poruka stigla od nekog od povezanih klijenata
 			for (int i = 0; i < poslednjiIndeks ; i++) 
 			{
-				// Check if new message is received from client on position "i"
-				if (FD_ISSET(klijentSoketi[i], &fdCitanje)) 
+				// Da li je poruka poslata od klijenta na poziciji "i"
+				if (FD_ISSET(uticniceKlijenata[i], &fdCitanje)) 
 				{
-					iResult = recv(klijentSoketi[i], dataBuffer, BUFFER_SIZE, 0);
+					iResult = recv(uticniceKlijenata[i], dataBuffer, BUFFER_SIZE, 0);
 
 					if (iResult > 0)
 					{
 						dataBuffer[iResult] = '\0';
 						printf("Poruka je primljena od klijenta (%d):\n", i+1);
 						
-						// Primljenoj poruci u memoriji pristupiti preko pokazivaca tipa (studentInfo *)
+						// Primljenoj poruci u memoriji čemo pristupiti preko pokazivaca tipa (studentInfo *)
 						// Jer znamo format u kom je poruka poslata a to je struct studentInfo
 						student = (studentInfo*) dataBuffer;
 
@@ -217,31 +209,30 @@ int main()
 					}
 					else if (iResult == 0)
 					{
-						// Connection was closed gracefully
+						// Veza je zatvorena
 						printf("Veza sa klijentom (%d) je zatvorena.\n", i+1);
-						closesocket(klijentSoketi[i]);
+						closesocket(uticniceKlijenata[i]);
 
-						// Sort array and clean last place
-						for (int j = i; j < poslednjiIndeks-1; j++) 
+						// Sortiraj niz i oslobodi poslednje mesto
+						for (int j = i; j < poslednjiIndeks - 1; j++) 
 						{
-							klijentSoketi[j] = klijentSoketi[j+1];
+							uticniceKlijenata[j] = uticniceKlijenata[j + 1];
 						}
-						klijentSoketi[poslednjiIndeks-1] = 0;
+						uticniceKlijenata[poslednjiIndeks - 1] = 0;
 
 						poslednjiIndeks--;
 					}
 					else
 					{
-						// There was an error during recv
-						printf("Poruka od klijenta nije primljena.\nGreska: %d\n", WSAGetLastError());
-						closesocket(klijentSoketi[i]);
+						printf("Poruka od klijenta nije primljena.\nGRESKA: %d\n", WSAGetLastError());
+						closesocket(uticniceKlijenata[i]);
 
-						// Sort array and clean last place
-						for (int j = i; j < poslednjiIndeks-1; j++) 
+						// Sortiraj niz i oslobodi poslednje mesto
+						for (int j = i; j < poslednjiIndeks - 1; j++) 
 						{
-							klijentSoketi[j] = klijentSoketi[j+1];
+							uticniceKlijenata[j] = uticniceKlijenata[j + 1];
 						}
-						klijentSoketi[poslednjiIndeks-1] = 0;
+						uticniceKlijenata[poslednjiIndeks - 1] = 0;
 
 						poslednjiIndeks--;
 					}
@@ -250,10 +241,8 @@ int main()
 		}
 	}
 
-	// Close listen and accepted sockets
-	closesocket(serverSoket);
+	closesocket(uticnicaServera);
 
-	// Deinitialize WSA library
 	WSACleanup();
 
 	return 0;

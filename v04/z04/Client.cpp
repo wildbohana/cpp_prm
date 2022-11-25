@@ -1,3 +1,4 @@
+// TCP klijent, blokirajuce uticnice
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 #define WIN32_LEAN_AND_MEAN
@@ -20,46 +21,37 @@
 // TCP client that use blocking sockets
 int main()
 {
-    // Socket used to communicate with server
-    SOCKET klijentSoket = INVALID_SOCKET;
+    SOCKET klijentskaUticnica = INVALID_SOCKET;
 
-    // Variable used to store function return value
     int iResult;
 
-    // Buffer we will use to store message
     char dataBuffer[BUFFER_SIZE];
 
-    // WSADATA data structure that is to receive details of the Windows Sockets implementation
     WSADATA wsaData;
 
-    // Initialize windows sockets library for this process
     if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
     {
-        printf("WSAStartup neuspesan.\nGreska: %d\n", WSAGetLastError());
+        printf("Pokretanje winsock biblioteke neuspesno.\nGRESKA: %d\n", WSAGetLastError());
         return 1;
     }
 
-    // Create a socket
-    klijentSoket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-
-    if (klijentSoket == INVALID_SOCKET)
+    klijentskaUticnica = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (klijentskaUticnica == INVALID_SOCKET)
     {
-        printf("Otvaranje soketa neuspesno.\nGreska: %ld\n", WSAGetLastError());
+        printf("Otvaranje klijentske uticnice neuspesno.\nGRESKA: %ld\n", WSAGetLastError());
         WSACleanup();
         return 1;
     }
 
-    // Create and initialize address structure
     sockaddr_in adresaServera;
     adresaServera.sin_family = AF_INET;
     adresaServera.sin_addr.s_addr = inet_addr(SERVER_IP_ADDRESS);
     adresaServera.sin_port = htons(SERVER_PORT);
 
-    // Connect to server specified in adresaServera and socket klijentSoket
-    if (connect(klijentSoket, (SOCKADDR*) &adresaServera, sizeof(adresaServera)) == SOCKET_ERROR)
+    if (connect(klijentskaUticnica, (SOCKADDR*) &adresaServera, sizeof(adresaServera)) == SOCKET_ERROR)
     {
-        printf("Spajanje sa serverom neuspesno.\n");
-        closesocket(klijentSoket);
+        printf("Spajanje koricnicke uticnice sa adresom servera neuspesno.\n");
+        closesocket(klijentskaUticnica);
         WSACleanup();
         return 1;
     }
@@ -79,17 +71,11 @@ int main()
         }
         
         // Saljemo nizBrojeva prosledjujuci njegovu adresu i duzinu poruke (niza) u bajtima
-        iResult = send
-			(klijentSoket, 
-			(char*) nizBrojeva, 
-			3 * sizeof(int), 
-			0);
-
-        // Check result of send function
+        iResult = send(klijentskaUticnica, (char*) nizBrojeva, 3 * sizeof(int), 0);
         if (iResult == SOCKET_ERROR)
         {
             printf("Slanje poruke serveru neuspesno.\nGreska: %d\n", WSAGetLastError());
-            closesocket(klijentSoket);
+            closesocket(klijentskaUticnica);
             WSACleanup();
             return 1;
         }
@@ -97,22 +83,15 @@ int main()
         printf("Poruka je uspesno poslata serveru. Ukupno bajtova: %ld\n", iResult);
 
         // Prijem poruke koju salje server
-        iResult = recv
-			(klijentSoket, 
-			dataBuffer, 
-			BUFFER_SIZE, 
-			0);
-	
-		// Check if message is successfully received
-        if (iResult > 0)
+        iResult = recv(klijentskaUticnica, dataBuffer, BUFFER_SIZE, 0);
+	    if (iResult > 0)
         {
             dataBuffer[iResult] = '\0';
             printf("\nServer salje: %s\n", dataBuffer);
         }
-		// Check if shutdown command is received
+		// Proveri da li je stigla komanda za gasenje
         else if (iResult == 0)	
         {
-            // Connection was closed successfully
             printf("Veza sa serverom je uspesno zatvorena.\n");
             break;
         }
@@ -132,26 +111,21 @@ int main()
 		}
     }
 
-    // Shutdown the connection since we're done
-    iResult = shutdown(klijentSoket, SD_BOTH);
-
-    // Check if connection is succesfully shut down.
+    // Gasenje veze - TCP, jbgy, mora se
+    iResult = shutdown(klijentskaUticnica, SD_BOTH);
     if (iResult == SOCKET_ERROR)
     {
-        printf("Shutdown neuspesan.\nGreska: %d\n", WSAGetLastError());
-        closesocket(klijentSoket);
+        printf("Gasenje veze neuspesno.\nGreska: %d\n", WSAGetLastError());
+        closesocket(klijentskaUticnica);
         WSACleanup();
         return 1;
     }
 
-    // For demonstration purpose
-    printf("\nPress any key to exit: ");
+    printf("\nPritisni bilo koji taster za kraj... ");
     _getch();
 
-    // Close connected socket
-    closesocket(klijentSoket);
+    closesocket(klijentskaUticnica);
 
-    // Deinitialize WSA library
     WSACleanup();
 
     return 0;

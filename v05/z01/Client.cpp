@@ -1,3 +1,4 @@
+// UDP klijent, neblokirajuce uticnice
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define WIN32_LEAN_AND_MEAN
 
@@ -12,53 +13,39 @@
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")
 
-#define SERVER_IP_ADDRESS "127.0.0.1"		// IPv4 address of server
-#define BUFFER_SIZE 512						// Size of buffer that will be used for sending and receiving messages to client
+#define SERVER_IP_ADDRESS "127.0.0.1"
+#define BUFFER_SIZE 512	
 
 int main()
 {
-    // Server address structure
     sockaddr_in adresaServera;
 
-    // Size of server address structure
-	int duzinaAdreseServera = sizeof(adresaServera);
-
-	// Buffer that will be used for sending and receiving messages to client
     char dataBuffer[BUFFER_SIZE];
 
-	// WSADATA data structure that is used to receive details of the Windows Sockets implementation
     WSADATA wsaData;
     
-	// Initialize windows sockets for this process
 	int iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
-    
-	// Check if library is succesfully initialized
-	if (iResult != 0)
+    	if (iResult != 0)
     {
-        printf("WSAStartup neuspesan.\nGreska: %d\n", iResult);
+        printf("Pokretanje winsock biblioteke neuspesno.\nGRESKA: %d\n", iResult);
         return 1;
     }
 
-	// Initialize memory for address structure
     memset((char*) &adresaServera, 0, sizeof(adresaServera));		
     
-	// Read server's port number
+	// Izbor broja porta za server
 	printf("Unesi broj porta servera (15011 or 15012):\n");
     gets_s(dataBuffer, BUFFER_SIZE);
 	unsigned long serverPort = atoi(dataBuffer);
 
-	 // Initialize address structure of server
-	adresaServera.sin_family = AF_INET;								// IPv4 address famly
-    adresaServera.sin_addr.s_addr = inet_addr(SERVER_IP_ADDRESS);	// Set server IP address using string
-    adresaServera.sin_port = htons(serverPort);						// Set server port
+	adresaServera.sin_family = AF_INET;	
+    adresaServera.sin_addr.s_addr = inet_addr(SERVER_IP_ADDRESS);
+    adresaServera.sin_port = htons(serverPort);	
 
-	// Create a socket
-    SOCKET clientSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-
-	// Check if socket creation succeeded
-    if (clientSocket == INVALID_SOCKET)
+    SOCKET klijentskaUticnica = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if (klijentskaUticnica == INVALID_SOCKET)
     {
-        printf("Neuspelo otvaranje soketa.\nGreska: %d\n", WSAGetLastError());
+		printf("Otvaranje klijentske uticnice neuspesno.\nGRESKA: %d\n", WSAGetLastError());
         WSACleanup();
         return 1;
     }
@@ -66,52 +53,38 @@ int main()
    	while (true)
    	{	
 		printf("Unesite poruku za slanje:\n");
-
-		// Read string from user into outgoing buffer
     	gets_s(dataBuffer, BUFFER_SIZE);
 
-		// Close client if end  message is entered
+		// Zatvori klijenta ako je poruka za kraj uneta
     	if (!strcmp(dataBuffer, "end"))
     	{
        		printf("Klijent je zavrsio. Zatvara se.\n");
 	    	break;
     	}
 	
-		// Send message to server
-   		iResult = sendto
-			(clientSocket,					// Own socket
-			dataBuffer,						// Text of message
-			strlen(dataBuffer),				// Message size
-			0,								// No flags
-			(SOCKADDR*) &adresaServera,		// Address structure of server (type, IP address and port)
-			sizeof(adresaServera));			// Size of sockadr_in structure
-
-		// Check if message is succesfully sent. If not, close client application
+		// Slanje poruke serveru
+		iResult = sendto(klijentskaUticnica, dataBuffer, strlen(dataBuffer), 0, (SOCKADDR*) &adresaServera, sizeof(adresaServera));
 		if (iResult == SOCKET_ERROR)
     	{
-	        printf("Neuspelo slanje poruke serveru.\nGreska: %d\n", WSAGetLastError());
-	        closesocket(clientSocket);
+			printf("Slanje poruke serveru neuspesno.\nGRESKA: %d\n", WSAGetLastError());
+	        closesocket(klijentskaUticnica);
 	        WSACleanup();
 	        return 1;
     	}
    	}
 
-	// Only for demonstration purpose
-	printf("Press any key to exit: ");
+	printf("Pritisni bilo koji taster za kraj... ");
 	_getch();
 
-	// Close client application
-    iResult = closesocket(clientSocket);
+    iResult = closesocket(klijentskaUticnica);
     if (iResult == SOCKET_ERROR)
     {
-        printf("closesocket nije uspeo.\nGreska: %d\n", WSAGetLastError());
+		printf("Zatvaranje klijentske uticnice neuspesno.\nGRESKA: %d\n", WSAGetLastError());
 		WSACleanup();
         return 1;
     }
 
-	// Close Winsock library
     WSACleanup();
 
-	// Client has succesfully sent a message
     return 0;
 }

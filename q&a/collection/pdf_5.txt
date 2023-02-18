@@ -1,0 +1,289 @@
+5.1. Razlika između kontrolne ravni unutar svakog rutera i logički centralizovane kontrolne ravni
+
+Kontrolna ravan unutar svakog rutera obavlja rutiranje na osnovu lokalno poznatih informacija.
+I prosleđivanje i rutiranje se obavlja unutar svakog rutera.
+Komponenta za rutiranje unutar svakog rutera komunicira sa komponentama za rutiranje 
+u ostalim ruterima kako bi se izračunale vrednosti za njihove tabele prosleđivanja.
+
+Logički centralizovana ravan koristi globalnu kontrolu za rutiranje.
+Udaljeni kontroler izračunava i distribuira tabele prosleđivanja ka svim ruterima.
+
+---
+
+5.2. Šta je zadatak rutiranja? Putanja. Trošak putanje. Algoritam rutiranja.
+
+Zadatak rutiranja je da odredi putanju kojom će podaci putovati kroz mrežu, 
+koristeći algoritam za određivanje najbolje putanje, koji se zasniva na trošku putanje.
+Trošak putanje se odnosi na kriterijum koji se koristi za određivanje najbolje putanje, 
+kao što je npr. minimalan broj skokova ili minimalna propusnost.
+Algoritam rutiranja je algoritam koji se koristi za određivanje najbolje putanje 
+(putanju najmanjeg troška između dva čvora).
+
+---
+
+5.3. Podela algoritama rutiranja
+
+Centralizovani:
+ - svi ruteri imaju informacije o svim vezama između čvorova i troškovima svih linkova
+ - ruteri imaju potpuna, globalna saznanja o mreži
+ - algoritmi "stanja linkova"
+Decentralizovani:
+ - ruter zna sve svoje susede i troškove linkova do svojih suseda
+ - iterativni proces izračunavanja, razmena informacija sa susedima
+ - algoritmi "vektora rastojanja"
+Statički:
+ - rute se menjaju veoma sporo
+Dinamički:
+ - rute se menjaju brže
+ - periodično osvežavanje kao odgovor na promene troškova linka
+
+---
+
+5.4. Algoritam rutiranja zasnovan na stanju linkova (LS algoritam). Primer.
+
+LS algoritam (Link-State Routing) je centralizovani algoritam rutiranja 
+koji se zasniva na stanju linkova u mreži.
+On koristi LS bazu podataka za određivanje putanje.
+Primer LS algoritma je OSPF (Open Shortest Path First) protokol.
+
+Dijkstrin algoritam:
+ - svim čvorotima je poznata mrežna topologija i troškovi svih linkova
+ - izračunava se putanja najmanjeg troška od jednog čvora (izvora) ka svim ostalim čvorovima
+ - nakon k iteracija, poznate su putanje najmanjeg troška do k odredišnih čvorova
+
+---
+
+5.5. Algoritam rutiranja vektorom rastojanja (DV algoritam). Primer
+
+DV algoritam (Distance Vector Rounting) je decentralizovani algoritam rutiranja koji se zasniva na vektoru rastojanja.
+On koristi tabelu rastojanja za određivanje putanje.
+Primer DV algoritma je RIP (Router Information Protocol).
+
+Algoritam Bellman-Ford je algoritam za rutiranje po dužini vektora koji se koristi za 
+pronalaženje najkraćeg puta između izvorišnog čvora i svih ostalih čvorova u mreži.
+Algoritam izračunava najkraći put tako što iterativno opušta udaljenosti svih čvorova u mreži.
+Algoritam radi tako što ponavljano ažurira vektor udaljenosti svakog čvora 
+da bi održavao novu minimalnu udaljenost do određenog čvora.
+Algoritam se nastavlja dok se vektori udaljenosti više ne ažuriraju, 
+što ukazuje da je najkraći put pronađen.
+
+---
+
+5.6. Poređenje LS i DV algoritma
+
+Složenost slanja poruka:
+ - LS algoritam šalje O(NE) poruka
+ - DV algoritam razmenjuje poruke samo između neposredno povezanih suseda
+
+Vreme konvergencije:
+ - LS algoritam može brzo konvergirati, ali može doći do oscilacija
+ - DV algoritam može konvergirati sporo i može doći do petlji rutiranja, 
+   kao i problema brojanja do beskonačnosti
+
+Robustnost:
+ - LS algoritam omogućava čvoru da izračuna vlastitu tabelu i 
+   da objavi pogrešne troškove za jedan link povezan sa njim
+ - DV algoritam može objaviti pogrešne putanje najmanjih troškova 
+   do bilo kog odredišta i greška se može prostirati kroz čitavu mrežu
+
+---
+
+5.7. Pojam autonomnih sistema (AS). Zadaci rutiranja unutar AS i između AS
+
+Autonomni sistemi (AS) (ili domeni) su mreže koje imaju 
+sopstvenu politiku rutiranja i koje se nezavisno upravljaju.
+Ruteri se organizuju u AS.
+AS se prepozanju po svom globalno jedinstvenom broju AS.
+Svi ruteri unutar jednog AS izvršavaju isti algoritam rutiranja i imaju informacije jedni o drugima.
+
+Zadaci rutiranja unutar AS su da se odredi putanja za podatke unutar AS.
+Zadaci rutiranja između AS su da se odredi putanja za podatke koji putuju između različitih AS.
+
+---
+
+5.8. Rutiranje unutar AS–OSPF protokola – koji algoritam koristi, kako se izvršava?
+
+OSPF (Open Shortest Path First) protokol je algoritam rutiranja koji se koristi za rutiranje unutar AS.
+On koristi LS algoritam i koristi se za određivanje putanje na osnovu najkraćeg puta.
+OSPF se izvršava tako što se u mreži kreiraju LS baze podataka 
+(topološka mapa celog AS, Dijkstra algoritam) i na osnovu njih se određuje putanja.
+
+Ruter povremeno šalje poruke ka svim ostalim ruterima u AS da ih obavesti 
+o trenutnom stanju, bez obzira da li se stanje likova promenilo.
+
+---
+
+5.9. OSPF troškovi linkova i napredne funkcije. Hijerarhijski OSPF.
+
+OSPF troškovi linkova:
+ - konfiguriše ih administrator mreže
+ - troškovi svih linkova mogu biti jednaki ili obrnuto proporcionalni kapacitetu
+ - postoje dva pristupa za rutiranje prema najmanjem trošku 
+   (polazne vrednosti linkova, vrednosti postavljene u cilju upravljanja saobraćajem)
+
+Napredne funkcije:
+ - mogućnost provere autentičnosti OSPF poruka radi bezbednosti
+ - dozvoljene višestruke putanje sa istim troškovima
+ - više metrika troškova za različite nivoe TOS
+ - integrisana podrška za unicast i multicast
+ - hijerarhija OSPF unutar velikih AS-AS se hijerarhijski konfiguriše u zone
+
+Hijerarhijski OSPF je proširenje OSPF protokola koji se koristi za upravljanje rutiranjem u mrežama.
+Hijerarhijska arhitektura deli autonomni sistem u područja (zone), a svaka zona sadrži svoj OSPF algoritam za rutiranje linkova.
+Granični ruter za zonu sumira rastojanje ka čvorovima unutar zone i obaveštava druge granične rutere o tome.
+Ruter okosnice OSPF vrši rutiranje samo za okosnicu, dok granični ruter rutira saobraćaj između različitih zona.
+Ova hijerarhijska struktura omogućava veću efikasnost, bezbednost i kontrolu u velikim mrežama.
+
+---
+
+5.10. Rutiranje između AS–BGP protokola – uloga, karakteristike
+
+BGP (Border Gateway Protocol) je protokol za rutiranje između autonomnih sistema (AS) na internetu.
+To je "lepak koji drži internet povezanim" i korišćen je od strane svih rutera na internetu.
+
+BGP je decentralizovan i asinhron protokol koji koristi vektor rastojanja za rutiranje.
+Uloga BGP-a je da izačuna stavku u tabeli prosleđivanja za odredište izvan AS-a.
+U slučaju BGP, odredišta nisu računari već podmreže sa specifičnim prefiksom u CIDR šemi.
+
+BGP omogućva ruterima da pribave informacije o dostupnosti podmreža 
+do susednih AS-ova i da odrede "najbolju" rutu do određenih prefiksa.
+To se postiže kombinacijom informacija o dostupnosti i politike rutiranja.
+
+---
+
+5.11. Pojam eBGP i iBGP veze. Šta se razmenjuje putem BGP sesije? BGP atributi i BGP rute.
+
+BGP parovi rutera razmenjuju informacije uspostavljanjem TCP veza i slanjem BGP poruka preko njih (BGP veza).
+
+eBGP (External Border Gateway Protocol) veze se odnose na veze između različitih AS.
+iBGP (Internal Border Gateway Protocol) veze se odnose na veze unutar istog AS.
+Informacije o dostupnosti se prenose korišćenjem i iBGP i eBGP veza.
+
+BGP sesiju čine dva rutera koja razmenjuju BGP poruke preko polutrajne TCP veze.
+Sesije se koriste za razmenu informacija o rutama između rutera.
+
+BGP atributi su informacije koje se koriste za određivanje putanje.
+Dva važna atributa:
+ - AS-PATH  - sadrži spisak svih AS kroz koje je prošla objava za odgovarajući prefiks
+ - NEXT-HOP - označava IP adresu interfejsa rutera kojim počinje AS-PATH (ruter u susednom AS)
+
+---
+
+5.12. Postupak objavljivanja BGP ruta.
+
+Kada ruter u AS-u primi objavu BGP rute (koja se može objaviti putem eBGP ili iBGP veze), 
+ruter će je prihvatiti i prosleđivati dalje svim ruterima unutar AS-a.
+Zatim, zavisno od politike rutiranja, ruter može da šalje objavljenu BGP rutu 
+ka ruterima mrežnog prolaza iz drugih AS-ova.
+Nakon toga, ruter mrežnog prolaza će prosleđivati poruku o ruti 
+do ostalih rutera u svom AS-u pomoću iBGP konekcije.
+
+---
+
+5.13. Pravljenje unosa u tabeli prosleđivanja – povezanost BGP i OSPF protokola
+
+Povezanost BGP i OSPF protokola se odnosi na to da se OSPF koristi za rutiranje unutar AS, 
+dok se BGP koristi za rutiranje između AS.
+
+Pravljenje unosa u tabeli prosleđivanja podrazumeva dodavanje ruta u tabelu rutiranja 
+kako bi se omogućilo prosleđivanje podataka.
+
+---
+
+5.14. BGP izbor rute. Rutiranje vrućeg krompira.
+
+BGP izbor rute se odnosi na proces odabira najbolje rute za prosleđivanje podataka.
+
+Ruter može da sazna više ruta ka prefiksu odredišta.
+Tada će BGP primeniti određena pravila odbacujući pojedine rute na osnovu lokalnog prioriteta.
+Od preostalih ruta se prvo bira ruta sa najkraćim atributom AS-PATH.
+Zatim se bira ruta sa najbližim NEXT-HOP ruterom (rutiranje vrućeg krompira).
+Ako i dalje ima više ruta, primenjuju se dodatni kriterijumi.
+
+Rutiranje vrućeg krompira:
+ - izabrati rutu sa najkraćim atributom AS-PATH
+ - izabrati rutu sa najmanjim troškom do NEXT-HOP rutera
+ - izabrati lokalni gateway ruter koji ima najmanji unutar-domenski trošak
+
+---
+
+5.15. BGP politika rutiranja pomoću objavljivanja
+
+-- slika --
+
+BGP politika rutiranja može se koristiti kako bi se odredilo koji ruteri će objavljivati i prihvatati BGP rute.
+
+U primeru sa slike, ISP želi da rutira samo pakete poslate iz/ka njegovoj mreži korisnika 
+(ne želi da prenosi tranzitni saobraćaj između drugih ISP-ova).
+
+ISP objavljuje rutu Aw ka B i ka C.
+Međutim, B ne objavljuje rutu BAw ka C, pošto ni C ni A i w nisu korisnici mreže B.
+Tako C neće saznati za rutu CBAw.
+Zbog toga će se C rutirati preko CAw (ne koristeći B).
+
+X, koja je dvo-domna mreža (povezana preko dva različita posrednika), 
+ne želi da rutira saobraćaj iz B poslat ka C.
+Zato neće objavljivati ka B da poseduje rutu ka C.
+X će funkcionisati kao pristupna mreža ako svojim susedima (B i C) 
+objavi da nema putanje ni za jedno odredište osim sebe samog.
+
+---
+
+5.16. ICMP protokol – glavne funkcije i primena
+
+ICMP (Internet Control Message Protocol) ima glavnu funkciju 
+da omogući dijagnostiku mreže i signalizaciju grešaka.
+Koristi se od strane hostova i rutera kako bi razmenjivali poruke na mrežnom nivou.
+
+ICMP poruke se prenose unutar IP datagrama.
+ICMP poruke: type, code, description.
+
+Primena ICMP-a je u procesu testiranja dostupnosti resursa 
+i određivanja razloga za eventualne probleme u mreži.
+
+---
+
+5.17. Ciljevi upravljanja mrežom. Opis glavnih elemenata za upravljanje mrežom
+
+Autonomne sisteme (ili mreže) čini veliki broj hardverskih i sotverskih delova koji međusobno sarađuju.
+Ti delovi su linkovi, komutatori, ruteri, računari, brojni protokoli koji usklađuju i kontrolišu njihov rad...
+
+Upravljanje mrežom obuhvata postavljanje, spajanje i usklađivanje tih delova 
+i ljudskog faktora za nadzor i testiranje kako bi se postigli zahtevi u realnom vremenu i kvalitet usluge, 
+a sve uz razumne troškove.
+
+Upravljački server - aplikacija uz aktivno učešće operatera kontroliše prikupljanje, 
+obradu, analizu i prikazivanja informacija o upravljanju mrežom.
+Upravljani uređaj - računar, ruter, komutator, modem...
+Baza upravljačkih informacija - u njoj se prikupljaju informacije o svim upravljanim objektima unutar upravljanog uređaja.
+Agent za upravljanje mrežom - proces koji se izvršava na svakom upravljanom uređaju i komunicira sa upravljačkim serverom.
+Protokol za upravljanje mrežom - izvršava se između upravljačkog servera i upravljanog uređaja.
+
+Ciljevi upravljanja mrežom su:
+ - osigurati efikasnost mreže
+ - osigurati stabilnost mreže
+ - osigurati dostupnost mreže
+ - osigurati da se podaci prenose sa što manje kašnjenja i gubitka
+Glavni elementi za upravljanje mrežom su:
+ - monitoring
+ - konfiguracija
+ - dijagnostika
+ - upravljanje performansama
+
+---
+
+5.18. SNMP – protokol za upravljanje mrežom – karakterisitke i dva režima prenošenja poruka
+
+SNMP (Simple Network Management Protocol) se koristi za upravljanje mrežom.
+To je protokol aplikativnog nivoa.
+
+Koristi se za prenošenje kontrolnih poruka i informacija između upravljačkog servera 
+i agenata u upravljanim uređajima.
+
+Najčešće radi u režimu "zahtev i odgovor".
+Agent može samostalno da pošalje poruku serveru "poruka o prekidu" ukoliko se desi vanredni događaj.
+
+Postoje dva režima prenošenja poruka SNMP-a:
+ - režim jednostavnog prenošenja
+ - režim sigurnog prenošenja
+SNMP poruke se obično prenose preko UDP protokola (kao podaci unutar UDP datagrama).

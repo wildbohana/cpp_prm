@@ -1,0 +1,348 @@
+6.1. Usluge sloja veze – pravljenje okvira, pristup linku, otkrivanje i ispravljanje grešaka
+
+Pravljenje okvira:
+ - enkapsulira datagram u okvir, dodajući mu zaglavlje sloja veze
+ - strukturu zaglavlja određuje protokol sloja veze
+Pristupanje linku:
+ - protokol za kontrolu pristupa medijumu (MAC - Media Access Control), ako je kanal deljeni
+ - fizičke MAC adrese se koriste u zaglavlju okvira da bi se identifikovao pošaljilac i primalac
+ - različito je od IP adresa
+Pouzdana isporuka između susednih čvorova:
+ - retko se koristi na linkovima sa malom verovatnoćom greške (optički kabel, upredene parnice)
+ - obično se koristi za bežične linkove koji imaju veću verovatnoću grešaka
+ - da bi se greške otklonile lokalno na linku gde se dese, umesto ponovnog prenosa sa kraja na kraj
+
+Detekcija grešaka:
+ - greške izazvane slabljenjem signala, šumom pri prenosu
+ - prijemna strana detektuje postojanje grešaka
+ - može da javi pošaljiocu radi retransmisije ili da odbaci okvir sa greškom
+Korekcija grešaka:
+ - prijemnik prepoznaje i ispravlja bitske greške bez potrebe zahteva za retransmisijom
+Polu-dupleksna i puna dupleksna komunikacija
+
+---
+
+6.2. Mrežni adapteri (NIC) – uloga i funkcije
+
+Mrežni adapteri (NIC) su hardverski uređaji koji omogućavaju računarima da se povežu sa mrežom.
+Sloj veze se ostvaruje u mrežnom adapteru.
+
+Oni obavljaju funkcije kao što su konverzija digitalnih podataka u analogne signale, 
+i obrnuto, te upravljaju pristupom linku.
+
+---
+
+6.3. Tehnike za otkrivanje i ispravljanje grešaka (provera parnosti, kontrolna suma, ciklična provera redundanse). Primeri
+
+Na predajnoj strani podaci koji se štite od bitskih grešaka proširuju se bitovima za otkrivanje i ispravljanje grešaka.
+Podaci koji se štite obuhvataju najčešće i zaglavlje sloja veze i datagram prosleđen sa mrežnog sloja (ceo okvir).
+Otkrivanje greške nije uvek 100% pouzdano.
+
+Tehnike za otkrivanje i ispravljanje grešaka uključuju:
+ - proveru parnosti
+ - kontrolnu sumu (najčešće na transportnom sloju)
+ - cikličnu proveru redundanse (uobičajeno na sloju veze sa adapterima)
+ 
+Provera parnosti:
+ - detekcija neparnog broja bitskih grešaka
+ - dvodimenzionalna provera parnosti može da detektuje i ispravi grešku na jednom bitu
+
+Kontrolna suma:
+ - u TCP i UDP kontrolna suma se izračunava za ceo segment (zaglavlje + podaci)
+ - kod IP kontrolna suma se izračunava samo za polja zaglavlja
+ - pošaljilac izračuna vrednost kontrolne sume i smesti je u zaglavlje segmenta
+ - primalac računa kontrolnu sumu primljenog segmenta i proverava da li su te dve vrednosti jednake
+
+Ciklična provera redundanse:
+ - biti podataka se posmatraju kao binaran broj
+ - bira se generator
+ - određuju se CRC biti tako da pri deljenju sa generatorom imamo ostatak nula
+ - ako prijemnik pri proveri dobije nenulti ostatak pri deljenju sa istim generatorom, 
+   detektovao je grešku
+
+---
+
+6.4. Protokoli za višestruki pristup linku – uloga i zadatak. Podela MAC protokola
+
+Protokoli za višestruki pristup linku su odgovorni za upravljanje pristupom linku 
+kada više računara želi da se poveže sa istim linkom (deljeni difuzni kanal).
+Algoritmi koji određuju način deljenja kanala uređuju kada jedan čvor može da šalje pakete, 
+da bi bio usklađen sa drugim čvorovima.
+
+Želimo da jedan čvor može da šalje maksimalnom propusnom brzinom, 
+a kada ih ima više da svaki ima istu prosečnu brzinu slanja.
+Protokol je decentralizovan i jednostavan.
+
+Podela MAC protokola:
+1. Protokoli sa deljenjem kanala
+ - dele kanal na manje "delove" (vremenske odsečke, frekvencije, kodove)
+ - dodeljuju svakom čvoru deo kanala samo za njegovu upotrebu
+ - TDMA, FDMA
+2. Protokoli sa slučajnim pristupom
+ - nema podele kanala, dozvoljene su kolizije
+ - "oporavak" od kolizija
+ - ALOHA sa odsečcima, čista ALOHA, CSMA, CSMA/CD
+3. Protokoli sa smenjivanjem pristupa
+ - čvorovi se smenjuju u slanju, ali čvorovi koji imaju više da šalju mogu duže da koriste kanal
+ - protokoli sa prozivanjem, protokoli sa prosleđivanjem tokena
+
+---
+
+6.5. Protokoli sa slučajnim pristupom – karakteristike i vrste protokola
+
+Protokoli sa slučajnim pristupom koriste slučajni odabir vremena 
+da se osigura da svi računari imaju jednaku šansu za pristup linku.
+
+Protokoli sa slučajnim pristupom određuju:
+ - kako prepoznati kolizije
+ - kako se oporaviti od kolizija
+
+Primeri protokola:
+ - ALOHA sa odsečcima
+ - ALOHA
+ - sa prepoznavanjem nosioca (CSMA)
+
+---
+
+6.6. ALOHA sa odsečcima i čista ALOHA
+
+ALOHA sa odsečcima i čista ALOHA su dve varijante protokola sa slučajnim pristupom.
+
+ALOHA sa odsečcima:
+ - svi okviri za slanje su iste veličine
+ - vreme je podeljeno u jednake vremenske odsečke
+ - čvor počinje da šalje samo na početku odsečka
+ - čvorovi su sinhronizovani (znaju kada odsečak počinje)
+ - ako dva ili više čvorova započnu prenos u istom odsečku, svi čvorovi otkrivaju koliziju
+Kada čvor ima okvir za slanje, on čeka početak sledećeg osečka i tada šalje okvir.
+Ako ne dođe do kolizije, slanje je bilo uspešno, čvor može da šalje novi okvir.
+Ako dođe do kolizije, čvor ponovo šalje okvir sve dok se okvir uspešno ne prenese.
+
+ALOHA bez odsečaka:
+ - jednostavnija, bez sinhronizacije
+ - započinje prenos na kanal čim ima okvir za slanje
+ - verovatnoća kolizije je povećana
+ - efikasnost je duplo manja u odnosu na efikasnost ALOHA sa odsečcima
+
+ALOHA sa odsečcima koristi odsečke vremena da ograniči vreme koje računar može da koristi za slanje podataka.
+Čista ALOHA ne koristi odsečke vremena.
+
+---
+
+6.7. Protokoli za višestruki pristup sa prepoznavanjem nosioca (CSMA). CSMA sa otkrivanjem kolizija (CSMA/CD)
+
+Protokoli za višestruki pristup sa prepoznavanjem nosioca (CSMA) su protokoli 
+koji se koriste da se osigura da samo jedan računar ima pristup linku u datom trenutku.
+Ako je kanal slobodan, prenosi se čitav okvir.
+Ako je kanal zauzet, slanje se odlaže.
+
+Kolizije i dalje mogu da se dese (zbog kašnjenja usled prostiranja signala).
+CSMA sa otkrivanjem kolizija (CSMA/CD) otkriva kolizije u kratkom intervalu.
+Kada se otkrije kolizija, prekida se dalje slanje okvira, i time se smanjuje uzaludno korišćenje kanala.
+
+Otkrivanje kolizija je jednostavno u ožičenim LAN - meri se snaga signala, 
+poredi se primljeni signal sa onim što se šalje.
+Otkrivanje kolizija je otežano u bežičnim LAN - snaga primljenog signala je nadjačana snagom lokalnog prenosa.
+
+---
+
+6.8. Ethernet CSMA/CD algoritam. Binarno eksponencijalno odlaganje. Efikasnost
+
+Ethernet CSMA/CD (Carrier Sense Multiple Access with Collision Detection) algoritam 
+se koristi za kontrolu pristupa u Ethernet mrežama.
+
+Ovaj algoritam funkcioniše na sledeći način:
+ 1. NIC (mrežni adapter) prima datagram sa mrežnog sloja i enkapsulira ga u okvir
+ 2. pre slanja, NIC osluškuje stanje kanala; 
+    ako je kanal slobodan, NIC počinje sa slanjem okvira; 
+	ako NIC otkrije da je kanal zauzet, čeka dok kanal ne postane slobodan, i tek onda šalje okvir
+ 3. tokom prenosa, NIC nadgleda prisustvo energije signala od drugih adaptera; 
+    ako NIC pošalje okvir bez detektovanja kolizije, znači da je okvir uspešno poslat
+ 4. ako NIC detektuje koliziju tokom slanja, 
+    prekida slanje svog okvira i šalje dodatni "jam" signal
+ 5. nakon prekida, NIC ulazi u postupak binarnog eksponencijalnog odlaganja; 
+    posle m-te kolizije, NIC bira nasumičan broj K iz skupa {0, 1, ..., 2^m - 1} i čeka K*512 bitskih vremena; 
+	nakon toga se vraća na korak 2 i ponovo proverava stanje kanala
+
+Ovaj algoritam značajno smanjuje šanse za ponavljanje kolizije, 
+što značajno povećava učinkovitost Ethernet mreže.
+
+---
+
+6.9. Protokoli sa smenjivanjem pristupa (protokol sa prozivanjem i protokol sa prosleđivanjem tokena)
+
+Protokoli sa smenjivanjem pristupa pokušavaju da iskoriste najbolje od 
+protokola sa deljenjem kanala i protokola sa slučajnim pristupom.
+
+Protokol sa prozivanjem koristi prozivanje računara da se osigura pristup linku.
+Glavni čvor vrši prozivku svih ostalih čvorova.
+Glavni čvor saopštava čvoru koliko najviše okvira može da pošalje, nakon čega se obavlja slanje iz tog čvora.
+Nema kolizija i praznih intervala, ali dolazi do kašnjenja usled prozivanja.
+Ako glavni čvor otkaže, ceo kanal prestaje da radi.
+Primer: Bluetooth
+
+Protokol sa prosleđivanjem tokena koristi prenos tokena da se osigura pristup linku.
+Kada čvor primi token zadržava ga samo ako ima okvira za slanje.
+U suprotnom, odmah dalje prosleđuje token.
+Primer: token ring, FDDI protokol
+
+---
+
+6.10. Fizičke (MAC) adrese (format i značaj). ARP protokol (svrha, ARP tabele, postupak prevođenja adresa)
+
+Fizičke (MAC) adrese su jedinstveni identifikatori koji se koriste za 
+identifikaciju mrežnih uređaja na nivou fizičke veze.
+Koriste se da bi se preneo okvir od jednog interfejsa do drugog fizički povezanog interfejsa (unutar iste mreže).
+
+Tipično su MAC adrese dužine 48 bita i utisnute su u ROM mrežnog adaptera od strane proizvođača.
+ Primer: 1A-2F-BB-76-09-AD
+Značaj MAC adresa je da omogućavaju jedinstvenu identifikaciju uređaja na mreži.
+
+ARP protokol se koristi za prevođenje IP adresa u fizičke adrese, 
+a ARP tabele se koriste za pohranu ovih prevoda.
+Svi računari i ruteri u LAN-u imaju svoju ARP tabelu.
+U njoj su preslikavanja IP adresa u MAC adrese za sve čvorove u LAN-u.
+Preslikavanje ima svoj TTL (Time To Live) nakon čijeg isteka će se preslikavanje obrisati iz tabele (tipično 20 minuta).
+
+ARP protokol je "plug and play", bez kofigurisanja.
+Čvorovi popunjavaju svoje ARP tabele bez uplitanja mrežnog administratora.
+
+---
+
+6.11. Postupak slanja datagrama izvan podmreže
+
+1. A kreira IP datagram sa IP adresom izvora A i IP adresom odredišta B
+2. A kreira okvir sloja veze sa MAC adresom rutera R kao odredišnom adresom; 
+   taj okvir enkapsulira IP datagram koji A šalje ka B
+3. Okvir je poslat od A ka R 
+4. Okvir je primljen u R, datagram je izvučen iz okvira i prosleđen ka IP sloju
+5. R prosleđuje datagram sa IP izvornom adresom A i odredišnom IP adresom B
+6. R kreira okvir sloja veze sa MAC adresom od B kao odredištem; 
+   okvir enkapsulira IP datagram poslat od A ka B 
+
+---
+
+6.12. Eternet – uloga, glavne karakteristike, fizička topolgija, format okvira, različiti Eternet standardi
+
+Ethernet je mrežni protokol koji se koristi u LAN-ovima.
+To je prvi široko prihvaćen i primenjivan protokol za LAN mreže.
+Jednostavna i jeftina tehnologija.
+
+Glavne karatkeristike:
+ - brzina prenosa podataka od 10 Mbps do 100 Gbps
+ - podrška za višestruki pristup linku (CSMA/CD)
+ - podrška za različite vrste topologije (bus, star, ...)
+
+Fizička topologija:
+ - magistrala (koaksijalna magistrala, difuzni prenos - svi čvorovi su u istom kolizionom domenu)
+ - zvezda (u središtu je svič, svaki krak zvezde pripada zasebnom kolizionom domenu)
+
+Ethernet okvir se sastoji od:
+ - preambule (za sinhronizaciju prijemnika sa generatorom takta pošaljioca)
+ - MAC adrese odredišta i izvora (moraju da se poklope, inače adapter odbacuje okvir)
+ - podataka (tu se prenose podaci dobijeni od protokola sa mrežnog sloja)
+ - tipa (označava protokol višeg (mrežnog) sloja čije podatke prenosi okvir)
+ - CRC (ciklična provera redundanse u prijemnom adapteru, ako se detektuje greška, okvir se odbacuje)
+
+Nema uspostave veze između predajnog i prijemnog adaptera.
+Protokol je nepouzdan jer prijemni adapter (NIC) ne šalje nikakve potvrde prijema adapteru pošaljioca.
+Ethernetov MAC protokol omogućava višestruki pristup deljenom linku.
+
+Različiti Ethernet standardi su 10Base-T, 100Base-T i 1000Base-T.
+Oni se odnose na brzinu prenosa podataka od 10 Mbps, 100 Mbps i 1000 Mbps, respektivno.
+
+---
+
+6.13. Komutatori sloja veze (svičevi) – uloga i karaktersitike
+
+Komutatori sloja veze su uređaji koji se koriste u LAN-ovima da se 
+poveže više računara i omogući im se pristup linku.
+Glavna uloga svičeva je da omoguće preusmeravanje podataka između računara na mreži.
+
+Svičevi imaju aktivnu ulogu u prosleđivanju Ethernet okvira.
+Pristupaju MAC adresi u dolaznom okviru, pa selektivno prosleđuju okvir ka određenom linku.
+Nevidljivi su za hostove (kranje uređaje).
+Komutatori su samoobučavajući uređaji (ne treba da se konfigurišu).
+
+Računari imaju direktan link ka sviču.
+Svič baferuje primljene pakete.
+Ethernet protokol se koristi na svakom ulaznom linku, ali nema kolizija (puna dupleksna veza).
+
+Svičevi se razlikuju od rutera po tome što ruteri imaju više interfejsa i preusmeravaju 
+podatke između različitih mreža, dok svičevi preusmeravaju podatke unutar iste podmreže.
+
+---
+
+6.14. Tabela komutiranja (switch table) – namena i njeno popunjavanje tokom samoobučavanja sviča
+
+Tabela komutiranja je tabela koja se koristi da se pohrane informacije o povezanosti računara u mreži.
+Tabela se popunjava tokom procesa samoobučavanja sviča kada se registruju novi uređaji na mreži.
+Tada svič u svoju tabelu unosi: 
+ - MAC adresu pošaljioca
+ - interfejs na koji je okvir stigao
+ - tekuće vreme
+
+Namena table komutiranja je da omogući sviču da efikasno preusmerava podatke.
+Ako svič u dolaznom paketu pronađe MAC adresu koja se nalazi u njegovoj tabeli komutiranja, 
+onda se okvir ili filtrira ili prosleđuje na interfejs na koji je pozvano odredište.
+Ako u svič dođe paket sa MAC adresom koja je nepoznata sviču, 
+okvir će se proslediti na sve interfejse osim na dolazni.
+
+---
+
+6.15. Postupak prosleđivanja i filtriranja paketa u sviču. Opis sva tri moguća slučaja.
+
+Postupak prosleđivanja i filtriranja paketa u sviču se sastoji od tri moguća slučaja:
+ - ako svič prepozna ciljni uređaj na mreži, on će proslediti paket direktno tamo
+ - ako svič ne prepozna ciljni uređaj, on će proslediti paket svakom uređaju na mreži
+ - ako svič ne prepozna ni pošaljioca ni primaoca, on će odbaciti paket
+
+---
+
+6.16. Poređenje komutatora i rutera
+
+Ruteri imaju više interfejsa i preusmeravaju podatke između različitih podmreža.
+
+Svičevi preusmeravaju podatke unutar iste podmreže.
+Svičevi su uređaji sloja veze (ispituju zaglavlje sloja veze).
+Oni sami popunjavaju tablu komutiranja, a zatim prosleđuju/preplavljuju/odbacuju pakete.
+Koriste MAC adrese.
+
+Ruteri imaju mogućnost rutiranja podataka na osnovu IP adresa, dok svičevi ne poseduju ovu mogućnosti.
+Ruteri su uređaji mrežnog sloja (ispituju zaglavlje mrežnog sloja).
+Oni izračunavaju tabele za rutiranje pomoću algoritama rutiranja.
+Koriste IP adrese.
+
+---
+
+6.17. Virtuelne lokalne računarske mreže (VLAN) - razlozi postojanja, uloga, VLAN mreže zasnovane na portovima
+
+Virtuelne lokalne računarske mreže (VLAN) su logičke mreže koje se koriste 
+da se razdvoje različiti tipovi komunikacije unutar fizičke mreže.
+
+Svič koji podržava VLAN mreže omogućava da se više virtuelnih lokalnih mreža 
+uspostavi preko infrastrukture jedne fizičke lokalne računarske mreže.
+
+Kod VLAN mreža zasnovanih na portovima, portovi sviča su konfigurisani i grupisani 
+(pomoću softvera za upravljanje svičem) tako da se jedan fizički svič ponaša kao više virtuelnih svičeva.
+
+Razlozi postojanja VLAN-ova su da se omogući bolje upravljanje mrežom, 
+povećanje sigurnosti i omogućavanje razdvajanja različitih tipova komunikacije.
+
+---
+
+6.18. VLAN prenošenje. 802.1q Ethernet okvir
+
+VLAN prenošenje se odnosi na proces prenosa podataka između uređaja unutar VLAN-a.
+To se obično vrši korišćenjem protokola kao što je 802.1q Ethernet okvir.
+
+Povezivanje VLAN svičeva je poznato kao VLAN prenošenje.
+Prenosni port je zasebno konfigurisani port koji služi za povezivanje dva VLAN sviča (za prenošenje okvira između ovih VLAN mreža).
+On pripada svim VLAN mrežama koje spaja.
+
+Protokol 802.1q je prošireni format Ethernet okvira za okvire koji prelaze preko prenosnog porta.
+Potreban nam je proširen Ethernet okvir zbog polja VLAN ID.
+Preko njega, komutator zna kojoj VLAN mreži pripada okvir koji je pristigao na prenosni port.
+
+VLAN oznaka nosi identitet VLAN mreže kojoj okvir pripada. 
+Nju dodaje komutator na predajnoj strani porta.

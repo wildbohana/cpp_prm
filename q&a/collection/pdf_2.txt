@@ -1,0 +1,312 @@
+2.1. Komunikacija između procesa. Klijentski i serverski proces.
+
+Proces je program koji se izvršava na krajnjem uređaju.
+Procesi na različitim krajnjim uređajima međusobno komuniciraju 
+razmenom poruka kroz računarsku mrežu.
+
+Komunikacija između procesa je proces prenosa podataka 
+između dva ili više procesa na računaru ili u mreži.
+
+Klijentski proces je proces koji inicira zahtev za uslugom.
+Serverski proces je proces koji pruža tu uslugu.
+
+---
+
+2.2. Pojam soketa (utičnice). Šta je soket? Kako se adresira proces?
+
+Procesi šalju/primaju poruke u/iz mreže kroz soket.
+Soket je posrednih (interfejs) između aplikativnog i transportnog sloja unutar računara.
+Soket je API - programski interfejs aplikacije.
+
+Da bi primili poruke, procesi moraju imati identifikator.
+Identifikator uključuje i IP adresu i broj porta pridružen datom procesu na krajnjem uređaju.
+Svaki krajnji uređaj ima jedinstvenu 32-bitnu adresu.
+
+---
+
+2.3. Web – osnovni pojmovi: Web stranica, objekti, URL, HTML datoteka
+
+Web (World Wide Web) je sistem hipertekstualnih dokumenata koji se povezuju preko interneta.
+Osnovni pojmovi su:
+ - Web stranica - dokument sačinjen od HTML koda
+ - objekti - slike, video zapisi, audio zapisi itd. koji se nalaze na web stranici
+ - URL (Uniform Resource Locator) - adresa web stranice
+ - HTML datoteka - tekstualna datoteka koja sadrži HTML kod za web stranicu
+
+Web stranica je dokument koji se sastoji od objekata.
+Ona je definisana osnovnom HTML datotekom koja sadrži reference na više povezanih objekata.
+
+Objekat može biti HTML datoteka, JPEG slika, Java applet, audio/video datoteka...
+Svaki objekat se adresira pomoću URL adrese (Uniform Resource Locator).
+
+HTTP (Hypertext Transfer Protocol) je protokol za prenos hiperteksta.
+On je web protokol u aplikativnom sloju, koristi TCP (soket sa portom 80) 
+i nema stanje (server ne čuva podatke o prethodnim klijentskim zahtevima).
+HTTP poruke na aplikativnom nivou se razmenjuju između 
+pretraživača (HTTP klijent) i web servera (HTTP server).
+
+---
+
+2.4. HTTP protokol – osnovne karaktersitike. Varijante HTTP konekcije
+
+HTTP (Hypertext Transfer Protocol) je protokol za prenos hiperteksta.
+On je web protokol u aplikativnom sloju, koristi TCP (soket sa portom 80) 
+i nema stanje (server ne čuva podatke o prethodnim klijentskim zahtevima).
+
+Dva tipa HTTP poruka: zahtev i odgovor.
+HTTP poruke na aplikativnom nivou se razmenjuju između pretraživača (HTTP klijent) i web servera (HTTP server).
+
+Varijante HTTP konekcije su nepresistentna i persistentna.
+Nepersistentne HTTP:
+ - najviše jedan objekat se šalje preko jedne TCP konekcije
+ - svaka TCP veza prenosi jednu poruku zahteva i jednu poruku odgovora
+ - definiše se RTT (Round Trip Time) - ukupno vreme potrebno za prenos i potvrdu jednog malog paketa
+ - po svakom objektu zahteva 2 dodatna RTT, uzrokuje OS opterećenje za svaku TCP konekciju
+Persistentna HTTP:
+ - više objekata se mogu poslati preko jedne TCP konekcije
+ - server ostavlja TCP konekciju otvorenom i po slanju svog odgovora
+ - klijent šalje novi zahtev čim otkrije neki novi objekat
+ - zahteve je moguće slati jedan za drugim bez čekanja odgovora (protočna obrada)
+ - troši samo 1 dodatni RTT za prenos svakog objekta 
+
+---
+
+2.5. Tipovi HTTP metoda
+
+HTTP metode su komande koje se koriste u HTTP protokolu da se specificira radnja koja se želi izvršiti na Web stranici.
+Tipovi HTTP metoda: GET, POST, HEAD, PUT, DELETE, ...
+
+GET    - uzmi
+POST   - postavi, pošalji (u telu poruke se nalaze podaci koji se šalju)
+HEAD   - proveri da li objekat postoji (kao GET, ali traži od servera da u svom odgovoru izostavi zahtevani objekat)
+PUT    - postavi fajl (prenos fajla iz tela poruke na lokaciju zadatu URL poljem)
+DELETE - obriši datoteku (označenu URL poljem)
+
+---
+
+2.6. Veb keširanje (proxy server) – objašnjenje i značaj. Uslovni GET
+
+Web keširanje je proces koji pohranjuje kopiju web stranice na lokalnom računaru ili na serveru.
+Za cilj ima da ispuni zahtev klijenta bez pristupa izvornom serveru.
+
+Pretraživač ima opciju da usmeri HTTP zahteve ka proxy serveru.
+Ako je objekat već keširan, proxy ga odmah isporučuje.
+U suprotnom, obraća se izvornom serveru, isporučuje i pamti sadržaj.
+Proxy se ponaša i kao klijent i kao server.
+
+Upotreba keširanja ubrzava odgovor na zahtev korisnika, smanjuje saobraćaj ka globalnoj mreži i 
+unapređuje ukupne performanse Interneta u smislu pristupa i pretraživanja web sadržaja.
+
+Uslovni GET je metoda koja se koristi da se proveri da li je lokalna kopija web stranice ažurirana.
+Proxy server navodi datum svoje kopije objekta u HTTP zahtevu.
+Izvorni server, ako se traženi objekat nije promenio, vraća odgovor bez traženog objekta (praznu poruku).
+
+---
+
+2.7. FTP protokol – osnovne karakteristike, namena, prenos komandi i podataka
+
+FTP (File Transfer Protocol) je protokol koji se koristi za prenos datoteka preko interneta.
+Osnovne karekteristike su:
+ - klijent-server arhitektura (klijent inicira prenos, serverski port 21)
+ - podrška za različite vrste prenosa (binarni, ASCII)
+ - podrška za kontrolu verzija
+
+FTP klijent koristi TCP, traži FTP servera na portu 21.
+Preko kontrolne konekcije se vrši autentifikacija klijenta.
+Zatim se vrši pregled udaljenog fajl direktorijuma i zahteva se prenos.
+Prenos se odvija preko druge TCP veze koju otvara server.
+Po prenosu jedne datoteke, server zatvara ovu konekciju.
+Za svaku novu datoteku koja se prenosi, otvara se nova konekcija.
+
+FTP server održava stanje korisnika u toku sesije (trenutno direktorijum gde se nalazi, prethodnu autentifikaciju isl).
+To usložnjava realizaciju FTP servera u smislu podrške istovremenom radu više korisnika.
+
+Prenos komandi i podataka se vrši preko dva kanala: kontrolnog kanala i kanala za podatke.
+FTP komande se šalju preko kontrolne veze kao ASCII tekst.
+Neke komande: USER username, PASS password, LIST, RETR filename, STOR filename...
+
+Povratni kodovi (status code and phase) postoje, isto kao u HTTP.
+Neki povratni kodovi:
+ - 331 Username OK, password required
+ - 125 data connection allready open 
+ - 425 can't open data connection
+ - 452 error writin file 
+
+---
+
+2.8. Elektronska pošta - tri glavne komponente (čitač pošte, mejl server, SMTP)
+
+Elektronska pošta je sistem za razmenu tekstualnih i multimedijalnih poruka preko Interneta.
+
+Tri glavne komponente su:
+ - user agent (čitač pošte)
+ - mail server
+ - SMTP (Simple Mail Transfer Protocol)
+ 
+Čitač pošte:
+ - koristi se za pregled i čitanje poruka
+ - komunicira sa mail serverom radi pristupa dolaznim i odlaznim email porukama
+ - Primeri: Outlook, Apple Mail, Mozilla Thunderbird
+
+Mail server:
+ - računar koji pohranjuje i razmenjuje poruke
+ - mailbox sadrži dolazne poruke za korisnika
+ - red poruka za slanje
+ - za komunikaciju između servera se koriste SMTP i TCP
+
+SMTP (Simple Mail Transfer Protocol):
+ - protokol koji se koristi za slanje poruka
+ - koristi TCP za pouzdan prenos email poruka od klijenta do servera (port 25)
+ - direktan prenos bez posrednika između mejl servera
+ - tri faze prenosa: uspostava veze, prenos poruke, zatvaranje
+ - command/response interakcija
+ - poruke moraju biti u 7-bitnom ASCII kodu
+
+---
+
+2.9. SMTP protokol – osnovne karakteristike
+
+SMTP (Simple Mail Transfer Protocol) je protokol koji se koristi za slanje elektronske pošte preko Interneta.
+Koristi TCP za pouzdan prenos email poruke od klijenta do servera (port 25).
+Prenos između mejl servera je direktan (bez posrednika).
+Tri faze prenosa: uspotava veze, prenos poruke, zatvaranje.
+SMTP koristi perzistentnu konekciju, može sadržati više objekata u jednoj poruci.
+
+Originalan SMTP traži da poruke budu u 7-bitnom ASCII kodu.
+Od 2012 postoji RFC za UTF-8 kodiranje.
+SMTP server koisti CRLF.CRLF sekvencu kao kraj poruke.
+
+Osnovne karakteristike su:
+ - klijent-server arhitektura
+ - podrška za različite vrste podataka (tekst, slike, video...)
+ - podrška za različite metode (MAIL, RCPT, DATA...)
+
+---
+
+2.10. Protokoli za pristupanje e-pošti (POP3, IMAP, HTTP) – karakteristike i poređenje POP3 i IMAP
+
+SMTP - isporuka/čuvanje na serveru primaoca.
+Protokoli za pristupanje e-pošti - preuzimanje od servera.
+
+Protokoli za pristupanje pošti su:
+ - POP3 (Post Office Protocol version 3)
+ - IMAP (Internet Message Access Protocol)
+ - HTTP (Hypertext Transfer Protocol)
+
+POP3 se koristi za preuzimanje poruka sa mail servera.
+Osim preuzimanja poruka, obavlja i njihovo brisanje sa servera (download and delete režim).
+Koristi TCP (port 110).
+Ima fazu autorizacije, fazu transakcije, quit za kraj sesije i fazu ažuriranja.
+POP3 je stateless između sesija (one su međusobno nezavisne).
+
+IMAP omogućava pregled i upravljanje porukama na mail serveru.
+Kompleksniji je, porukama se može pristupiti sa raznih računara, jer poruke ne mogu da se brišu sa njega.
+Dozvoljava korisnicima da sami organizuju svoje poruke u foldere.
+Zato IMAP nije stateless (vodi računa o korisnicima).
+
+HTTP se koristi za pristupanje e-pošti preko web-sučelja.
+
+---
+
+2.11. DNS protokol – namena i vrste DNS usluga
+
+DNS (Domain Name System) protokol se koristi za mapiranje imena računara u IP adrese.
+DNS je distribuirana baza podataka, implementirana hijerarhijskim skupom name servera.
+DNS aplikativni protokol omogućava komunikaciju između uređaja i name servera radi razrešenja referenci preko imena.
+
+Namena mu je da omogući ljudima lakše korišćenje Interneta, tako što 
+omogućava da se umesto IP adrese koriste ljudski razumljivi nazivi računara.
+Na primer, www.google.com umesto 216.58.194.174.
+
+Postoje različite vrste DNS usluga kao što su:
+ - rezolucija imena (hostname -> IP adresa)
+ - mapiranje imena u IP adrese
+ - mapiranje IP adresa u imena
+
+DNS ne može da se centralizuje iz više razloga koji negativno utiču na performanse:
+ - jedna tačka otkaza
+ - velik obim saobraćaja
+ - prisup udaljenoj centralnoj bazi
+ - otežano održavanje
+
+---
+
+2.12. DNS baza podataka – objašnjenje hijerarhije DNS servera. 
+Uloga svakog nivoa servera u hijerarhiji (korenski serveri, TLD serveri, nadležni serveri)
+
+DNS baza podataka se sastoji od hijerarhije DNS servera.
+Hijerarhija servera je sledeća:
+ - korenski serveri
+ - TLD (top-level domain) serveri
+ - nadležni (authoratitive) serveri
+
+Korenski serveri pohranjuju informacije o TLD serverima.
+Njima pristupaju lokalni name serveri kad ne mogu da prevedu ime.
+Ako mu ime nije poznato, on pristupa nižim DNS serverima, oni mu vraćaju 
+IP adresu TLD servera, i onda korenski server tu informaciju vraća lokalnom name serveru.
+
+TLD serveri pohranjuju informacije (IP adrese) o nadležnim DNS serverima (com, org, edu...).
+To su serveri domena najvišeg nivoa.
+
+Nadležni serveri pohranjuju informacije o specifičnim domenima (yahoo.com, pbs.org, poly.edu...).
+Nadležni server može održavati sama organizacije ili njen Internet servis provajder.
+
+Lokalni DNS serveri u principu nisu deo DNS hijerarhije.
+Kad neki računar postavi DNS upit, on se šalje lokalnom DNS serveru, koji deluje kao proksi server.
+
+---
+
+2.13. Lokalni DNS server – uloga
+
+Lokalni DNS server je računar koji pohranjuje informacije o domenima 
+u lokalnoj mreži i omogućuje lokalnim korisnicima da pristupaju Internetu.
+Uloga mu je da olakša rad korisnicima tako što skraćuje vreme potrebno 
+za dobavljanje odgovora od DNS servera i smanjuje opterećenje na Internet.
+
+Lokalni DNS serveri u principu nisu deo DNS hijerarhije. 
+On deluje kao proksi server.
+
+---
+
+2.14. Razrešenje DNS upita – rekurzivno i iterativno
+
+Razrešenje DNS upita se može obaviti na dva načina: rekurzivno i iterativno.
+
+Rekurzivno razrešenje znači da se DNS server obraća samo svojoj bazi podataka za odgovor na upit.
+Jednom predati upit se razrešava unutar DNS sistema.
+
+Iterativno razrešenje znači da se DNS server obraća drugim serverima ako ne može dati odgovor na upit.
+Svaki od servera, ako ne zna odgovor, u odgovoru navodi ime sledećeg servera.
+
+---
+
+2.15. DNS slogovi resursa (RR) – tipovi resursa
+
+DNS slogovi resursa (RR - resource records) su 
+tipovi resursa koji se koriste u DNS bazi podataka.
+RR format: (name, value, type, ttl)
+
+Neki od tipova su:
+ - A     (IPv4 adresa)
+ - AAAA  (IPv6 adresa)
+ - MX    (Mail Exchange)
+ - CNAME (Canonical Name)
+ - NS    (Name Server)
+ - TXT   (teksualni slog)
+
+---
+
+2.16. Dodavanje RR slogova u bazu
+
+Dodavanje RR slogova u bazu podataka se može obaviti na različite načine, 
+zavisno od konfiguracije DNS servera i mreže.
+To može biti izvršeno ručno, kroz web-okruženje ili korišćenjem određenih alata ili skripti.
+U svakom slučaju, potrebno je imati pristup DNS severu i odgovarajuće dozvole za promenu podataka u bazi.
+
+Prvo je potrebno registrovati naziv domena kod DNS registara.
+Oni odobravaju ime kao IP adrese za dva nadležna (AUTH) servera.
+Tada registar upisuje dva RR sloga na odgovarajućem TLD serveru, za svaki od nadležnih servera.
+
+Upis RR omogućava da server na upit odgovori sa:
+ - TLD:  pitaj ove AUTH servere
+ - AUTH: ovo su tražene adrese

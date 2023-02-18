@@ -1,0 +1,420 @@
+4.1. Uloga i ključne funkcije mrežnog sloja
+
+Uloga mrežnog sloja je da omogući komunikaciju između računara na različitim mrežama.
+
+Na strani pošaljioca enkapsulira transportne segmente u IP datagrame i zatim ih šalje najbližem ruteru.
+Na strani primaoca prima datagrame od najbližeg rutera, 
+izdvaja segment transportnog sloja i isporučuje ga transportnom sloju.
+
+Protokoli mrežnog sloja postoje u svakom hostu (krajnjem uređaju) i ruteru.
+Ruteri ispisuju pola zaglavlja svih IP datagrama koji prođu kroz njih.
+
+Dve ključne funkcije mrežnog sloja su prosleđivanje i rutiranje.
+Prosleđivanje - premeštanje paketa sa ulaznog linka rutera do odgovarajučeg izlaznog linka rutera.
+Rutiranje - određivanje rute koje će paketi preći kroz celu mrežu od izvornog do odredišnog računara.
+
+---
+
+4.2. Mrežni sloj – uloge i razlike ravni podataka i kontrolne ravni
+
+Ravan podataka je funkcija unutar rutera.
+Određuje kako se datagram prenosi sa interfejsa ulaznog linka do odgovarajućeg interfejsa izlaznog linka rutera.
+Traje kratko, ostvaruje se u hardveru.
+
+Kontrolna ravan je logika unutar cele mreže.
+Određuje putanju (rutu) kojom paketi putuju od pošaljioca do primaoca.
+Traje nešto duže, obično se ostvaruje u softveru.
+Dva pristupa kontrolnoj ravni - tradicionalni algoritmi rutiranja i softverski definisano umrežavanje.
+
+---
+
+4.3. Kontrolna ravan – tradicionalan i SDN pristup
+
+Tradicionalan pristup kontrolnoj ravni koristi hardverski definisane protokole za rutiranje i upravljanje prometom.
+SDN pristup koristi softverski definisane protokole koji omogućavaju fleksibilniju kontrolu mrežnog prometa.
+
+Kod tradicionalnog pristupa prosleđivanje i rutiranje su smešteni unutar rutera.
+Algoritam rutiranja određuje sadržaj tabele prosleđivanja.
+Algoritam rutiranja u svakom ruteru komunicira sa algoritmom rutiranja 
+u ostalim ruterima kako bi izračunao vrednosti za svoju tabelu prosleđivanja.
+
+Kod SDN (software defined networking) pristupa, udaljeni kontroler 
+izračunava i distribuira tabele prosleđivanja koje koriste svi ruteri.
+Ruter obavlja samo prosleđivanje paketa.
+
+---
+
+4.4. Opšti prikaz arhitekture rutera
+
+Arhitektura rutera obično se sastoji od:
+ - procesora rutiranja
+ - komutatorske mreže
+ - ulaznih/izlaznih portova rutera
+
+Ruteri su sposobni da rutiraju pakete između različitih mreža koristeći tablice rutiranja.
+
+---
+
+4.5. Funkcije ulaznih portova rutera
+
+Ulazni portovi rutera su portovi koji primaju pakete sa drugih mreža.
+Oni se koriste za proveru i filtriranje paketa pre nego što se oni prosleđuju dalje.
+
+Koristeći polja iz IP zaglavlja, pretražuje se tabela prosleđivanja kako bi se odredio izlazni port rutera.
+Preko komutatorske mreže se prosleđuju paketi ka izlaznom portu rutera.
+
+Ako datagrami pristižu brže nego što je brzina prosleđivanja, oni se smeštaju u red.
+
+---
+
+4.6. Tabela prosleđivanja. Prosleđivanje na osnovu odredišta. Podudaranje najdužeg prefiksa.
+
+Tabela prosleđivanja je tabela koja sadrži informacije o tome 
+kako da se paket prosleđuje kroz mrežu.
+
+Prosleđivanje na osnovu odredišta se odnosi na proces pronalaženja 
+najboljeg puta za prosleđivanje paketa do odredišta.
+
+Podudaranje najdužeg prefiksa se odnosi na proces određivanja 
+najboljeg puta za prosleđivanje paketa koristeći najduži prefiks 
+adrese iz tabele koji se poklapa sa odredišnom adresom.
+
+---
+
+4.7. Tri tehnike komutiranja u ruteru
+
+Komutiranje je prosleđivanje paketa od ulaznog porta do odgovarajućeg izlaznog porta.
+
+Tri tehnike komutiranja u ruteru su:
+ - preko memorije (procesor rutiranja traži odgovarajući port i kopira paket u bafer izlaznog porta)
+ - preko magistrale (datagram sa ulaznog porta se prenosi na izlazni port preko zajedničke magistrale) (nadmetanje za magistralu)
+ - unakrsno (višestruko povezana mreža sa 2N magistrala koja ima N ulaznih i N izlaznih portova)
+
+---
+
+4.8. Redovi čekanja na ulaznom i izlaznom portu.
+
+Redovi čekanja na ulaznom i izlaznom portu su redovi koji sadrže pakete koji čekaju da budu prosleđeni.
+Oni se koriste da se spreči preopterećenje mreže.
+
+Ako komutatorska mreža nije dovoljno brza u odnosu na brzinu ulazne linije, 
+nastaju redovi čekanja na ulaznim portovima.
+Blokiranje spreda - datagram na početku reda blokira druge datagrame 
+da se prenesu do njihovog izlaznog porta.
+
+Ako datagrami pristižu iz komutatorske mreže brže nego što se prenesu 
+na izlazni port, nastaju redovi čekanja na izlaznim portovima.
+Pomoću pravila raspoređivanja se bira koji datagram se sledeći prenosi na port.
+
+---
+
+4.9. Raspoređivanje paketa – FIFO, po prioritetu, round robin, WFQ
+
+Raspoređivanje paketa se odnosi na proces određivanja koji paket treba da bude prosleđen na izlazni port bafera.
+
+Postoji nekoliko tehnika raspoređivanja paketa, kao što su:
+ - FIFO (prvi uneti, prvi isporučeni)
+ - Raspoređivanje po prioritetu - paketima se dodeljuje prioritet, 
+   a oni sa višim prioritetom se prenose prvi na izlazni port
+ - Round Robin - paketi se dele u više klasa i služe se u cikličnom redosledu, 
+   šalje se po jedan paket iz svake klase (ako je dostupan)
+ - WFQ (težinsko fer mešanje) - uopšteni Round Robin, planer određuje težinu svakom paketu u redu, 
+   sa redovima sa višom težinom koji dobijaju veći procenat širine opsega
+
+---
+
+4.10. Protokoli mrežnog sloja Interneta
+
+Protokoli mrežnog sloja Interneta su protkoli koji se koriste 
+za komunikaciju između računara na Internetu.
+Najpoznatiji su IP (Internet Protocol) i ICMP (Internet Control Message Protocol).
+
+IP protokol određuje:
+ - pravila adresiranja
+ - format datagrama
+ - pravila za rukovanje paketima
+
+ICMP protokol obuhvata:
+ - izveštaj o greškama
+ - signaliranje rutera
+
+---
+
+4.11. Format IP datagrama – značenje pojedinih polja u IP zaglavlju
+
+Format IP datagrama se odnosi na strukturu podataka koji se koristi za prenos podataka preko mreže.
+Tipično, IP zaglavlje zauzima 20 bita.
+
+IP zaglavlje sadrži informacije kao što su:
+ - Version - verzija IP protokola koji se koristi (npr IPv4 ili IPv6)
+ - Header Length - dužina u 32-bitnim rečima
+ - Type of Service - informacije o prioritetu i tipu podataka u datagramu
+ - Length - ukupna dužina IP datagrama, uključuju zaglavlje i teret
+ - ID - jedinstveni identifikator za datagram koji pomaže pri ponovnom sastavljanju fragmentiranih paketa
+ - Flags - kontrolni flegovi za fragmentaciju
+ - Fragment Offset - offset trenutnog fragmenta u originalnog IP datagramu
+ - TimeToLive - maksimalan broj čvorova kroz koje paket sme da prođe pre nego što bude odbijen (istekne)
+ - Protocol - viši nivo protokola koji koristi IP datagram (npr. TCP, UDP)
+ - Header Checksum - provera sažetka za verifikaciju integriteta zaglavlja
+ - IP adresa pošaljioca
+ - IP adresa primaoca
+
+---
+
+4.12. IP fragmentacija paketa i ponovno sastavljanje
+
+IP fragmentacija paketa se odnosi na proces deljenja velikih paketa 
+na manje pakete kako bi se preneli preko mreže.
+Dešava se u ruteru.
+
+Pravljenje paketa se odnosi na proces ponovnog sastavljanja 
+manjih paketa u jedan veliki paket na odredištu.
+Biti u IP zaglavlju se koriste za identifikaciju, oznake i slaganje fragmenata.
+
+---
+
+4.13. Vrste adresiranja
+
+Unicast 1:1
+ - jednoznačna asocijacija između adrese i jedne krajnje tačke
+Broadcast 1:SVI 
+ - adresa označava sve čvorove u mreži 
+Multicast 1:N
+ - adresa označava skup čvorova (ne sve)
+Anycast 1:1 od N
+ - adresa odznačava više čvorova, ali će samo jednom od njih biti isporučena poruka
+ - vrši se izbor najbližeg ili najboljeg odredišta
+ - BGP ruteri koriste ovaj vide adresiranja
+
+---
+
+4.14. IP adresiranje – ko se adresira? Kakav je format i zapis IP adrese?
+
+IP adresa je 32-bitni identifikator interfejsa računara ili rutera.
+IP adresiranje se odnosi na proces dodeljivanja IP adresa računarima na mreži.
+
+Interfejs je granica između računara/rutera i fizičkog linka.
+Ruteri tipično imaju više interfejsa.
+Računar tipično ima jedan ili dva interfejsa (npr Ethernet i bežični 802.11).
+
+IP adrese su pridružene svakom interfejsu u mreži.
+One su globalno jedinstvene i zapisuju se u decimalnoj notaciji sa tačkom.
+
+IP adresa je sačinjena iz dva dela:
+ - podmrežni deo (biti višeg reda)
+ - host deo (biti nižeg reda)
+
+---
+
+4.15. Podmreža. Podela IP adrese (podmrežni deo i host deo). Adresa podmreže
+
+Podmrežu čine interfejsi uređaja sa istim podmrežnim delom IP adrese.
+Svi uređaji unutar podmreže mogu komunicirati bez rutera kao posrednika.
+
+Podela IP adrese se odnosi na to kako se podmrežni deo i 
+host deo IP adrese koriste za identifikaciju mreže i računara na mreži.
+Adresa podmreže se koristi za identifikaciju mreže.
+
+---
+
+4.16. CIDR zapis IP adresa. Primer IP adresiranja
+
+CIDR (Classless Inter-Domain Routing) zapis IP adresa se koristi za 
+opisivanje raspona IP adresa koje pripadaju jednoj mreži.
+
+Korišćenje CIDR šeme uopštava adresiranje podmreža.
+Podmrežni deo adrese je proizvoljne dužine.
+Format adrese: a.b.c.d/x (x - broj bita u podmrežnom delu adrese)
+
+Dok CIDR šema nije bila prihvaćena, mrežni prefiks IP adrese 
+je morao da bude tačno 8, 16 ili 24 bita (puno klasno adresiranje).
+
+Primer IP adresiranja bi bio 192.168.0.0/24
+On označava da su sve adrese od 192.168.0.0 do 192.168.0.255 deo te mreže.
+
+---
+
+4.17. Način dodeljivanja IP adresa – statički i dinamički
+
+Način dodeljivanja IP adresa se odnosi na to kako se 
+IP adrese dodeljuju računarima na mreži.
+
+Postoji statičko i dinamičko dodeljivanje IP adresa.
+Statičko dodeljivanje znači da se IP adresa ručno podešava za svaki računar.
+Dinamičko dodeljivanje koristi protokol kao što je DHCP 
+(Dynamic Host Configuration Protocol) za automatsku dodelu IP adresa.
+
+---
+
+4.18. DHCP protokol – uloga i karakteristike
+
+DHCP (Dynamic Host Configuration Protocol) se koristi 
+za automatsku dodelu IP adresa računarima na mreži.
+Uloga DHCP protokola je da osigura da svaki računar na mreži 
+ima jedinstvenu i validnu IP adresu.
+
+DHCP radi na aplikativnom nivou (UDP, portovi 67 i 68).
+Po priključenju terminala u mrežu, DHCP korisniku šalje IP adresu.
+
+Osim dodeljene IP adrese u podmreži, DHCP može da vrati i:
+ - adresu podrazumevanog rutera (default gateway)
+ - ime i IP adresu DNS servera
+ - podmrežnu masku (indikator mrežnog prefiksa)
+
+---
+
+4.19. Opis koraka dobijanja IP adrese putem DHCP protokola
+
+1. DHCP otkrivanje
+ - klijent šalje zahtev za otkrivanje DHCP servera
+ - koristi IP broadcast adresu
+2. DHCP ponuda
+ - server odgovara ponudom IP adrese i dužinom njenog trajanja
+3. DHCP zahtev
+ - klijent može da primi nekoliko ponuda od više različitih DHCP servera
+ - u ovom koraku klijent bira IP adresu i određeni server
+4. DHCP potvrda
+ - server potvrđuje dodelu
+
+Po završetku ove procedure, klijent može da zatraži ostale konfiguracione podatke
+
+---
+
+4.20. DHCP – dobijanje dodatnih informacija
+
+DHCP, osim dodeljene IP adrese u podmreži, takođe može da vrati i:
+ - adresu podrazumevanog rutera (default gateway)
+ - ime i IP adresu DNS servera
+ - podmrežnu masku (koja je indikator mrežnog prefiksa)
+
+Ove podatke klijent može da traži od izabranog DHCP servera 
+tek nakon što završi sa konfiguracijom IP adrese.
+
+---
+
+4.21. Hijerarhijsko rutiranje – sažimanje ruta i određenije rute
+
+Hijerarhijsko rutiranje uključuje podelu velike mreže na manje podmreže 
+(poznate i kao autonomni sistemi ili domeni rutiranja).
+Svaka podmreža tada dobija svoj vlastiti ruter, koji je odgovoran za 
+upravljanje svim saobraćajem unutar te podmreže.
+Ova hijerarhijska struktura omogućava efikasnije rutiranje podataka, 
+kao i poboljšanu skalabilnost i jednostavnije upravljanje mrežom.
+
+Sažimanje ruta podrazumeva spajanje više ruta u jednu, opštiju rutu koja pokriva veći deo mreže.
+Ovo pomaže u smanjenju veličine tabele rutiranja i smanjuje količinu saobraćaja u mreži, 
+čime mreža postaje efikasnija.
+
+Određivanje rute se odnosi na proces odabira najboljeg puta za prenos podataka 
+iz jedne lokacije na drugu unutar mreže.
+Ruteri koriste protokole rutiranja, kao što su OSPF ili BGP, 
+za razmenu informacija među sobom i određivanje optimalnih ruta za prenos podataka.
+Ovo pomaže da se podaci prenose efikasno i brzo, čak i u velikim i kompleksnim mrežama.
+
+---
+
+4.22. NAT (prevođenje mrežnih adresa) – namena i prednosti
+
+NAT (Network Address Translation) omogućava prenos mrežnih adresa iz jednog adresnog domena u drugi.
+
+Svi datagrami koji napuštaju lokalnu mrežu imaju istu jedinstvenu izvornu NAT adresu, 
+a različite brojeve izvornog porta.
+Tako će lokalna mreža za ostatak mreže (Interneta) da izgleda kao jedan uređaj sa jednom IP adresom.
+
+Dobija se veća sigurnost i efikasnije iskorištavanje resursa mreže, 
+kao i sprečavanje problema sa adresiranjem u mreži.
+
+Prednosti:
+ - nije neophodan opseg adresa od strane Internet provajdera; dovolja je samo jedna IP adresa
+ - adrese uređaja u lokalnoj mreži mogu da se menjaju bez obaveštavanja ostatka Interneta
+ - Internet provajder može da se promeni bez promena adresa unutar lokalne mreže
+ - uređaji unutar lokalne mreže nisu direktno adresibilni iz spoljnog dela mreže (bezbednosni bonus)
+
+---
+
+4.23. Zadaci NAT rutera – zamena IP adresa i portova, NAT tabela prevođenja
+
+Zadaci NAT rutera su zamena IP adresa i portova kako bi se omogućilo 
+višestruko korišćenje jedne javne IP adrese u privatnoj mreži.
+NAT tabela prevođenja je tabela koja sadrži informacije o mapiranju 
+privatnih IP adresa na javne IP adrese.
+
+Prilikom slanja datagrama, NAT ruter ima zadatak da zameni izvornu IP adresu i 
+izvorni broj porta za svaki izlazni datagram u NAT IP adresu i novi broj porta.
+
+NAT ruter mora da zapamti unutar NAT tabele prevođenja svaki par prevođenja 
+{(izvorna adresa, izvorni port), (NAT IP adresa, novi broj porta)}.
+
+Prilikom primanja datagrama, NAT ruter ima zadatak da zameni (NAT IP adresu, novi broj porta) 
+upisane u polje odrdišne adrese sa odgovarajučim (izvorna IP adresa, izvorni port) koji su sačuvani u NAT tabeli.
+
+---
+
+4.24. IPv6 protokol – motivacija za uvođenje i glavne izmene u odnosu na IPv4
+
+IPv6 protokol je motivisan potrebom za više IP adresa zbog rasta broja uređaja koji se povezuju na internet.
+Glavne izmene u odnosu na IPv4 su veći broj bita u IP adresi (128 bita u odnosu na 32 bita), 
+novi oblik zapisa IP adrese i proširenje podrške za mobilnu mrežu.
+
+IPv6 označava prioritet među datagramima u toku.
+Datagrami u istom "toku" se označavaju.
+Sledeće zaglavlje ukazuje na protokol višeg sloja kome treba isporučiti podatke iz datagrama.
+
+Kontrolna suma je totalno uklonjena da bi se smanjilo vreme obrade na svakom ruteru.
+IPv6 ne dozvoljava fragmentaciju na ruterima (preveliki datagrami se odbacuju).
+Ne postoji više polje opcija.
+Uvedena je nova verzija ICMP protokola, sa dodatnim tipovima poruka i funkcijama za upravljanje multicast grupama.
+
+---
+
+4.25. Čemu služi tunelovanje i kako se realizuje?
+
+Tunelovanje je tehnika koja omogućava prenos podataka između dve mreže putem treće mreže.
+To se često koristi kada se žele prenositi podaci između IPv4 i IPv6 mreža.
+
+Tunelovanje se realizuje tako što se podaci iz jedne mreže kodiraju i prenose preko druge mreže, 
+a zatim se dekodiraju na odredištu.
+IPv6 datagram se prenosi kao podatak unutar IPv4 datagrama između IPv4 rutera.
+
+---
+
+4.26. OpenFlow standard i softverski definisano umrežavanje (SDN) – pojam uopštenog prosleđivanja; 
+Na osnovu kojih zaglavlja je moguće podudaranje? Koje su moguće akcije za podudaranja?
+
+Svaki ruter sadrži tabelu toka koja je izračunata i distribuirana 
+od strane logički centralizovanog kontrolera rutiranja.
+
+OpenFlow standard i softverski definisano umrežavanje (SDN) se odnose na 
+pristup mrežnom upravljanju koji koristi softver za kontrolu mrežnih uređaja, 
+umesto da se svaki uređaj konfiguriše odvojeno.
+
+OpenFlow omogućava opšte prosleđivanje (forwarding) na osnovu više polja zaglavlja 
+iz različitih protokola, kao što su IP adresa, MAC adresa...
+Moguće akcije za podudaranja su:
+ - odbacivanje paketa
+ - prosleđivanje
+ - izmena paketa
+ - slanje paketa ka kontroleru
+
+---
+
+4.27. OpenFlow apstrakcija rutera, komutatora, mrežne barijere i NAT-a.
+
+OpenFlow apstrakcija rutera, komutatora, mrežnih barijere i NAT-a omogućava 
+upravljanje ovim uređajima korišćenjem jedinstvenog kontrolnog sloja.
+To olakšava automatizaciju i centralizaciju kontrole mreže.
+
+Pravilo podudaranja + delovanja objedinjuje različite vrste uređaja.
+
+Ruter:
+ - podudaranje - najduži prefiks IP odredišne adrese
+ - delovanje - prosledi na izlazni link
+Komutator:
+ - podudaranje - odredišna MAC adresa
+ - delovanje - prosledi ili pošalji svima
+Mrežna barijera:
+ - podudaranje - IP adrese i TCP/UDP brojevi portova
+ - delovanje - dozvoli ili odbij
+NAT:
+ - podudaranje - IP adresa i port
+ - delovanje - izmeni adresu i port

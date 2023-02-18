@@ -1,0 +1,191 @@
+1.1. Internet – šta je Internet i koji su njegovi gradivni elementi?
+
+Internet je globalna mreža računara koja omogućava razmenu informacija 
+i usluga putem različitih tehnologija i protokola.
+Internet je mreža sastavljena od mnogo mreža, hijerarhijski organizovana.
+
+Gradivni elementi Interneta:
+ - računari - krajnji sistemi, na njima se izvršavaju mrežne aplikacije
+ - mrežni uređaji - prosleđuju pakete (ruteri, svičevi...)
+ - protokoli - kontrolišu slanje i prijem poruka (TCP, IP, HTTP...)
+ - standardi (usvaja ih IETF)
+ - infrastruktura (kablovi, radio, sateliti...)
+
+---
+
+1.2. Šta su mrežni protokoli?
+
+Mrežni protokoli su pravila i standardi koji regulišu komunikaciju između računara na mreži.
+Protokoli definišu format poruka, redosled slanja i prijema poruka između mrežnih uređaja, 
+akcije koje se preduzimaju po slanju ili prijemu poruke...
+
+Primeri protokola: TCP/IP, HTTP, FTP, itd.
+
+---
+
+1.3. Modeli izvršavanja aplikacija na krajnjim uređajima (klijent/server i peer-to-peer)
+
+Modeli izvršavanja aplikacija na krajnjim uređajima se dele na dva tipa:
+ - klijent-server
+ - peer-to-peer
+
+U klijent-server modelu, jedan računar (server) služi drugim 
+računarima (klijentima) koji traže usluge ili informacije.
+Primer: web browser/server, mail client/server
+Server je uvek dostupan računar, ima stalnu IP adresu.
+Klijent ima povremenu konekciju, može imati dinamičku IP adresu, 
+ne komunicira sa drugim klijentima.
+
+U peer-to-peer modelu, svi računari su jednaki i mogu služiti 
+i kao klijenti i kao serveri.
+Serveri se koriste minimalno, ili se uopšte ne koriste.
+Primer: Skype, BitTorrent
+Nema uvek dostupnog servera, krajnji sistemi komuniciraju direktno, 
+parovi su u povremenoj vezi i mogu menjati svoje IP adrese.
+
+---
+
+1.4. Načini povezivanja na Internet – digitalna pretplatnička linija, 
+kablovski pristup, optički pristup, bežični pristup, Ethernet pristupna mreža
+
+Načini povezivanja na Internet se odnose na različite tehnologije 
+koje se koriste za povezivanje računara ili uređaja sa Internetom:
+ - Digitalna pretplatnička linija (DSL)
+ - Kablovski pristup
+ - Optički pristup
+ - Bežični pristup
+ - Ethernet
+
+Digitalna pretplatnička linija (DSL) se koristi za povezivanje računara preko telefonske linije.
+Sadrži sopstvenu fizičku liniju do telefonske centrale.
+Govor i podaci prenose se na različitim frekvencijama preko postojeće telefonske linije do centrale.
+
+Kablovski pristup se koristi za povezivanje preko kabelske televizije.
+Mreža hibridnih optičkih koaksijalnih kablova i optičkih vlakana povezuje kuće sa ruterom Internet provajdera.
+Korisnici dele pristup ruteru, za razliku od DSL u kom svaki korisnik ima sopstveni pristup.
+
+Optički pristup se koristi za povezivanje preko optičkih vlakana.
+Koriste se dve optičke tehnologije: Passive Optical network i Active Optical network.
+Ostvaruju se mnogo veći protoci; moguć je prenos preko TV i telefonije.
+
+Bežični pristup se koristi za povezivanje preko radio talasa.
+Krajnji sistemi se povezuju sa ruterom u ovoj mreži preko bazne stanice (tačke pristupa, "access point").
+Bežični LAN-ovi imaju mali domet, ali veće brzine.
+Bežični prisup na širem području ima veći domet, ali manje brzine, 
+obezbeđen je od telekomunacionog operatera i služi za mobilnu telefoniju (3G, 4G, LTE).
+
+Ethernet pristupna mreža se koristi za povezivanje računara ili uređaja preko kabela.
+Tipično se koristi u kompanijama, na univerzitetima...
+Danas se krajnji sistemi obično povezuju na Ethernet svič.
+
+---
+
+1.5. Fizički medijumi: vođeni (bakarne parice, coax, optika) i slobodni medijum (vrste radio linkova)
+
+Fizički medijumi se odnose na materijale ili tehnologije koje se koriste 
+za fizičko povezivanje računara ili uređaja na mrežu ili Internet.
+
+Vođeni medijumi su oni koji koriste fizički kabl za prenos podataka, 
+kao što su bakarne parnice, coax (kabl sa centralnom žicom) ili optika (optički kabl).
+Ovi mediji su ograničeni u dometu i treba ih fizički povezati sa uređajima.
+Koaksijalni kabl - dva koncentrična bakarna provodnika.
+Optička vlakna - stakleno vlakno nosi svetlnosne impulse, svaki impuls je jedan bit.
+
+Slobodni medijumi su oni koji koriste radio talase za prenos podataka, 
+kao što su različiti radio linkovi (Wi-Fi, Bluetooth, cellular itd).
+Ovi medijumi ne zahtevaju fizičku vezu između uređaja i omogućavaju bežično povezivanje.
+Tipovi radio linkova:
+ - zemaljski mikrotalasi
+ - LAN (npr WiFi)
+ - široko područje (npr mobilna telefonija)
+ - satelitski (npr GEO)
+
+---
+
+1.6. Komutacija kola – osnovne karakteristike. Šta je TDM I FDM?
+
+Komutacija kola (Circuit Switching) je tehnologija koja rezerviše 
+komunikacijski kanal za trajan period vremena dok se komunikacija vrši.
+Resursi od jednog do drugog kraja rezervisani za poziv su propusni opseg linka,
+memorija i procesorsko vreme mrežnih čvorova.
+Ovi resursi su namenjeni samo datoj vezi (nema deljenja).
+Neophodna je uspostava veze (i njeno raskidanje po završetku prenosa).
+
+Prednosti:
+ - malo i konstantno kašnjenje
+ - kada je kolo jednom uspostavljeno, čvorovi vrše samo prekidačku funkciju
+Mane:
+ - loša iskorišćenost kapaciteta dodeljene putanje
+ - potrebno je vreme za uspostavu kola
+
+TDM (Time Division Multiplexing) i FDM (Frequency Division Multiplexing) 
+su tehnike koje se koriste za deljenje jednog fizičkog kanala na više logičkih kanala.
+TDM - svaki host dobija isti slot u TDM ramu (??)
+
+---
+
+1.7. Komutacija paketa – opis, značajne karakteristike. Poređenje komutacije kola i komutacije paketa.
+
+Komutacija paketa (Packet Switching) je tehnologija koja deli podatke na 
+manje delove (pakete) i svaki paket se prenosi preko mreže na određenu destinaciju. 
+Komutacija paketa omogućava da više korisnika koristi mrežu.
+
+Komutacija paketa je odlična za sporadičan saobraćaj, jer omogućava deljenje resursa, 
+jednostavnija je (nema uspostave veze), ali kašnjenje varira od paketa do paketa).
+Takođe je dobra u slučaju velikog zagušenja jer sadrži potrebne protokole za 
+pouzdan prenos podataka i kontrolu zagušenja.
+
+Komutacija kola rezerviše kanal za vreme komunikacije.
+Komutacija paketa ne rezerviše kanal i paketi se prenose u realnom vremenu.
+
+---
+
+1.8. Kašnjenje paketa u mreži – 4 uzroka kašnjenja
+
+Kašnjenje paketa u mreži može biti uzrokovano od strane četiri različita faktora:
+ - obrada u čvoru 
+   (provera grešaka u prenosu, određivanje izlaznog linka)
+ - čekanje u redu 
+   (vreme čekanja da se oslobodi link za prenos; zavisi od nivoa zagušenja u ruteru)
+ - kašnjenje pri emitovanju 
+   (predstavlja odnos dužine paketa i protoka linka)
+ - kašnjenje pri propagaciji 
+   (predstavlja odnos dužine linka i brzine propagacije u medijumu)
+
+---
+
+1.9. Internet protokol stek – nivoi i kratki opis. 
+Koja je razlika Internet protokol steka i ISO/OSI referentnog modela?
+
+Internet protokol stek je skup protokola koji se koriste za komunikaciju na Internetu.
+Nivoi su:
+ - aplikacijski nivo - mrežne aplikacije (HTTP, FTP, itd.)
+ - transportni nivo - prenos poruke aplikacijskog sloja između dva krajnja procesa (TCP, UDP)
+ - mrežni nivo - rutiranje paketa od izvora do odredišta (IP)
+ - nivo linka - prenos podataka između susednih mrežnih elemenata (PPP, Ethernet, WiFi)
+ - fizički nivo - prenos pojedinačnih bita preko žice susednih čvorova
+
+Internet protokol stek ima manje nivoa i fokusira se na praktična rešenja za komunikaciju na Internetu.
+ISO/OSI (Open System Interconnection) referentni model ima više nivoa 
+(nivo prezentacije i nivo sesije) i služi kao teorijski okvir za razumevanje mrežnih komunikacija.
+Dodatne usluge koje su u sastavu OSI modela, ako su potrebne, 
+moraju biti implementirane u okviru aplikacije.
+
+---
+
+1.9. Internet protokol stek – nivoi i kratki opis. 
+Koja je razlika Internet protokol steka i ISO/OSI referentnog modela?
+
+Internet protokol stek je skup protokola koji se koriste za komunikaciju na Internetu.
+Nivoi su:
+ - aplikacijski nivo - mrežne aplikacije (HTTP, FTP, itd.)
+ - transportni nivo - prenos poruke aplikacijskog sloja između dva krajnja procesa (TCP, UDP)
+ - mrežni nivo - rutiranje paketa od izvora do odredišta (IP)
+ - nivo linka - prenos podataka između susednih mrežnih elemenata (PPP, Ethernet, WiFi)
+ - fizički nivo - prenos pojedinačnih bita preko žice susednih čvorova
+
+Internet protokol stek ima manje nivoa i fokusira se na praktična rešenja za komunikaciju na Internetu.
+ISO/OSI (Open System Interconnection) referentni model ima više nivoa 
+(nivo prezentacije i nivo sesije) i služi kao teorijski okvir za razumevanje mrežnih komunikacija.
+Dodatne usluge koje su u sastavu OSI modela, ako su potrebne, 
+moraju biti implementirane u okviru aplikacije.

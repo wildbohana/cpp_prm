@@ -1,0 +1,427 @@
+3.1. Usluge protokola transportnog sloja
+
+Usluge protokola transportnog sloja su komunikacije između aplikacije i mrežnog interfejsa na računaru.
+One obezbeđuju mehanizme za uspostavljanje veze, upravljanje tokom, 
+kontrolu grešaka, kontrolu protoka i prenos podataka između aplikacija na različitim računarima.
+
+Mrežni sloj: 
+ - logička komunikacija između hostova
+Transportni sloj: 
+ - logička komunikacija između procesa
+ - oslanja se na usluge mrežnog sloja
+
+---
+
+3.2. Kako funkcioniše multipleksiranje i demultipleksiranje podataka. 
+Koji su važni parametri da bi se obavilo demultipleksiranje bez uspostave veze i sa uspostavom veze?
+
+Multipleksiranje podataka se koristi kako bi se više komunikacijskih kanala 
+moglo koristiti istovremeno na jednom fizičkom linku.
+Taj link će onda preuzimati podatke sa više soketa i dodavati 
+transportno zaglavlje koje se kasnije koristi za demultipleksiranje.
+
+Demultipleksiranje podataka je proces odvajanja podataka koji su dolazili preko više kanala na odgovarajući kanal.
+Taj kanal koristi oznaku porta u zaglavlju primljenog segmenta da bi ga usmerio ka ispravnom soketu.
+
+Važni parametri za demultipleksiranje bez uspostave veze su:
+ - IP adresa odredišta
+ - broj porta odredišta
+Važni parametri za demultipleksiranje sa uspostavom veze su:
+ - IP adresa izvornog računara 
+ - broj izvornog porta
+ - IP adresa odredišta
+ - broj porta odredišta
+
+---
+
+3.3. UDP protokol – namena, opis i glavne karakteristike
+
+UDP (User Datagram Protocol) je protokol bez uspostave veze koji se koristi za prenos podataka u mreži.
+U toku prenosa vrši najmanje što transportni protokol može da uradi:
+ - multipleksiranje
+ - demultipleksiranje
+ - proveru grešaka pri prenosu
+
+To je protokol bez uspostave veze (nema rukovanja između pošaljioca i primaoca).
+Ovo smanjuje vremenska kašnjenja.
+Nema kontrole zagušenja (omogućava slanje podataka velikom brzinom).
+Svaki UDP segment se prenosi nezavisno od drugih segmenata.
+Segmenti se isporučuju van redosleda u krajnjoj aplikaciji.
+
+UDP koriste aplikacije za protok multimedijalnih zapisa, koji su tolerantni na gubitke, a osetljivi na brzinu slanja.
+UDP koriste i DNS (prevođenje imena) i SNMP (upravljanje mrežom).
+
+Pouzdanost prenosa preko UDP se dodaje na aplikativnom sloju.
+Oporavak od greške se dodaje na aplikativnom nivou.
+
+Zaglavlje segmenta ima 32 bita, sadrži izvorni port, odredišni port, 
+dužinu celokupnog UDP segmenta (u bajtima) i kontrolnu sumu.
+
+UDP server je definisan parom [IP adresa, port].
+Svaki datagram sa tim odredištem će biti prihvaćen, bez obzira ko ga šalje.
+
+---
+
+3.4. Tok komunikacije kod UDP protokola
+
+Tok komunikacije kod UDP protokola je jednostavan.
+Klijent šalje poruke serveru bez prethodnog uspostavljanja veze ili potvrde da su podaci stigli.
+
+Open - evidentiranje kod UDP drajvera
+Bind - omogućava prijem, definiše server
+SendTo/RecvFrom - nezavisna razmena paketa podataka, druga strana se specificira parom Adresa/Port 
+Close - obe strane ga mogu inicirati
+
+Aplikacija poziva funkcije UDP rukovaoca, koji je deo OS.
+
+---
+
+3.5. Protokoli sa automatskim ponavljanjem zahteva (ARQ protokoli) – šta rešavaju i funkcionalnosti koje uključuju
+
+ARQ (Automatic Repeat Request) protokoli su protokoli za pouzdan prenos podataka 
+koji se zasnivaju na ponovnom slanju oštećenih paketa.
+Ovi protokoli se koriste za poboljšanje kvaliteta i sigurnosti prenosa podataka u komunikacionim mrežama. 
+
+ARQ protokoli rešavaju problem grešaka u prenosu podataka.
+Oni omogućavaju detekciju grešaka i korekciju grešaka u prenosu podataka.
+
+Funkcionalnosti koje uključuju ARQ protokoli su:
+ 1. detekcija grešaka na prijemu
+ 2. povratna informacija od primaoca ka pošaljiocu
+ 3. ponovno slanje
+
+Pošaljilac pravi paket koji sadrži podatke kao i kontrolnu sumu paketa, i zatim taj paket šalje.
+Detekcija grešaka na prijemu se vrši preko kontrolne sume (kod UDP protokola).
+
+Primalac šalje pošaljiocu pozitivne (ACK) ili negativne (NAK) potvrde prijema.
+
+Ako stigne ACK potvrda, paket je ispavno primljen, i pošaljilac pravi novi paket za slanje.
+Ako stigne NAK potvrda, pošaljilac ponovo šalje isti paket i čeka potvrdu od primaoca.
+Pošaljilac ne šalje novi paket sve dok se ne uveri da je 
+primalac ispravno primio tekući paket (stop and wait ARQ).
+
+ARQ protokoli su korisni u mrežama gde se očekuje da će biti grešaka u prenosu podataka, 
+kao što su bežične mreže i mreže sa slabošću signala.
+
+---
+
+3.6. Stani-i-čekaj protokol (stop and wait) – opis
+
+Stani i čekaj (stop and wait) je jednostavan protokol za kontrolu protoka 
+koji zahteva da pošaljilac čeka potvrdu primanja pre nego što pošalje sledeći podatak.
+
+Pošajilac pravi paket koji sadrži podatke kao i kontrolu sumu paketa, i zatim taj paket šalje.
+Detekcija grešaka na prijemu se vrši preko kontrolne sume (kod UDP protokola).
+
+Primalac šalje pošaljiocu pozitivne (ACK) ili negativne (NAK) potvrde prijema.
+
+Ako stigne ACK potvrda, paket je ispavno primljen, i pošaljilac pravi novi paket za slanje.
+Ako stigne NAK potvrda, pošaljilac ponovo šalje isti paket i čeka potvrdu od primaoca.
+Pošaljilac ne šalje novi paket sve dok se ne uveri da je primalac 
+ispravno primio tekući paket (stop and wait ARQ).
+
+---
+3.7. Čemu služi obeležavanje paketa rednim brojem? 
+Objašnjenje uloge ACK i NAK poruke. Objašnjenje duplikata ACK poruke.
+
+Obeležavanje paketa rednim brojem je dopuna stop and wait ARQ protokola.
+
+Ako je ACK/NAK potvrda oštećena, pošaljilac ne zna da li je primalac ispravno primio poslednji paket.
+Pošaljilac ne može samo da ponovi slanje, jer tada može da duplira paket.
+
+Kao rešenje problema, pošaljilac svaki paket obeležava rednim brojem.
+Ako za trenutni paket primi oštećen ACK/NAK, pošaljilac ponovo šalje taj paket.
+Ako je taj paket duplikat (primalac ga prepoznaje po rednom broju), odbacuje ga.
+
+Poruka ACK se šalje kada je primanje paketa uspešno.
+NAK poruka se šalje kada je primanje paketa neuspešno.
+
+Kada pošaljilac primi dve ACK poruke za isti paket, 
+on zna da primalac nije ispravno primio poslednji poslati paket.
+Tada pošaljilac ponovo šalje poslednji paket.
+
+---
+
+3.8. Kako se rešava problem gubljenja paketa?
+
+Problem gubljenja paketa se može rešiti korišćenjem protokola sa 
+automatskim ponavljanjem zahteva (ARQ) koji obezbeđuje mehanizme 
+za potvrdu primanja i ponovno slanje u slučaju gubitka paketa.
+
+Takođe se može koristiti protokol sa kliznim prozorom koji 
+omogućava pošaljiocu da šalje više paketa bez potvrde primanja,
+što može povećati efikasnost prenosa podataka.
+
+---
+
+3.9. Šta predstavlja protočno slanje paketa i koja su dva osnovna pristupa? Zašto se zovu protokoli sa kliznim prozorom?
+
+Protočno slanje paketa je način prenosa podataka gde se više paketa šalje u toku jedne veze bez potvrda primanja svakog paketa.
+Neophodno je povećanje raspona rednih brojeva paketa, kao i uvođenje bafera na strani primaoca i pošaljioca.
+
+Postoje dva osnovna pristupa protočnom slanju:
+ - vrati se za N
+ - selektivno ponavljanje
+
+Raspon dozvoljenih rednih brojeva za poslate, a još nepotvrđene pakete se posmatra kao prozor veličine N.
+Tokom rada ovaj prozor klizi unapred duž raspoloživih rednih brojeva.
+Zato se N naziva veličina prozora, a sami protokoli - protokoli sa kliznim prozorom.
+
+---
+
+3.10. Vrati se za N (Go back N) – opis. Objašnjenje pošiljaoca i primaoca.
+
+Vrati se za N (Go Back N) je protokol sa automatskim ponavljanjem zahteva (ARQ) koji koristi klizni prozor.
+
+Vrati se za N:
+ - pošaljilac može da ima do N nepotvrđenih paketa koje je poslao
+ - primalac šalje kumulativne potvrde 
+   (ACK n znači da je pravilno primio sve pakete čiji je redni broj <=n)
+ - pošaljilac ima tajmer za najstariji nepotvrđeni paket
+ - kada tajmer istekne, pošaljilac ponovo šalje sve nepotvrđene pakete (ceo prozor)
+
+Ovaj protokol omogućava efikasnije korišćenje kanala za prenos podataka, 
+ali može dovesti do gubitka vremena u slučaju gubitka paketa.
+
+---
+
+3.11. Selektivno ponavljanje (selective repeat) – opis. Objašnjenje pošiljaoca i primaoca.
+
+Selektivno ponavljanje je tip ARQ protokola koji se koristi za automatsko ponavljanje zahteva 
+za prenos podataka kada se pojave greške u prenosu.
+Razlikuje se od drugih tipova ARQ protokola po tome što selektivno ponavljanje ponavlja samo 
+one pakete koji su greškom preneti, dok ostali paketi koji su uspešno preneti ne moraju da se ponavljaju.
+
+Selektivno ponavljanje:
+ - pošaljilac može da ima do N nepotvrđenih paketa koje je poslao
+ - primalac šalje pojedinačni ACK za svaki paket
+ - pošaljilac ima tajmer za svaki nepotvrđeni paket
+ - kada tajmer istekne, pošaljilac ponovo šalje samo taj nepotvrđeni paket
+
+Prednost selektivnog ponavljanja je da se smanjuje količina podataka koja se mora ponovo preneti, 
+što dovodi do manjeg vremena prenosa i manje prepunjenosti u mreži.
+Međutim, ovaj protokol zahteva veću memoriju i procesorsku moć pošaljioca i primaoca 
+jer moraju da numerišu i prate stanja svakog paketa.
+
+---
+
+3.12. TCP protokol – osnovne karaktersitike (uspostava veze, pouzdanost, 
+kontrola toka, protočno slanje). Predajni i prijemni bafer.
+
+TCP (Transmission Control Protocol) je protokol transportnog sloja koji obezbeđuje 
+uspostavu veze, pouzdan prenos podataka, kontrolu toka i protočno stanje.
+
+Uspostavljanje veze koristi metodu trostrukog rukovanja koji 
+obezbeđuje da oba uređaja potvrde da su spremni za komunikaciju.
+Uvek postoji tačno jedan pošaljilac i tačno jedan primalac.
+
+Pouzdanost se obezbeđuje korišćenjem rednih brojeva i broja potvrde, 
+a kontrola toka i zagušenja se postiže korišćenjem prozora za prenos podataka.
+
+TCP veza obezbeđuje punu dupleksnu uslugu - istovremeno slanje i prijem podataka 
+u oba smera po istoj uspostavljenoj vezi.
+Usaglašavanje (rukovanje) se bazira na razmeni kontrolnih poruka kojima se 
+inicijalizuju početna stanja pošaljioca i primaoca pre razmene podataka.
+
+Predajni i prijemni bafer su memorijski prostori koji se koriste za skladištenje podataka tokom prenosa.
+TCP zahvata delove podataka iz predajnog bafera, enkapsulira ih u TCP segment i prosleđuje mrežnom sloju.
+U prijemni bafer se smeštaju podaci iz segmenta, i iz njega prijemna aplikacija učitava podatke.
+
+---
+
+3.13. TCP redni brojevi i broj potvrde – čemu služe?
+
+TCP redni brojevi i broj potvrde se koriste za potvrđivanje primanja paketa.
+
+Redni brojevi se koriste za označavanje svakog paketa koji se šalje.
+Redni broj predstavlja rbr prvog bajta podataka u segmentu unutar neprekidnog toka bajtova.
+Redni brojevi omogućavaju da se podaci primaju u ispravnom redosledu.
+
+Broj potvrde se koristi za potvrđivanje primanja paketa od strane primaoca.
+Broj potvrde predstavlja broj sledećeg bajta koji se očekuje da druga strana pošalje.
+Broj potvrde omogućava da se potvrdi da su svi paketi koji su poslati stigli na ciljnu adresu.
+
+---
+
+3.14. TCP i postavljanje vremena tajmera.
+
+TCP koristi tajmere za otkrivanje gubitka paketa.
+Kada pošaljilac šalje paket, podešava tajmer.
+Ukoliko primalac ne potvrdi primanje paketa u određenom vremenu, 
+tajmer će se aktivirati i pošaljilac će ponovo poslati paket.
+
+Tajmer treba da bude duži nego vreme povratnog puta (RTT) za tu vezu.
+Ako je RTT prekratak, doći će do nepotrebnog ponovnog slanja.
+Ako je RTT predugačak, imaćemo spore reakcije na gubljenje segmenata.
+
+RTT može da se izmeri kao SampleRTT - pošalje se jedan segment 
+i čeka se prijem njegovog ACK (to vreme je RTT).
+Treba izvršiti više merenja (jer SampleRTT varira), pa računamo prosek.
+
+Takođe može i da se proceni EstimatedRTT.
+Tada će interval tajmera biti jednak procenjenom RTT i malim uvećanjem, dodatim za "rezervu".
+
+---
+
+3.15. Kako TCP obezbeđuje pouzdan prenos podataka? Kad se vrši ponovno slanje?
+
+TCP obezbeđuje pouzdan prenos podataka korišćenjem:
+ - rednih brojeva
+ - brojeva potvrde
+ - tajmera
+
+Ukoliko primalac primi paket sa pogrešnim rednim brojem ili brojem potvrde, 
+on će ga odbaciti i pošaljilac će ponovo poslati isti paket.
+Ukoliko primalac ne potvrdi primanje paketa u određenom vremenu, 
+tajmer će se aktivirati i pošaljilac će ponovo poslati paket.
+
+---
+
+3.16. TCP događaji na strani pošiljaoca.
+
+Na strani pošaljioca, TCP događaji uključuju uspostavljanje veze, slanje paketa, 
+čekanje potvrde primanja paketa i ponovno slanje paketa u slučaju gubitka.
+
+1. Prijem podataka od aplikacije
+ - enkapsulira podatke u segment sa rednim brojem
+ - rbr segmenta je broj prvog bajta podataka koji se prenosi datim segmentom
+ - ako tajmer već nije pokrenut, pokreni ga
+2. Istek vremena tajmera
+ - ponovo šalji segment koji je izazvao istek tajmera
+ - ponovo pokreni tajmer
+3. Prijem ACK potvrde
+ - ako dobijemo potvrdu prijema za nepotvrđen segment, moramo ažurirati sendBase primenljivu
+ - ako ima nepotvrđenih segmenata, moramo ponovo pokrenuti tajmer
+
+---
+
+3.17. TCP brzo ponovno slanje (retransmisija) – kad se primenjuje i čemu služi?
+
+TCP brzo ponovno slanje (retransmisija) se primenjuje kada se otkrije gubitak paketa.
+Cilj je da se što pre ponovo pošalju izgubljeni paketi kako bi se izbeglo kašnjenje u prenosu podataka.
+
+Ako pošaljilac primi 3 dodatne ACK potvrde za isti segment, 
+on će ponovo poslati nepotvrđeni segment sa najmanjim rednim brojem.
+Vrlo je verovatno da je taj nepovrđen segment izgubljen, pa ne treba čekati njegov istek tajmera, 
+nego ga što pre poslati da bi paketi posle njega mogli uspešno da se pošalju.
+
+---
+
+3.18. Šta predstavlja kontrola toka kod TCP protokola i koji je njen cilj?
+
+Kontrola toka kod TCP protokola ima za cilj da ograniči brzinu slanja 
+podataka pošaljiocu kako bi se izbeglo preopterećenje mreže i primaoca.
+To se postiže korišćenjem prozora zagušenja i algoritma za kontrolu zagušenja.
+
+Princip kontrole toka:
+Prijemna strana kontroliše pošaljioca, tako da pošaljilac ne prepuni 
+prijemni bafer primaoca slanjem suviše mnogo podataka, suviše velikom brzinom.
+
+---
+
+3.19. Prijemni prozor i kontrola toka – objašnjenje.
+
+Neka računar A šalje računaru B veliku datoteku.
+Računar B toj vezi dodeljuje prijemi bafer RcvBuffer.
+
+Imamo i dve promenljive - LastByteRead i LastByteRcvd.
+LastByteRead - broj poslednjeg bajta u toku podataka koji je proces prijemne aplikacije u računaru B učitao iz bafera.
+LastByteRcvd - broj poslednjeg bajta koji je stigao i smešten je u prijemni bafer na računaru B.
+
+Pošto TCP ne sme da prepuni prijemni bafer, mora da važi sledeće:
+ LastByteRcvd - LastByteRead <= RcvBuffer
+
+Prijemni prozor rwnd postavlja se na veličinu slobodnog prostora u prijemnom baferu.
+ rwnd = RcvBuffer - (LastByteRcvd - LastByteRead)
+
+Primalac (računar B) oglašava slobodan prostor u baferu tako što trenutnu vrednost 
+promenljive rwnd stavlja u polja TCP zaglavlja unutar segmenata koje šalje nazad pošaljiocu (računar A).
+
+Pošaljilac ograničava broj poslatih, a nepotvrđenih paketa tako da ne prevaziđu rwnd vrednost na prijemnoj strani
+ LastByteSend - LastByteAcked <= rwnd
+Time se osigurava da se prijemni bafer u računaru B neće preplaviti.
+
+---
+
+3.20. Uspostava veze kod TCP protokola. Trostruko rukovanje – opis i objašnjenje koraka.
+
+Pre razmene podataka, pošaljilac i primalac se "rukuju" tj. razmenjuju kontrolne TCP segmente kojim se:
+ - dogovaraju oko uspostave veze (daju na znanje da su spremni da uspostave vezu)
+ - dogovaraju oko parametara veze
+
+Uspostava veze kod TCP protokola se obavlja korišćenjem trostrukog rukovanja.
+Prvi korak je slanje zahteva za uspostavljanjem veze (SYN) od strane pošaljioca.
+Drugi korak je potvrda primanja zahteva (SYN-ACK) od strane primaoca.
+Treći korak je potvrda uspostavljanja veze (ACK) od strane pošaljioca.
+
+---
+
+3.21. TCP prekid veze.
+
+U TCP vezi bilo koja strana (klijent ili server) može da zatvori vezu 
+tj. da inicira prekid veze sa svoje strane.
+
+TCP prekid veze se obavlja korišćenjem četvorostrukog rukovanja.
+Prvi korak je slanje zahteva za prekid veze (FIN) od strane pošaljioca.
+Drugi korak je potvrda primanja zahteva (ACK) od strane primaoca.
+Treći korak je slanje zahteva za prekid veze (FIN) od strane primaoca.
+Četvrti korak je potvrda primanja zahteva (ACK) od strane pošaljioca.
+
+Kad se veza završi, na krajnjim računarima se oslobađaju svi resursi 
+koje je veza zauzela (baferi i promenljive).
+
+---
+
+3.22. Tok aplikacije kod TCP protokola.
+
+Tok aplikacije kod TCP protokola podrazumeva:
+ - kreiranje struktura za održavanje TCP sesije
+ - slanje ili prijem kontrolnih segmenata koji imaju samo TCP zaglavlje
+ - slanje ili prijem segmenata sa podacima, 
+   pri čemu oni mogu nositi i kontrolnu informaciju (ACK na primer)
+
+---
+
+3.23. Objasniti glavne uzroke i posledice zagušenja.
+
+Neformalno, zagušenje je:
+Previše izvora koji pokušavaju da pošalju previše podataka suviše velikim brzinama da bi se mreža izborila sa tim.
+
+Glavni uzroci zagušenja su:
+ - prevelika količina podataka koja se šalje preko mreže
+ - nedovoljna propusna širina puta
+ - nedovoljna brzina linka
+ - preopterećenje kompjutera
+ - neadekvatna kontrola zagušenja
+
+Posledice zagušenja su kašnjenje u prenosu podataka, gubitak paketa, 
+nedovoljna propusna širina i smanjena performansa mreže.
+
+---
+
+3.24. Principi TCP kontrole zagušenja. Prozor zagušenja. Događaj gubitka.
+
+TCP koristi kontrolu zagušenja s kraja na kraj.
+Pristup TCP - svaki pošaljilac se primorava da ograniči brzinu slanja u svojoj vezi u zavisnosti od uočenog zagušenja mreže.
+Na strani pošaljioca se održava posebna promenljiva - prozor zagušenja (congestion window, cwnd).
+Prozor zagušenja nameće ograničenje brzine slanja.
+
+Kako TCP pošaljilac prepoznaje zagušenja:
+ - po događaju gubitka zaključuje da postoji zagušenje mreže
+ - istek vremena tajmera
+ - primanje 3 duplikata ACK potvrde
+
+---
+
+3.25. TCP algoritam za kontrolu zagušenja – objašnjenje sve tri faze (spori start, izbegavanje zagušenja, brz oporavak)
+
+TCP algoritam za kontrolu zagušenja se sastoji od tri faze:
+ 1. spori start - početna faza u kojoj se prozor zagušenja postavlja na 
+    malu veličinu i postepeno povećava dok se ne dobiju potvrde od primaoca
+ 2. izbegavanje zagušenja - faza u kojoj se prozor zagušenja prilagođava
+    dinamički na osnovu potvrde i gubitaka paketa
+ 3. brz oporavak - faza u kojoj se prozor zagušenja brzo vraća na 
+    veliku veličinu nakon što se otkloni zagušenje u mreži
+
+Spori start i izbegavanje zagušenja su obavezni delovi TCP protokola, 
+dok se brz oporavak preporučuje, ali se ne zahteva.

@@ -1,0 +1,22 @@
+6.6. ALOHA sa odsečcima i čista ALOHA
+
+ALOHA sa odsečcima i čista ALOHA su dve varijante protokola sa slučajnim pristupom.
+
+ALOHA sa odsečcima:
+ - svi okviri za slanje su iste veličine
+ - vreme je podeljeno u jednake vremenske odsečke
+ - čvor počinje da šalje samo na početku odsečka
+ - čvorovi su sinhronizovani (znaju kada odsečak počinje)
+ - ako dva ili više čvorova započnu prenos u istom odsečku, svi čvorovi otkrivaju koliziju
+Kada čvor ima okvir za slanje, on čeka početak sledećeg osečka i tada šalje okvir.
+Ako ne dođe do kolizije, slanje je bilo uspešno, čvor može da šalje novi okvir.
+Ako dođe do kolizije, čvor ponovo šalje okvir sve dok se okvir uspešno ne prenese.
+
+ALOHA bez odsečaka:
+ - jednostavnija, bez sinhronizacije
+ - započinje prenos na kanal čim ima okvir za slanje
+ - verovatnoća kolizije je povećana
+ - efikasnost je duplo manja u odnosu na efikasnost ALOHA sa odsečcima
+
+ALOHA sa odsečcima koristi odsečke vremena da ograniči vreme koje računar može da koristi za slanje podataka.
+Čista ALOHA ne koristi odsečke vremena.

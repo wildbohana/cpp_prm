@@ -1,0 +1,20 @@
+2.3. Web – osnovni pojmovi: Web stranica, objekti, URL, HTML datoteka
+
+Web (World Wide Web) je sistem hipertekstualnih dokumenata koji se povezuju preko interneta.
+Osnovni pojmovi su:
+ - Web stranica - dokument sačinjen od HTML koda
+ - objekti - slike, video zapisi, audio zapisi itd. koji se nalaze na web stranici
+ - URL (Uniform Resource Locator) - adresa web stranice
+ - HTML datoteka - tekstualna datoteka koja sadrži HTML kod za web stranicu
+
+Web stranica je dokument koji se sastoji od objekata.
+Ona je definisana osnovnom HTML datotekom koja sadrži reference na više povezanih objekata.
+
+Objekat može biti HTML datoteka, JPEG slika, Java applet, audio/video datoteka...
+Svaki objekat se adresira pomoću URL adrese (Uniform Resource Locator).
+
+HTTP (Hypertext Transfer Protocol) je protokol za prenos hiperteksta.
+On je web protokol u aplikativnom sloju, koristi TCP (soket sa portom 80) 
+i nema stanje (server ne čuva podatke o prethodnim klijentskim zahtevima).
+HTTP poruke na aplikativnom nivou se razmenjuju između 
+pretraživača (HTTP klijent) i web servera (HTTP server).

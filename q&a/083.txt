@@ -1,0 +1,13 @@
+5.5. Algoritam rutiranja vektorom rastojanja (DV algoritam). Primer
+
+DV algoritam (Distance Vector Rounting) je decentralizovani algoritam rutiranja koji se zasniva na vektoru rastojanja.
+On koristi tabelu rastojanja za određivanje putanje.
+Primer DV algoritma je RIP (Router Information Protocol).
+
+Algoritam Bellman-Ford je algoritam za rutiranje po dužini vektora koji se koristi za 
+pronalaženje najkraćeg puta između izvorišnog čvora i svih ostalih čvorova u mreži.
+Algoritam izračunava najkraći put tako što iterativno opušta udaljenosti svih čvorova u mreži.
+Algoritam radi tako što ponavljano ažurira vektor udaljenosti svakog čvora 
+da bi održavao novu minimalnu udaljenost do određenog čvora.
+Algoritam se nastavlja dok se vektori udaljenosti više ne ažuriraju, 
+što ukazuje da je najkraći put pronađen.

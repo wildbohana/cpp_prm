@@ -1,0 +1,11 @@
+5.16. ICMP protokol – glavne funkcije i primena
+
+ICMP (Internet Control Message Protocol) ima glavnu funkciju 
+da omogući dijagnostiku mreže i signalizaciju grešaka.
+Koristi se od strane hostova i rutera kako bi razmenjivali poruke na mrežnom nivou.
+
+ICMP poruke se prenose unutar IP datagrama.
+ICMP poruke: type, code, description.
+
+Primena ICMP-a je u procesu testiranja dostupnosti resursa 
+i određivanja razloga za eventualne probleme u mreži.

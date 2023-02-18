@@ -1,0 +1,14 @@
+4.24. IPv6 protokol – motivacija za uvođenje i glavne izmene u odnosu na IPv4
+
+IPv6 protokol je motivisan potrebom za više IP adresa zbog rasta broja uređaja koji se povezuju na internet.
+Glavne izmene u odnosu na IPv4 su veći broj bita u IP adresi (128 bita u odnosu na 32 bita), 
+novi oblik zapisa IP adrese i proširenje podrške za mobilnu mrežu.
+
+IPv6 označava prioritet među datagramima u toku.
+Datagrami u istom "toku" se označavaju.
+Sledeće zaglavlje ukazuje na protokol višeg sloja kome treba isporučiti podatke iz datagrama.
+
+Kontrolna suma je totalno uklonjena da bi se smanjilo vreme obrade na svakom ruteru.
+IPv6 ne dozvoljava fragmentaciju na ruterima (preveliki datagrami se odbacuju).
+Ne postoji više polje opcija.
+Uvedena je nova verzija ICMP protokola, sa dodatnim tipovima poruka i funkcijama za upravljanje multicast grupama.

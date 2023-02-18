@@ -1,0 +1,20 @@
+5.9. OSPF troškovi linkova i napredne funkcije. Hijerarhijski OSPF.
+
+OSPF troškovi linkova:
+ - konfiguriše ih administrator mreže
+ - troškovi svih linkova mogu biti jednaki ili obrnuto proporcionalni kapacitetu
+ - postoje dva pristupa za rutiranje prema najmanjem trošku 
+   (polazne vrednosti linkova, vrednosti postavljene u cilju upravljanja saobraćajem)
+
+Napredne funkcije:
+ - mogućnost provere autentičnosti OSPF poruka radi bezbednosti
+ - dozvoljene višestruke putanje sa istim troškovima
+ - više metrika troškova za različite nivoe TOS
+ - integrisana podrška za unicast i multicast
+ - hijerarhija OSPF unutar velikih AS-AS se hijerarhijski konfiguriše u zone
+
+Hijerarhijski OSPF je proširenje OSPF protokola koji se koristi za upravljanje rutiranjem u mrežama.
+Hijerarhijska arhitektura deli autonomni sistem u područja (zone), a svaka zona sadrži svoj OSPF algoritam za rutiranje linkova.
+Granični ruter za zonu sumira rastojanje ka čvorovima unutar zone i obaveštava druge granične rutere o tome.
+Ruter okosnice OSPF vrši rutiranje samo za okosnicu, dok granični ruter rutira saobraćaj između različitih zona.
+Ova hijerarhijska struktura omogućava veću efikasnost, bezbednost i kontrolu u velikim mrežama.

@@ -1,0 +1,12 @@
+4.13. Vrste adresiranja
+
+Unicast 1:1
+ - jednoznačna asocijacija između adrese i jedne krajnje tačke
+Broadcast 1:SVI 
+ - adresa označava sve čvorove u mreži 
+Multicast 1:N
+ - adresa označava skup čvorova (ne sve)
+Anycast 1:1 od N
+ - adresa odznačava više čvorova, ali će samo jednom od njih biti isporučena poruka
+ - vrši se izbor najbližeg ili najboljeg odredišta
+ - BGP ruteri koriste ovaj vide adresiranja

@@ -1,0 +1,13 @@
+4.8. Redovi čekanja na ulaznom i izlaznom portu.
+
+Redovi čekanja na ulaznom i izlaznom portu su redovi koji sadrže pakete koji čekaju da budu prosleđeni.
+Oni se koriste da se spreči preopterećenje mreže.
+
+Ako komutatorska mreža nije dovoljno brza u odnosu na brzinu ulazne linije, 
+nastaju redovi čekanja na ulaznim portovima.
+Blokiranje spreda - datagram na početku reda blokira druge datagrame 
+da se prenesu do njihovog izlaznog porta.
+
+Ako datagrami pristižu iz komutatorske mreže brže nego što se prenesu 
+na izlazni port, nastaju redovi čekanja na izlaznim portovima.
+Pomoću pravila raspoređivanja se bira koji datagram se sledeći prenosi na port.

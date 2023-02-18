@@ -1,0 +1,13 @@
+3.10. Vrati se za N (Go back N) – opis. Objašnjenje pošiljaoca i primaoca.
+
+Vrati se za N (Go Back N) je protokol sa automatskim ponavljanjem zahteva (ARQ) koji koristi klizni prozor.
+
+Vrati se za N:
+ - pošaljilac može da ima do N nepotvrđenih paketa koje je poslao
+ - primalac šalje kumulativne potvrde 
+   (ACK n znači da je pravilno primio sve pakete čiji je redni broj <=n)
+ - pošaljilac ima tajmer za najstariji nepotvrđeni paket
+ - kada tajmer istekne, pošaljilac ponovo šalje sve nepotvrđene pakete (ceo prozor)
+
+Ovaj protokol omogućava efikasnije korišćenje kanala za prenos podataka, 
+ali može dovesti do gubitka vremena u slučaju gubitka paketa.

@@ -1,0 +1,12 @@
+4.9. Raspoređivanje paketa – FIFO, po prioritetu, round robin, WFQ
+
+Raspoređivanje paketa se odnosi na proces određivanja koji paket treba da bude prosleđen na izlazni port bafera.
+
+Postoji nekoliko tehnika raspoređivanja paketa, kao što su:
+ - FIFO (prvi uneti, prvi isporučeni)
+ - Raspoređivanje po prioritetu - paketima se dodeljuje prioritet, 
+   a oni sa višim prioritetom se prenose prvi na izlazni port
+ - Round Robin - paketi se dele u više klasa i služe se u cikličnom redosledu, 
+   šalje se po jedan paket iz svake klase (ako je dostupan)
+ - WFQ (težinsko fer mešanje) - uopšteni Round Robin, planer određuje težinu svakom paketu u redu, 
+   sa redovima sa višom težinom koji dobijaju veći procenat širine opsega

@@ -1,0 +1,7 @@
+5.13. Pravljenje unosa u tabeli prosleđivanja – povezanost BGP i OSPF protokola
+
+Povezanost BGP i OSPF protokola se odnosi na to da se OSPF koristi za rutiranje unutar AS, 
+dok se BGP koristi za rutiranje između AS.
+
+Pravljenje unosa u tabeli prosleđivanja podrazumeva dodavanje ruta u tabelu rutiranja 
+kako bi se omogućilo prosleđivanje podataka.

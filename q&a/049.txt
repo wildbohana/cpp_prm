@@ -1,0 +1,14 @@
+3.23. Objasniti glavne uzroke i posledice zagušenja.
+
+Neformalno, zagušenje je:
+Previše izvora koji pokušavaju da pošalju previše podataka suviše velikim brzinama da bi se mreža izborila sa tim.
+
+Glavni uzroci zagušenja su:
+ - prevelika količina podataka koja se šalje preko mreže
+ - nedovoljna propusna širina puta
+ - nedovoljna brzina linka
+ - preopterećenje kompjutera
+ - neadekvatna kontrola zagušenja
+
+Posledice zagušenja su kašnjenje u prenosu podataka, gubitak paketa, 
+nedovoljna propusna širina i smanjena performansa mreže.

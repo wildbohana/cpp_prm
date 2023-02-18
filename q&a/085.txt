@@ -1,0 +1,10 @@
+5.7. Pojam autonomnih sistema (AS). Zadaci rutiranja unutar AS i između AS
+
+Autonomni sistemi (AS) (ili domeni) su mreže koje imaju 
+sopstvenu politiku rutiranja i koje se nezavisno upravljaju.
+Ruteri se organizuju u AS.
+AS se prepozanju po svom globalno jedinstvenom broju AS.
+Svi ruteri unutar jednog AS izvršavaju isti algoritam rutiranja i imaju informacije jedni o drugima.
+
+Zadaci rutiranja unutar AS su da se odredi putanja za podatke unutar AS.
+Zadaci rutiranja između AS su da se odredi putanja za podatke koji putuju između različitih AS.

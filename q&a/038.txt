@@ -1,0 +1,21 @@
+3.12. TCP protokol – osnovne karaktersitike (uspostava veze, pouzdanost, 
+kontrola toka, protočno slanje). Predajni i prijemni bafer.
+
+TCP (Transmission Control Protocol) je protokol transportnog sloja koji obezbeđuje 
+uspostavu veze, pouzdan prenos podataka, kontrolu toka i protočno stanje.
+
+Uspostavljanje veze koristi metodu trostrukog rukovanja koji 
+obezbeđuje da oba uređaja potvrde da su spremni za komunikaciju.
+Uvek postoji tačno jedan pošaljilac i tačno jedan primalac.
+
+Pouzdanost se obezbeđuje korišćenjem rednih brojeva i broja potvrde, 
+a kontrola toka i zagušenja se postiže korišćenjem prozora za prenos podataka.
+
+TCP veza obezbeđuje punu dupleksnu uslugu - istovremeno slanje i prijem podataka 
+u oba smera po istoj uspostavljenoj vezi.
+Usaglašavanje (rukovanje) se bazira na razmeni kontrolnih poruka kojima se 
+inicijalizuju početna stanja pošaljioca i primaoca pre razmene podataka.
+
+Predajni i prijemni bafer su memorijski prostori koji se koriste za skladištenje podataka tokom prenosa.
+TCP zahvata delove podataka iz predajnog bafera, enkapsulira ih u TCP segment i prosleđuje mrežnom sloju.
+U prijemni bafer se smeštaju podaci iz segmenta, i iz njega prijemna aplikacija učitava podatke.

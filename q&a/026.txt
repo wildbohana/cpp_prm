@@ -1,0 +1,14 @@
+2.16. Dodavanje RR slogova u bazu
+
+Dodavanje RR slogova u bazu podataka se može obaviti na različite načine, 
+zavisno od konfiguracije DNS servera i mreže.
+To može biti izvršeno ručno, kroz web-okruženje ili korišćenjem određenih alata ili skripti.
+U svakom slučaju, potrebno je imati pristup DNS severu i odgovarajuće dozvole za promenu podataka u bazi.
+
+Prvo je potrebno registrovati naziv domena kod DNS registara.
+Oni odobravaju ime kao IP adrese za dva nadležna (AUTH) servera.
+Tada registar upisuje dva RR sloga na odgovarajućem TLD serveru, za svaki od nadležnih servera.
+
+Upis RR omogućava da server na upit odgovori sa:
+ - TLD:  pitaj ove AUTH servere
+ - AUTH: ovo su tražene adrese

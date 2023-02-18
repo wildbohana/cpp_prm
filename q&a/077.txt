@@ -1,0 +1,17 @@
+4.26. OpenFlow standard i softverski definisano umrežavanje (SDN) – pojam uopštenog prosleđivanja; 
+Na osnovu kojih zaglavlja je moguće podudaranje? Koje su moguće akcije za podudaranja?
+
+Svaki ruter sadrži tabelu toka koja je izračunata i distribuirana 
+od strane logički centralizovanog kontrolera rutiranja.
+
+OpenFlow standard i softverski definisano umrežavanje (SDN) se odnose na 
+pristup mrežnom upravljanju koji koristi softver za kontrolu mrežnih uređaja, 
+umesto da se svaki uređaj konfiguriše odvojeno.
+
+OpenFlow omogućava opšte prosleđivanje (forwarding) na osnovu više polja zaglavlja 
+iz različitih protokola, kao što su IP adresa, MAC adresa...
+Moguće akcije za podudaranja su:
+ - odbacivanje paketa
+ - prosleđivanje
+ - izmena paketa
+ - slanje paketa ka kontroleru

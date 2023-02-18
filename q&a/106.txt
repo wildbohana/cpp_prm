@@ -1,0 +1,18 @@
+6.10. Fizičke (MAC) adrese (format i značaj). ARP protokol (svrha, ARP tabele, postupak prevođenja adresa)
+
+Fizičke (MAC) adrese su jedinstveni identifikatori koji se koriste za 
+identifikaciju mrežnih uređaja na nivou fizičke veze.
+Koriste se da bi se preneo okvir od jednog interfejsa do drugog fizički povezanog interfejsa (unutar iste mreže).
+
+Tipično su MAC adrese dužine 48 bita i utisnute su u ROM mrežnog adaptera od strane proizvođača.
+ Primer: 1A-2F-BB-76-09-AD
+Značaj MAC adresa je da omogućavaju jedinstvenu identifikaciju uređaja na mreži.
+
+ARP protokol se koristi za prevođenje IP adresa u fizičke adrese, 
+a ARP tabele se koriste za pohranu ovih prevoda.
+Svi računari i ruteri u LAN-u imaju svoju ARP tabelu.
+U njoj su preslikavanja IP adresa u MAC adrese za sve čvorove u LAN-u.
+Preslikavanje ima svoj TTL (Time To Live) nakon čijeg isteka će se preslikavanje obrisati iz tabele (tipično 20 minuta).
+
+ARP protokol je "plug and play", bez kofigurisanja.
+Čvorovi popunjavaju svoje ARP tabele bez uplitanja mrežnog administratora.

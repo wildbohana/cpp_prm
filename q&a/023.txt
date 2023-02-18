@@ -1,0 +1,9 @@
+2.13. Lokalni DNS server – uloga
+
+Lokalni DNS server je računar koji pohranjuje informacije o domenima 
+u lokalnoj mreži i omogućuje lokalnim korisnicima da pristupaju Internetu.
+Uloga mu je da olakša rad korisnicima tako što skraćuje vreme potrebno 
+za dobavljanje odgovora od DNS servera i smanjuje opterećenje na Internet.
+
+Lokalni DNS serveri u principu nisu deo DNS hijerarhije. 
+On deluje kao proksi server.

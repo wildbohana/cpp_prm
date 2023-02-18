@@ -1,0 +1,16 @@
+5.6. Poređenje LS i DV algoritma
+
+Složenost slanja poruka:
+ - LS algoritam šalje O(NE) poruka
+ - DV algoritam razmenjuje poruke samo između neposredno povezanih suseda
+
+Vreme konvergencije:
+ - LS algoritam može brzo konvergirati, ali može doći do oscilacija
+ - DV algoritam može konvergirati sporo i može doći do petlji rutiranja, 
+   kao i problema brojanja do beskonačnosti
+
+Robustnost:
+ - LS algoritam omogućava čvoru da izračuna vlastitu tabelu i 
+   da objavi pogrešne troškove za jedan link povezan sa njim
+ - DV algoritam može objaviti pogrešne putanje najmanjih troškova 
+   do bilo kog odredišta i greška se može prostirati kroz čitavu mrežu

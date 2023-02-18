@@ -1,0 +1,16 @@
+2.9. SMTP protokol – osnovne karakteristike
+
+SMTP (Simple Mail Transfer Protocol) je protokol koji se koristi za slanje elektronske pošte preko Interneta.
+Koristi TCP za pouzdan prenos email poruke od klijenta do servera (port 25).
+Prenos između mejl servera je direktan (bez posrednika).
+Tri faze prenosa: uspotava veze, prenos poruke, zatvaranje.
+SMTP koristi perzistentnu konekciju, može sadržati više objekata u jednoj poruci.
+
+Originalan SMTP traži da poruke budu u 7-bitnom ASCII kodu.
+Od 2012 postoji RFC za UTF-8 kodiranje.
+SMTP server koisti CRLF.CRLF sekvencu kao kraj poruke.
+
+Osnovne karakteristike su:
+ - klijent-server arhitektura
+ - podrška za različite vrste podataka (tekst, slike, video...)
+ - podrška za različite metode (MAIL, RCPT, DATA...)

@@ -1,0 +1,13 @@
+3.21. TCP prekid veze.
+
+U TCP vezi bilo koja strana (klijent ili server) može da zatvori vezu 
+tj. da inicira prekid veze sa svoje strane.
+
+TCP prekid veze se obavlja korišćenjem četvorostrukog rukovanja.
+Prvi korak je slanje zahteva za prekid veze (FIN) od strane pošaljioca.
+Drugi korak je potvrda primanja zahteva (ACK) od strane primaoca.
+Treći korak je slanje zahteva za prekid veze (FIN) od strane primaoca.
+Četvrti korak je potvrda primanja zahteva (ACK) od strane pošaljioca.
+
+Kad se veza završi, na krajnjim računarima se oslobađaju svi resursi 
+koje je veza zauzela (baferi i promenljive).

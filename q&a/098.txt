@@ -1,0 +1,7 @@
+6.2. Mrežni adapteri (NIC) – uloga i funkcije
+
+Mrežni adapteri (NIC) su hardverski uređaji koji omogućavaju računarima da se povežu sa mrežom.
+Sloj veze se ostvaruje u mrežnom adapteru.
+
+Oni obavljaju funkcije kao što su konverzija digitalnih podataka u analogne signale, 
+i obrnuto, te upravljaju pristupom linku.

@@ -1,0 +1,28 @@
+6.12. Eternet – uloga, glavne karakteristike, fizička topolgija, format okvira, različiti Eternet standardi
+
+Ethernet je mrežni protokol koji se koristi u LAN-ovima.
+To je prvi široko prihvaćen i primenjivan protokol za LAN mreže.
+Jednostavna i jeftina tehnologija.
+
+Glavne karatkeristike:
+ - brzina prenosa podataka od 10 Mbps do 100 Gbps
+ - podrška za višestruki pristup linku (CSMA/CD)
+ - podrška za različite vrste topologije (bus, star, ...)
+
+Fizička topologija:
+ - magistrala (koaksijalna magistrala, difuzni prenos - svi čvorovi su u istom kolizionom domenu)
+ - zvezda (u središtu je svič, svaki krak zvezde pripada zasebnom kolizionom domenu)
+
+Ethernet okvir se sastoji od:
+ - preambule (za sinhronizaciju prijemnika sa generatorom takta pošaljioca)
+ - MAC adrese odredišta i izvora (moraju da se poklope, inače adapter odbacuje okvir)
+ - podataka (tu se prenose podaci dobijeni od protokola sa mrežnog sloja)
+ - tipa (označava protokol višeg (mrežnog) sloja čije podatke prenosi okvir)
+ - CRC (ciklična provera redundanse u prijemnom adapteru, ako se detektuje greška, okvir se odbacuje)
+
+Nema uspostave veze između predajnog i prijemnog adaptera.
+Protokol je nepouzdan jer prijemni adapter (NIC) ne šalje nikakve potvrde prijema adapteru pošaljioca.
+Ethernetov MAC protokol omogućava višestruki pristup deljenom linku.
+
+Različiti Ethernet standardi su 10Base-T, 100Base-T i 1000Base-T.
+Oni se odnose na brzinu prenosa podataka od 10 Mbps, 100 Mbps i 1000 Mbps, respektivno.

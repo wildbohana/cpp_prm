@@ -1,0 +1,21 @@
+2.4. HTTP protokol – osnovne karaktersitike. Varijante HTTP konekcije
+
+HTTP (Hypertext Transfer Protocol) je protokol za prenos hiperteksta.
+On je web protokol u aplikativnom sloju, koristi TCP (soket sa portom 80) 
+i nema stanje (server ne čuva podatke o prethodnim klijentskim zahtevima).
+
+Dva tipa HTTP poruka: zahtev i odgovor.
+HTTP poruke na aplikativnom nivou se razmenjuju između pretraživača (HTTP klijent) i web servera (HTTP server).
+
+Varijante HTTP konekcije su nepresistentna i persistentna.
+Nepersistentne HTTP:
+ - najviše jedan objekat se šalje preko jedne TCP konekcije
+ - svaka TCP veza prenosi jednu poruku zahteva i jednu poruku odgovora
+ - definiše se RTT (Round Trip Time) - ukupno vreme potrebno za prenos i potvrdu jednog malog paketa
+ - po svakom objektu zahteva 2 dodatna RTT, uzrokuje OS opterećenje za svaku TCP konekciju
+Persistentna HTTP:
+ - više objekata se mogu poslati preko jedne TCP konekcije
+ - server ostavlja TCP konekciju otvorenom i po slanju svog odgovora
+ - klijent šalje novi zahtev čim otkrije neki novi objekat
+ - zahteve je moguće slati jedan za drugim bez čekanja odgovora (protočna obrada)
+ - troši samo 1 dodatni RTT za prenos svakog objekta 

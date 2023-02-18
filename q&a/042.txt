@@ -1,0 +1,16 @@
+3.16. TCP događaji na strani pošiljaoca.
+
+Na strani pošaljioca, TCP događaji uključuju uspostavljanje veze, slanje paketa, 
+čekanje potvrde primanja paketa i ponovno slanje paketa u slučaju gubitka.
+
+1. Prijem podataka od aplikacije
+ - enkapsulira podatke u segment sa rednim brojem
+ - rbr segmenta je broj prvog bajta podataka koji se prenosi datim segmentom
+ - ako tajmer već nije pokrenut, pokreni ga
+2. Istek vremena tajmera
+ - ponovo šalji segment koji je izazvao istek tajmera
+ - ponovo pokreni tajmer
+3. Prijem ACK potvrde
+ - ako dobijemo potvrdu prijema za nepotvrđen segment, moramo ažurirati sendBase primenljivu
+ - ako ima nepotvrđenih segmenata, moramo ponovo pokrenuti tajmer
+ 

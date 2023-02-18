@@ -1,0 +1,15 @@
+4.14. IP adresiranje – ko se adresira? Kakav je format i zapis IP adrese?
+
+IP adresa je 32-bitni identifikator interfejsa računara ili rutera.
+IP adresiranje se odnosi na proces dodeljivanja IP adresa računarima na mreži.
+
+Interfejs je granica između računara/rutera i fizičkog linka.
+Ruteri tipično imaju više interfejsa.
+Računar tipično ima jedan ili dva interfejsa (npr Ethernet i bežični 802.11).
+
+IP adrese su pridružene svakom interfejsu u mreži.
+One su globalno jedinstvene i zapisuju se u decimalnoj notaciji sa tačkom.
+
+IP adresa je sačinjena iz dva dela:
+ - podmrežni deo (biti višeg reda)
+ - host deo (biti nižeg reda)

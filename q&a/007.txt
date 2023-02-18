@@ -1,0 +1,13 @@
+1.7. Komutacija paketa – opis, značajne karakteristike. Poređenje komutacije kola i komutacije paketa.
+
+Komutacija paketa (Packet Switching) je tehnologija koja deli podatke na 
+manje delove (pakete) i svaki paket se prenosi preko mreže na određenu destinaciju. 
+Komutacija paketa omogućava da više korisnika koristi mrežu.
+
+Komutacija paketa je odlična za sporadičan saobraćaj, jer omogućava deljenje resursa, 
+jednostavnija je (nema uspostave veze), ali kašnjenje varira od paketa do paketa).
+Takođe je dobra u slučaju velikog zagušenja jer sadrži potrebne protokole za 
+pouzdan prenos podataka i kontrolu zagušenja.
+
+Komutacija kola rezerviše kanal za vreme komunikacije.
+Komutacija paketa ne rezerviše kanal i paketi se prenose u realnom vremenu.

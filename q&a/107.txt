@@ -1,0 +1,10 @@
+6.11. Postupak slanja datagrama izvan podmreže
+
+1. A kreira IP datagram sa IP adresom izvora A i IP adresom odredišta B
+2. A kreira okvir sloja veze sa MAC adresom rutera R kao odredišnom adresom; 
+   taj okvir enkapsulira IP datagram koji A šalje ka B
+3. Okvir je poslat od A ka R 
+4. Okvir je primljen u R, datagram je izvučen iz okvira i prosleđen ka IP sloju
+5. R prosleđuje datagram sa IP izvornom adresom A i odredišnom IP adresom B
+6. R kreira okvir sloja veze sa MAC adresom od B kao odredištem; 
+   okvir enkapsulira IP datagram poslat od A ka B 

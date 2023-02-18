@@ -1,0 +1,16 @@
+2.6. Veb keširanje (proxy server) – objašnjenje i značaj. Uslovni GET
+
+Web keširanje je proces koji pohranjuje kopiju web stranice na lokalnom računaru ili na serveru.
+Za cilj ima da ispuni zahtev klijenta bez pristupa izvornom serveru.
+
+Pretraživač ima opciju da usmeri HTTP zahteve ka proxy serveru.
+Ako je objekat već keširan, proxy ga odmah isporučuje.
+U suprotnom, obraća se izvornom serveru, isporučuje i pamti sadržaj.
+Proxy se ponaša i kao klijent i kao server.
+
+Upotreba keširanja ubrzava odgovor na zahtev korisnika, smanjuje saobraćaj ka globalnoj mreži i 
+unapređuje ukupne performanse Interneta u smislu pristupa i pretraživanja web sadržaja.
+
+Uslovni GET je metoda koja se koristi da se proveri da li je lokalna kopija web stranice ažurirana.
+Proxy server navodi datum svoje kopije objekta u HTTP zahtevu.
+Izvorni server, ako se traženi objekat nije promenio, vraća odgovor bez traženog objekta (praznu poruku).

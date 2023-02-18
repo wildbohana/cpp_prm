@@ -1,0 +1,11 @@
+3.13. TCP redni brojevi i broj potvrde – čemu služe?
+
+TCP redni brojevi i broj potvrde se koriste za potvrđivanje primanja paketa.
+
+Redni brojevi se koriste za označavanje svakog paketa koji se šalje.
+Redni broj predstavlja rbr prvog bajta podataka u segmentu unutar neprekidnog toka bajtova.
+Redni brojevi omogućavaju da se podaci primaju u ispravnom redosledu.
+
+Broj potvrde se koristi za potvrđivanje primanja paketa od strane primaoca.
+Broj potvrde predstavlja broj sledećeg bajta koji se očekuje da druga strana pošalje.
+Broj potvrde omogućava da se potvrdi da su svi paketi koji su poslati stigli na ciljnu adresu.

@@ -1,0 +1,11 @@
+3.1. Usluge protokola transportnog sloja
+
+Usluge protokola transportnog sloja su komunikacije između aplikacije i mrežnog interfejsa na računaru.
+One obezbeđuju mehanizme za uspostavljanje veze, upravljanje tokom, 
+kontrolu grešaka, kontrolu protoka i prenos podataka između aplikacija na različitim računarima.
+
+Mrežni sloj: 
+ - logička komunikacija između hostova
+Transportni sloj: 
+ - logička komunikacija između procesa
+ - oslanja se na usluge mrežnog sloja

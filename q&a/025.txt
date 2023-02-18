@@ -1,0 +1,13 @@
+2.15. DNS slogovi resursa (RR) – tipovi resursa
+
+DNS slogovi resursa (RR - resource records) su 
+tipovi resursa koji se koriste u DNS bazi podataka.
+RR format: (name, value, type, ttl)
+
+Neki od tipova su:
+ - A     (IPv4 adresa)
+ - AAAA  (IPv6 adresa)
+ - MX    (Mail Exchange)
+ - CNAME (Canonical Name)
+ - NS    (Name Server)
+ - TXT   (teksualni slog)

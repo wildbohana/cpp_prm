@@ -1,0 +1,14 @@
+6.14. Tabela komutiranja (switch table) – namena i njeno popunjavanje tokom samoobučavanja sviča
+
+Tabela komutiranja je tabela koja se koristi da se pohrane informacije o povezanosti računara u mreži.
+Tabela se popunjava tokom procesa samoobučavanja sviča kada se registruju novi uređaji na mreži.
+Tada svič u svoju tabelu unosi: 
+ - MAC adresu pošaljioca
+ - interfejs na koji je okvir stigao
+ - tekuće vreme
+
+Namena table komutiranja je da omogući sviču da efikasno preusmerava podatke.
+Ako svič u dolaznom paketu pronađe MAC adresu koja se nalazi u njegovoj tabeli komutiranja, 
+onda se okvir ili filtrira ili prosleđuje na interfejs na koji je pozvano odredište.
+Ako u svič dođe paket sa MAC adresom koja je nepoznata sviču, 
+okvir će se proslediti na sve interfejse osim na dolazni.

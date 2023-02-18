@@ -1,0 +1,23 @@
+6.4. Protokoli za višestruki pristup linku – uloga i zadatak. Podela MAC protokola
+
+Protokoli za višestruki pristup linku su odgovorni za upravljanje pristupom linku 
+kada više računara želi da se poveže sa istim linkom (deljeni difuzni kanal).
+Algoritmi koji određuju način deljenja kanala uređuju kada jedan čvor može da šalje pakete, 
+da bi bio usklađen sa drugim čvorovima.
+
+Želimo da jedan čvor može da šalje maksimalnom propusnom brzinom, 
+a kada ih ima više da svaki ima istu prosečnu brzinu slanja.
+Protokol je decentralizovan i jednostavan.
+
+Podela MAC protokola:
+1. Protokoli sa deljenjem kanala
+ - dele kanal na manje "delove" (vremenske odsečke, frekvencije, kodove)
+ - dodeljuju svakom čvoru deo kanala samo za njegovu upotrebu
+ - TDMA, FDMA
+2. Protokoli sa slučajnim pristupom
+ - nema podele kanala, dozvoljene su kolizije
+ - "oporavak" od kolizija
+ - ALOHA sa odsečcima, čista ALOHA, CSMA, CSMA/CD
+3. Protokoli sa smenjivanjem pristupa
+ - čvorovi se smenjuju u slanju, ali čvorovi koji imaju više da šalju mogu duže da koriste kanal
+ - protokoli sa prozivanjem, protokoli sa prosleđivanjem tokena

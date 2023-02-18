@@ -1,0 +1,15 @@
+6.18. VLAN prenošenje. 802.1q Ethernet okvir
+
+VLAN prenošenje se odnosi na proces prenosa podataka između uređaja unutar VLAN-a.
+To se obično vrši korišćenjem protokola kao što je 802.1q Ethernet okvir.
+
+Povezivanje VLAN svičeva je poznato kao VLAN prenošenje.
+Prenosni port je zasebno konfigurisani port koji služi za povezivanje dva VLAN sviča (za prenošenje okvira između ovih VLAN mreža).
+On pripada svim VLAN mrežama koje spaja.
+
+Protokol 802.1q je prošireni format Ethernet okvira za okvire koji prelaze preko prenosnog porta.
+Potreban nam je proširen Ethernet okvir zbog polja VLAN ID.
+Preko njega, komutator zna kojoj VLAN mreži pripada okvir koji je pristigao na prenosni port.
+
+VLAN oznaka nosi identitet VLAN mreže kojoj okvir pripada. 
+Nju dodaje komutator na predajnoj strani porta.

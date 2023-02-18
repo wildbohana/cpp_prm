@@ -1,0 +1,18 @@
+3.7. Čemu služi obeležavanje paketa rednim brojem? 
+Objašnjenje uloge ACK i NAK poruke. Objašnjenje duplikata ACK poruke.
+
+Obeležavanje paketa rednim brojem je dopuna stop and wait ARQ protokola.
+
+Ako je ACK/NAK potvrda oštećena, pošaljilac ne zna da li je primalac ispravno primio poslednji paket.
+Pošaljilac ne može samo da ponovi slanje, jer tada može da duplira paket.
+
+Kao rešenje problema, pošaljilac svaki paket obeležava rednim brojem.
+Ako za trenutni paket primi oštećen ACK/NAK, pošaljilac ponovo šalje taj paket.
+Ako je taj paket duplikat (primalac ga prepoznaje po rednom broju), odbacuje ga.
+
+Poruka ACK se šalje kada je primanje paketa uspešno.
+NAK poruka se šalje kada je primanje paketa neuspešno.
+
+Kada pošaljilac primi dve ACK poruke za isti paket, 
+on zna da primalac nije ispravno primio poslednji poslati paket.
+Tada pošaljilac ponovo šalje poslednji paket.

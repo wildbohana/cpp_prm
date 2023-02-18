@@ -1,0 +1,9 @@
+4.12. IP fragmentacija paketa i ponovno sastavljanje
+
+IP fragmentacija paketa se odnosi na proces deljenja velikih paketa 
+na manje pakete kako bi se preneli preko mreže.
+Dešava se u ruteru.
+
+Pravljenje paketa se odnosi na proces ponovnog sastavljanja 
+manjih paketa u jedan veliki paket na odredištu.
+Biti u IP zaglavlju se koriste za identifikaciju, oznake i slaganje fragmenata.

@@ -1,0 +1,9 @@
+5.1. Razlika između kontrolne ravni unutar svakog rutera i logički centralizovane kontrolne ravni
+
+Kontrolna ravan unutar svakog rutera obavlja rutiranje na osnovu lokalno poznatih informacija.
+I prosleđivanje i rutiranje se obavlja unutar svakog rutera.
+Komponenta za rutiranje unutar svakog rutera komunicira sa komponentama za rutiranje 
+u ostalim ruterima kako bi se izračunale vrednosti za njihove tabele prosleđivanja.
+
+Logički centralizovana ravan koristi globalnu kontrolu za rutiranje.
+Udaljeni kontroler izračunava i distribuira tabele prosleđivanja ka svim ruterima.

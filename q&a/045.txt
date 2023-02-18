@@ -1,0 +1,21 @@
+3.19. Prijemni prozor i kontrola toka – objašnjenje.
+
+Neka računar A šalje računaru B veliku datoteku.
+Računar B toj vezi dodeljuje prijemi bafer RcvBuffer.
+
+Imamo i dve promenljive - LastByteRead i LastByteRcvd.
+LastByteRead - broj poslednjeg bajta u toku podataka koji je proces prijemne aplikacije u računaru B učitao iz bafera.
+LastByteRcvd - broj poslednjeg bajta koji je stigao i smešten je u prijemni bafer na računaru B.
+
+Pošto TCP ne sme da prepuni prijemni bafer, mora da važi sledeće:
+ LastByteRcvd - LastByteRead <= RcvBuffer
+
+Prijemni prozor rwnd postavlja se na veličinu slobodnog prostora u prijemnom baferu.
+ rwnd = RcvBuffer - (LastByteRcvd - LastByteRead)
+
+Primalac (računar B) oglašava slobodan prostor u baferu tako što trenutnu vrednost 
+promenljive rwnd stavlja u polja TCP zaglavlja unutar segmenata koje šalje nazad pošaljiocu (računar A).
+
+Pošaljilac ograničava broj poslatih, a nepotvrđenih paketa tako da ne prevaziđu rwnd vrednost na prijemnoj strani
+ LastByteSend - LastByteAcked <= rwnd
+Time se osigurava da se prijemni bafer u računaru B neće preplaviti.

@@ -1,0 +1,8 @@
+4.25. Čemu služi tunelovanje i kako se realizuje?
+
+Tunelovanje je tehnika koja omogućava prenos podataka između dve mreže putem treće mreže.
+To se često koristi kada se žele prenositi podaci između IPv4 i IPv6 mreža.
+
+Tunelovanje se realizuje tako što se podaci iz jedne mreže kodiraju i prenose preko druge mreže, 
+a zatim se dekodiraju na odredištu.
+IPv6 datagram se prenosi kao podatak unutar IPv4 datagrama između IPv4 rutera.

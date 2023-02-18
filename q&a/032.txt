@@ -1,0 +1,14 @@
+3.6. Stani-i-čekaj protokol (stop and wait) – opis
+
+Stani i čekaj (stop and wait) je jednostavan protokol za kontrolu protoka 
+koji zahteva da pošaljilac čeka potvrdu primanja pre nego što pošalje sledeći podatak.
+
+Pošajilac pravi paket koji sadrži podatke kao i kontrolu sumu paketa, i zatim taj paket šalje.
+Detekcija grešaka na prijemu se vrši preko kontrolne sume (kod UDP protokola).
+
+Primalac šalje pošaljiocu pozitivne (ACK) ili negativne (NAK) potvrde prijema.
+
+Ako stigne ACK potvrda, paket je ispavno primljen, i pošaljilac pravi novi paket za slanje.
+Ako stigne NAK potvrda, pošaljilac ponovo šalje isti paket i čeka potvrdu od primaoca.
+Pošaljilac ne šalje novi paket sve dok se ne uveri da je primalac 
+ispravno primio tekući paket (stop and wait ARQ).

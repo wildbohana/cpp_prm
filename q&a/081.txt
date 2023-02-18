@@ -1,0 +1,15 @@
+5.3. Podela algoritama rutiranja
+
+Centralizovani:
+ - svi ruteri imaju informacije o svim vezama između čvorova i troškovima svih linkova
+ - ruteri imaju potpuna, globalna saznanja o mreži
+ - algoritmi "stanja linkova"
+Decentralizovani:
+ - ruter zna sve svoje susede i troškove linkova do svojih suseda
+ - iterativni proces izračunavanja, razmena informacija sa susedima
+ - algoritmi "vektora rastojanja"
+Statički:
+ - rute se menjaju veoma sporo
+Dinamički:
+ - rute se menjaju brže
+ - periodično osvežavanje kao odgovor na promene troškova linka

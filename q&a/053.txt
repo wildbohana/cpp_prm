@@ -1,0 +1,10 @@
+4.2. Mrežni sloj – uloge i razlike ravni podataka i kontrolne ravni
+
+Ravan podataka je funkcija unutar rutera.
+Određuje kako se datagram prenosi sa interfejsa ulaznog linka do odgovarajućeg interfejsa izlaznog linka rutera.
+Traje kratko, ostvaruje se u hardveru.
+
+Kontrolna ravan je logika unutar cele mreže.
+Određuje putanju (rutu) kojom paketi putuju od pošaljioca do primaoca.
+Traje nešto duže, obično se ostvaruje u softveru.
+Dva pristupa kontrolnoj ravni - tradicionalni algoritmi rutiranja i softverski definisano umrežavanje.

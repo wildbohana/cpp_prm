@@ -1,0 +1,125 @@
+Uvod u internet
+1.1. Internet – šta je Internet i koji su njegovi gradivni elementi?
+1.2. Šta su mrežni protokoli?
+1.3. Modeli izvršavanja aplikacija na krajnjim uređajima (klijent/server i peer-to-peer)
+1.4. Načini povezivanja na Internet – digitalna pretplatnička linija, kablovski pristup, optički pristup, bežični pristup, Ethernet pristupna mreža
+1.5. Fizički medijumi: vođeni (bakarne parice, coax, optika) i slobodni medijum (vrste radio linkova)
+1.6. Komutacija kola – osnovne karakteristike. Šta je TDM I FDM?
+1.7. Komutacija paketa – opis, značajne karakteristike. Poređenje komutacije kola i komutacije paketa.
+1.8. Kašnjenje paketa u mreži – 4 uzroka kašnjenja
+1.9. Internet protokol stek – nivoi i kratki opis. Koja je razlika Internet protokol steka i ISO/OSI referentnog modela?
+1.10. Šta je enkapsulacija paketa? Princip enkapsulacije.
+
+Aplikativni sloj
+2.1. Komunikacija između procesa. Klijentski i serverski proces.
+2.2. Pojam soketa (utičnice). Šta je soket? Kako se adresira proces?
+2.3. Web – osnovni pojmovi – Web stranica, objekti, URL, HTML datoteka
+2.4. HTTP protokol – osnovne karaktersitike. Varijante HTTP konekcije
+2.5. Tipovi HTTP metoda
+2.6. Veb keširanje (proxy server) – objašnjenje i značaj. Uslovni GET
+2.7. FTP protokol – osnovne karakteristike, namena, prenos komandi i podataka
+2.8. Elektronska pošta- tri glavne komponente (čitač pošte, mejl server, SMTP)
+2.9. SMTP protokol – osnovne karakteristike
+2.10. Protokoli za pristupanje e-pošti (POP3, IMAP, HTTP) – karakteristike i poređenje POP3 i IMAP
+2.11. DNS protokol – namena i vrste DNS usluga
+2.12. DNS baza podataka – objašnjenje hijerarhije DNS servera. Uloga svakog nivoa servera u hijerarhiji (korenski serveri, TLD serveri, Nadležni serveri)
+2.13. Lokalni DNS server – uloga
+2.14. Razrešenje DNS upita – rekurzivno i iterativno
+2.15. DNS slogovi resursa (RR) – tipovi resursa
+2.16. Dodavanje RR slogova u bazu
+
+Transportni sloj
+3.1. Usluge protokola transportnog sloja
+3.2. Kako funkcioniše multipleksiranje i demultipleksiranje podataka. Koji su važni parametri da bi se obavilo demultipleksiranje bez uspostave veze i sa uspostavom veze?
+3.3. UDP protokol – namena, opis i glavne karakteristike
+3.4. Tok komunikacije kod UDP protokola
+3.5. Protokoli sa automatskim ponavljanjem zahteva (ARQ protokoli) – šta rešavaju i funkcionalnosti koje uključuju
+3.6. Stani-i-čekaj protokol (stop and wait) – opis
+3.7. Čemu služi obeležavanje paketa rednim brojem? Objašnjenje uloge ACK i NAK poruke. Objašnjenje duplikata ACK poruke.
+3.8. Kako se rešava problem gubljenja paketa?
+3.9. Šta predstavlja protočno slanje paketa i koja su dva osnovna pristupa? Zašto se zovu protokoli sa kliznim prozorom?
+3.10. Vrati se za N (Go back N) – opis. Objašnjenje pošiljaoca i primaoca.
+3.11. Selektivno ponavljanje (selective repeat) – opis. Objašnjenje pošiljaoca i primaoca.
+3.12. TCP protokol – osnovne karaktersitike (uspostava veze, pouzdanost, kontrola toka, protočno slanje). Predajni i prijemni bafer
+3.13. TCP redni brojevi i broj potvrde – čemu služe?
+3.14. TCP i postavljanje vremena tajmera.
+3.15. Kako TCP obezbeđuje pouzdan prenos podataka? Kad se vrši ponovno slanje?
+3.16. TCP događaji na strani pošiljaoca.
+3.17. TCP brzo ponovno slanje (retransmisija) – kad se primenjuje i čemu služi?
+3.18. Šta predstavlja kontrola toka kod TCP protokola i koji je njen cilj?
+3.19. Prijemni prozor i kontrola toka – objašnjenje.
+3.20. Uspostava veze kod TCP protokola. Trostruko rukovanje – opis i objašnjenje koraka.
+3.21. TCP prekid veze.
+3.22. Tok aplikacije kod TCP protokola.
+3.23. Objasniti glavne uzroke i posledice zagušenja.
+3.24. Principi TCP kontrole zagušenja. Prozor zagušenja. Događaj gubitka.
+3.25. TCP algoritam za kontrolu zagušenja – objašnjenje sve tri faze (spori start, izbegavanje zagušenja, brz oporavak)
+
+Mrežni sloj - ravan podataka
+4.1. Uloga i ključne funkcije mrežnog sloja
+4.2. Mrežni sloj – uloge i razlike ravni podataka i kontrolne ravni
+4.3. Kontrolna ravan – tradicionalan i SDN pristup
+4.4. Opšti prikaz arhitekture rutera
+4.5. Funkcije ulaznih portova rutera
+4.6. Tabela prosleđivanja. Prosleđivanje na osnovu odredišta. Podudaranje najdužeg prefiksa.
+4.7. Tri tehnike komutiranja u ruteru
+4.8. Redovi čekanja na ulaznom i izlaznom portu.
+4.9. Raspoređivanje paketa – FIFO, po prioritetu, round robin, WFQ
+4.10. Protokoli mrežnog sloja Interneta
+4.11. Format IP datagrama –značenje pojedinih polja u IP zaglavlju
+4.12. IP fragmentacija paketa i ponovno sastavljanje
+4.13. Vrste adresiranja
+4.14. IP adresiranje – ko se adresira? Kakav je format i zapis IP adrese?
+4.15. Podmreža. Podela IP adrese (podmrežni deo i host deo). Adresa podmreže
+4.16. CIDR zapis IP adresa. Primer IP adresiranja
+4.17. Način dodeljivanja IP adresa – statički i dinamički
+4.18. DHCP protokol – uloga i karakteristike
+4.19. Opis koraka dobijanja IP adrese putem DHCP protokola
+4.20. DHCP – dobijanje dodatnih informacija
+4.21. Hijerarhijsko rutiranje – sažimanje ruta i određenije rute
+4.22. NAT (prevođenje mrežnih adresa) – namena i prednosti
+4.23. Zadaci NAT rutera – zamena IP adresa i portova, NAT tabela prevođenja
+4.24. IPv6 protokol – motivacija za uvođenje i glavne izmene u odnosu na IPv4
+4.25. Čemu služi tunelovanje i kako se realizuje?
+4.26. OpenFlow standard i softverski definisano umrežavanje (SDN) – pojam uopštenog prosleđivanja; Na osnovu kojih zaglavlja je moguće podudaranje? Koje su moguće akcije za podudaranja?
+4.27. OpenFlow apstrakcija rutera, komutatora, mrežne barijere i NAT-a.
+
+Mrežni sloj - kontrolna ravan
+5.1. Razlika između kontrone ravni unutar svakog rutera i logički centralizovane kontrolne ravni
+5.2. Šta je zadatak rutiranja? Putanja. Trošak putanje. Algoritam rutiranja.
+5.3. Podela algoritama rutiranja
+5.4. Algoritam rutiranja zasnovan na stanju linkova (LS algoritam). Primer.
+5.5. Algoritam rutiranja vektorom rastojanja (DV algoritam). Primer
+5.6. Poređenje LS i DV algoritma
+5.7. Pojam autonomnih sistema (AS). Zadaci rutiranja unutar AS i između AS
+5.8. Rutiranje unutar AS –OSPF protokol – koji algoritam koristi, kako se izvršava?
+5.9. OSPF troškovi linkova i napredne funkcije. Hijerarhijski OSPF.
+5.10. Rutiranje između AS –BGP protokol – uloga, karakteristike
+5.11. Pojam eBGP i iBGP veze. Šta se razmenjuje putem BGP sesije? BGP atributi i BGP rute.
+5.12. Postupak objavljivanja BGP ruta.
+5.13. Pravljenje unosa u tabeli prosleđivanja – povezanost BGP i OSPF protokola
+5.14. BGP izbor rute. Rutiranje vrućeg krompira.
+5.15. BGP politika rutiranja pomoću objavljivanja
+5.16. ICMP protokol – glavne funkcije i primena
+5.17. Ciljevi upravljanja mrežom. Opis glavnih elemenata za upravljanje mrežom
+5.18. SNMP – protokol za upravljanje mrežom – karakterisitke i dva režima prenošenja poruka
+
+Sloj veze
+6.1. Usluge sloja veze – pravljenje okvira, pristup linku, otkrivanje i ispravljanje grešaka
+6.2. Mrežni adapteri (NIC) – uloga i funkcije
+6.3. Tehnike za otkrivanje i ispravljanje grešaka (provera parnosti, kontrolna suma, ciklična provera redundanse). Primeri
+6.4. Protokoli za višestruki pristup linku – uloga i zadatak. Podela MAC protokola
+6.5. Protokoli sa slučajnim pristupom – karakteristike i vrste protokola
+6.6. ALOHA sa odsečcima i čista ALOHA
+6.7. Protokoli za višestruki pristup sa prepoznavanjem nosioca (CSMA) . CSMA sa otkrivanjem kolizija (CSMA/CD)
+6.8. Ethernet CSMA/CD algoritam. Binarno eksponencijalno odlaganje. Efikasnost
+6.9. Protokoli sa smenjivanjem pristupa (protokol sa prozivanjem i protokol sa prosleđivanjem tokena)
+6.10. Fizičke (MAC) adrese (format i značaj). ARP protokol (svrha, ARP tabele, postupak prevođenja adresa)
+6.11. Postupak slanja datagrama izvan podmreže
+6.12. Eternet – uloga, glavne karakteristike, fizička topolgija, format okvira, različiti Eternet standardi
+6.13. Komutatori sloja veze (svičevi) –uloga i karaktersitike
+6.14. Tabela komutiranja (switch table) – namena i njeno popunjavanje tokom samoobučavanja sviča
+6.15. Postupak prosleđivanja i filtriranja paketa u sviču. Opis sva tri moguća slučaja.
+6.16. Poređenje komutatora i rutera
+6.17. Virtuelne lokalne računarske mreže (VLAN) - razlozi postojanja, uloga, VLAN mreže zasnovane na portovima
+6.18. VLAN prenošenje. 802.1q Ethernet okvir

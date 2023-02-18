@@ -1,0 +1,9 @@
+4.20. DHCP – dobijanje dodatnih informacija
+
+DHCP, osim dodeljene IP adrese u podmreži, takođe može da vrati i:
+ - adresu podrazumevanog rutera (default gateway)
+ - ime i IP adresu DNS servera
+ - podmrežnu masku (koja je indikator mrežnog prefiksa)
+
+Ove podatke klijent može da traži od izabranog DHCP servera 
+tek nakon što završi sa konfiguracijom IP adrese.

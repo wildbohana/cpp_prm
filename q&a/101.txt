@@ -1,0 +1,13 @@
+6.5. Protokoli sa slučajnim pristupom – karakteristike i vrste protokola
+
+Protokoli sa slučajnim pristupom koriste slučajni odabir vremena 
+da se osigura da svi računari imaju jednaku šansu za pristup linku.
+
+Protokoli sa slučajnim pristupom određuju:
+ - kako prepoznati kolizije
+ - kako se oporaviti od kolizija
+
+Primeri protokola:
+ - ALOHA sa odsečcima
+ - ALOHA
+ - sa prepoznavanjem nosioca (CSMA)

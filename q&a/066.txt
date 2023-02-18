@@ -1,0 +1,8 @@
+4.15. Podmreža. Podela IP adrese (podmrežni deo i host deo). Adresa podmreže
+
+Podmrežu čine interfejsi uređaja sa istim podmrežnim delom IP adrese.
+Svi uređaji unutar podmreže mogu komunicirati bez rutera kao posrednika.
+
+Podela IP adrese se odnosi na to kako se podmrežni deo i 
+host deo IP adrese koriste za identifikaciju mreže i računara na mreži.
+Adresa podmreže se koristi za identifikaciju mreže.

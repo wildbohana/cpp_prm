@@ -1,0 +1,12 @@
+1.1. Internet – šta je Internet i koji su njegovi gradivni elementi?
+
+Internet je globalna mreža računara koja omogućava razmenu informacija 
+i usluga putem različitih tehnologija i protokola.
+Internet je mreža sastavljena od mnogo mreža, hijerarhijski organizovana.
+
+Gradivni elementi Interneta:
+ - računari - krajnji sistemi, na njima se izvršavaju mrežne aplikacije
+ - mrežni uređaji - prosleđuju pakete (ruteri, svičevi...)
+ - protokoli - kontrolišu slanje i prijem poruka (TCP, IP, HTTP...)
+ - standardi (usvaja ih IETF)
+ - infrastruktura (kablovi, radio, sateliti...)

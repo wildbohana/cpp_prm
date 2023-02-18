@@ -1,0 +1,27 @@
+2.8. Elektronska pošta - tri glavne komponente (čitač pošte, mejl server, SMTP)
+
+Elektronska pošta je sistem za razmenu tekstualnih i multimedijalnih poruka preko Interneta.
+
+Tri glavne komponente su:
+ - user agent (čitač pošte)
+ - mail server
+ - SMTP (Simple Mail Transfer Protocol)
+ 
+Čitač pošte:
+ - koristi se za pregled i čitanje poruka
+ - komunicira sa mail serverom radi pristupa dolaznim i odlaznim email porukama
+ - Primeri: Outlook, Apple Mail, Mozilla Thunderbird
+
+Mail server:
+ - računar koji pohranjuje i razmenjuje poruke
+ - mailbox sadrži dolazne poruke za korisnika
+ - red poruka za slanje
+ - za komunikaciju između servera se koriste SMTP i TCP
+
+SMTP (Simple Mail Transfer Protocol):
+ - protokol koji se koristi za slanje poruka
+ - koristi TCP za pouzdan prenos email poruka od klijenta do servera (port 25)
+ - direktan prenos bez posrednika između mejl servera
+ - tri faze prenosa: uspostava veze, prenos poruke, zatvaranje
+ - command/response interakcija
+ - poruke moraju biti u 7-bitnom ASCII kodu

@@ -1,0 +1,14 @@
+4.18. DHCP protokol – uloga i karakteristike
+
+DHCP (Dynamic Host Configuration Protocol) se koristi 
+za automatsku dodelu IP adresa računarima na mreži.
+Uloga DHCP protokola je da osigura da svaki računar na mreži 
+ima jedinstvenu i validnu IP adresu.
+
+DHCP radi na aplikativnom nivou (UDP, portovi 67 i 68).
+Po priključenju terminala u mrežu, DHCP korisniku šalje IP adresu.
+
+Osim dodeljene IP adrese u podmreži, DHCP može da vrati i:
+ - adresu podrazumevanog rutera (default gateway)
+ - ime i IP adresu DNS servera
+ - podmrežnu masku (indikator mrežnog prefiksa)

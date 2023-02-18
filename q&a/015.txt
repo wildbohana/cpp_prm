@@ -1,0 +1,10 @@
+2.5. Tipovi HTTP metoda
+
+HTTP metode su komande koje se koriste u HTTP protokolu da se specificira radnja koja se želi izvršiti na Web stranici.
+Tipovi HTTP metoda: GET, POST, HEAD, PUT, DELETE, ...
+
+GET    - uzmi
+POST   - postavi, pošalji (u telu poruke se nalaze podaci koji se šalju)
+HEAD   - proveri da li objekat postoji (kao GET, ali traži od servera da u svom odgovoru izostavi zahtevani objekat)
+PUT    - postavi fajl (prenos fajla iz tela poruke na lokaciju zadatu URL poljem)
+DELETE - obriši datoteku (označenu URL poljem)

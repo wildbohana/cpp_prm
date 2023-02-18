@@ -1,0 +1,11 @@
+1.8. Kašnjenje paketa u mreži – 4 uzroka kašnjenja
+
+Kašnjenje paketa u mreži može biti uzrokovano od strane četiri različita faktora:
+ - obrada u čvoru 
+   (provera grešaka u prenosu, određivanje izlaznog linka)
+ - čekanje u redu 
+   (vreme čekanja da se oslobodi link za prenos; zavisi od nivoa zagušenja u ruteru)
+ - kašnjenje pri emitovanju 
+   (predstavlja odnos dužine paketa i protoka linka)
+ - kašnjenje pri propagaciji 
+   (predstavlja odnos dužine linka i brzine propagacije u medijumu)

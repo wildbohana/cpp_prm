@@ -1,0 +1,14 @@
+4.19. Opis koraka dobijanja IP adrese putem DHCP protokola
+
+1. DHCP otkrivanje
+ - klijent šalje zahtev za otkrivanje DHCP servera
+ - koristi IP broadcast adresu
+2. DHCP ponuda
+ - server odgovara ponudom IP adrese i dužinom njenog trajanja
+3. DHCP zahtev
+ - klijent može da primi nekoliko ponuda od više različitih DHCP servera
+ - u ovom koraku klijent bira IP adresu i određeni server
+4. DHCP potvrda
+ - server potvrđuje dodelu
+
+Po završetku ove procedure, klijent može da zatraži ostale konfiguracione podatke

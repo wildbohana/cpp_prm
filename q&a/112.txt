@@ -1,0 +1,13 @@
+6.16. Poređenje komutatora i rutera
+
+Ruteri imaju više interfejsa i preusmeravaju podatke između različitih podmreža.
+
+Svičevi preusmeravaju podatke unutar iste podmreže.
+Svičevi su uređaji sloja veze (ispituju zaglavlje sloja veze).
+Oni sami popunjavaju tablu komutiranja, a zatim prosleđuju/preplavljuju/odbacuju pakete.
+Koriste MAC adrese.
+
+Ruteri imaju mogućnost rutiranja podataka na osnovu IP adresa, dok svičevi ne poseduju ovu mogućnosti.
+Ruteri su uređaji mrežnog sloja (ispituju zaglavlje mrežnog sloja).
+Oni izračunavaju tabele za rutiranje pomoću algoritama rutiranja.
+Koriste IP adrese.

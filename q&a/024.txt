@@ -1,0 +1,9 @@
+2.14. Razrešenje DNS upita – rekurzivno i iterativno
+
+Razrešenje DNS upita se može obaviti na dva načina: rekurzivno i iterativno.
+
+Rekurzivno razrešenje znači da se DNS server obraća samo svojoj bazi podataka za odgovor na upit.
+Jednom predati upit se razrešava unutar DNS sistema.
+
+Iterativno razrešenje znači da se DNS server obraća drugim serverima ako ne može dati odgovor na upit.
+Svaki od servera, ako ne zna odgovor, u odgovoru navodi ime sledećeg servera.

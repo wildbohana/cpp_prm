@@ -1,0 +1,9 @@
+2.2. Pojam soketa (utičnice). Šta je soket? Kako se adresira proces?
+
+Procesi šalju/primaju poruke u/iz mreže kroz soket.
+Soket je posrednih (interfejs) između aplikativnog i transportnog sloja unutar računara.
+Soket je API - programski interfejs aplikacije.
+
+Da bi primili poruke, procesi moraju imati identifikator.
+Identifikator uključuje i IP adresu i broj porta pridružen datom procesu na krajnjem uređaju.
+Svaki krajnji uređaj ima jedinstvenu 32-bitnu adresu.

@@ -1,0 +1,15 @@
+4.23. Zadaci NAT rutera – zamena IP adresa i portova, NAT tabela prevođenja
+
+Zadaci NAT rutera su zamena IP adresa i portova kako bi se omogućilo 
+višestruko korišćenje jedne javne IP adrese u privatnoj mreži.
+NAT tabela prevođenja je tabela koja sadrži informacije o mapiranju 
+privatnih IP adresa na javne IP adrese.
+
+Prilikom slanja datagrama, NAT ruter ima zadatak da zameni izvornu IP adresu i 
+izvorni broj porta za svaki izlazni datagram u NAT IP adresu i novi broj porta.
+
+NAT ruter mora da zapamti unutar NAT tabele prevođenja svaki par prevođenja 
+{(izvorna adresa, izvorni port), (NAT IP adresa, novi broj porta)}.
+
+Prilikom primanja datagrama, NAT ruter ima zadatak da zameni (NAT IP adresu, novi broj porta) 
+upisane u polje odrdišne adrese sa odgovarajučim (izvorna IP adresa, izvorni port) koji su sačuvani u NAT tabeli.

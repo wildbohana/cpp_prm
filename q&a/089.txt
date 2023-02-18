@@ -1,0 +1,15 @@
+5.11. Pojam eBGP i iBGP veze. Šta se razmenjuje putem BGP sesije? BGP atributi i BGP rute.
+
+BGP parovi rutera razmenjuju informacije uspostavljanjem TCP veza i slanjem BGP poruka preko njih (BGP veza).
+
+eBGP (External Border Gateway Protocol) veze se odnose na veze između različitih AS.
+iBGP (Internal Border Gateway Protocol) veze se odnose na veze unutar istog AS.
+Informacije o dostupnosti se prenose korišćenjem i iBGP i eBGP veza.
+
+BGP sesiju čine dva rutera koja razmenjuju BGP poruke preko polutrajne TCP veze.
+Sesije se koriste za razmenu informacija o rutama između rutera.
+
+BGP atributi su informacije koje se koriste za određivanje putanje.
+Dva važna atributa:
+ - AS-PATH  - sadrži spisak svih AS kroz koje je prošla objava za odgovarajući prefiks
+ - NEXT-HOP - označava IP adresu interfejsa rutera kojim počinje AS-PATH (ruter u susednom AS)

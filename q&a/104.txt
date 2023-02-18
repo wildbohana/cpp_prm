@@ -1,0 +1,20 @@
+6.8. Ethernet CSMA/CD algoritam. Binarno eksponencijalno odlaganje. Efikasnost
+
+Ethernet CSMA/CD (Carrier Sense Multiple Access with Collision Detection) algoritam 
+se koristi za kontrolu pristupa u Ethernet mrežama.
+
+Ovaj algoritam funkcioniše na sledeći način:
+ 1. NIC (mrežni adapter) prima datagram sa mrežnog sloja i enkapsulira ga u okvir
+ 2. pre slanja, NIC osluškuje stanje kanala; 
+    ako je kanal slobodan, NIC počinje sa slanjem okvira; 
+	ako NIC otkrije da je kanal zauzet, čeka dok kanal ne postane slobodan, i tek onda šalje okvir
+ 3. tokom prenosa, NIC nadgleda prisustvo energije signala od drugih adaptera; 
+    ako NIC pošalje okvir bez detektovanja kolizije, znači da je okvir uspešno poslat
+ 4. ako NIC detektuje koliziju tokom slanja, 
+    prekida slanje svog okvira i šalje dodatni "jam" signal
+ 5. nakon prekida, NIC ulazi u postupak binarnog eksponencijalnog odlaganja; 
+    posle m-te kolizije, NIC bira nasumičan broj K iz skupa {0, 1, ..., 2^m - 1} i čeka K*512 bitskih vremena; 
+	nakon toga se vraća na korak 2 i ponovo proverava stanje kanala
+
+Ovaj algoritam značajno smanjuje šanse za ponavljanje kolizije, 
+što značajno povećava učinkovitost Ethernet mreže.

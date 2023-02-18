@@ -1,0 +1,15 @@
+5.18. SNMP – protokol za upravljanje mrežom – karakterisitke i dva režima prenošenja poruka
+
+SNMP (Simple Network Management Protocol) se koristi za upravljanje mrežom.
+To je protokol aplikativnog nivoa.
+
+Koristi se za prenošenje kontrolnih poruka i informacija između upravljačkog servera 
+i agenata u upravljanim uređajima.
+
+Najčešće radi u režimu "zahtev i odgovor".
+Agent može samostalno da pošalje poruku serveru "poruka o prekidu" ukoliko se desi vanredni događaj.
+
+Postoje dva režima prenošenja poruka SNMP-a:
+ - režim jednostavnog prenošenja
+ - režim sigurnog prenošenja
+SNMP poruke se obično prenose preko UDP protokola (kao podaci unutar UDP datagrama).

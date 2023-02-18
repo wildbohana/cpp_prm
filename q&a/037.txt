@@ -1,0 +1,17 @@
+3.11. Selektivno ponavljanje (selective repeat) – opis. Objašnjenje pošiljaoca i primaoca.
+
+Selektivno ponavljanje je tip ARQ protokola koji se koristi za automatsko ponavljanje zahteva 
+za prenos podataka kada se pojave greške u prenosu.
+Razlikuje se od drugih tipova ARQ protokola po tome što selektivno ponavljanje ponavlja samo 
+one pakete koji su greškom preneti, dok ostali paketi koji su uspešno preneti ne moraju da se ponavljaju.
+
+Selektivno ponavljanje:
+ - pošaljilac može da ima do N nepotvrđenih paketa koje je poslao
+ - primalac šalje pojedinačni ACK za svaki paket
+ - pošaljilac ima tajmer za svaki nepotvrđeni paket
+ - kada tajmer istekne, pošaljilac ponovo šalje samo taj nepotvrđeni paket
+
+Prednost selektivnog ponavljanja je da se smanjuje količina podataka koja se mora ponovo preneti, 
+što dovodi do manjeg vremena prenosa i manje prepunjenosti u mreži.
+Međutim, ovaj protokol zahteva veću memoriju i procesorsku moć pošaljioca i primaoca 
+jer moraju da numerišu i prate stanja svakog paketa.

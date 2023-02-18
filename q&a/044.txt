@@ -1,0 +1,9 @@
+3.18. Šta predstavlja kontrola toka kod TCP protokola i koji je njen cilj?
+
+Kontrola toka kod TCP protokola ima za cilj da ograniči brzinu slanja 
+podataka pošaljiocu kako bi se izbeglo preopterećenje mreže i primaoca.
+To se postiže korišćenjem prozora zagušenja i algoritma za kontrolu zagušenja.
+
+Princip kontrole toka:
+Prijemna strana kontroliše pošaljioca, tako da pošaljilac ne prepuni 
+prijemni bafer primaoca slanjem suviše mnogo podataka, suviše velikom brzinom.

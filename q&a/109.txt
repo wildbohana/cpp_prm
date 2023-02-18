@@ -1,0 +1,17 @@
+6.13. Komutatori sloja veze (svičevi) – uloga i karaktersitike
+
+Komutatori sloja veze su uređaji koji se koriste u LAN-ovima da se 
+poveže više računara i omogući im se pristup linku.
+Glavna uloga svičeva je da omoguće preusmeravanje podataka između računara na mreži.
+
+Svičevi imaju aktivnu ulogu u prosleđivanju Ethernet okvira.
+Pristupaju MAC adresi u dolaznom okviru, pa selektivno prosleđuju okvir ka određenom linku.
+Nevidljivi su za hostove (kranje uređaje).
+Komutatori su samoobučavajući uređaji (ne treba da se konfigurišu).
+
+Računari imaju direktan link ka sviču.
+Svič baferuje primljene pakete.
+Ethernet protokol se koristi na svakom ulaznom linku, ali nema kolizija (puna dupleksna veza).
+
+Svičevi se razlikuju od rutera po tome što ruteri imaju više interfejsa i preusmeravaju 
+podatke između različitih mreža, dok svičevi preusmeravaju podatke unutar iste podmreže.

@@ -1,0 +1,32 @@
+1.4. Načini povezivanja na Internet – digitalna pretplatnička linija, 
+kablovski pristup, optički pristup, bežični pristup, Ethernet pristupna mreža
+
+Načini povezivanja na Internet se odnose na različite tehnologije 
+koje se koriste za povezivanje računara ili uređaja sa Internetom:
+ - Digitalna pretplatnička linija (DSL)
+ - Kablovski pristup
+ - Optički pristup
+ - Bežični pristup
+ - Ethernet
+
+Digitalna pretplatnička linija (DSL) se koristi za povezivanje računara preko telefonske linije.
+Sadrži sopstvenu fizičku liniju do telefonske centrale.
+Govor i podaci prenose se na različitim frekvencijama preko postojeće telefonske linije do centrale.
+
+Kablovski pristup se koristi za povezivanje preko kabelske televizije.
+Mreža hibridnih optičkih koaksijalnih kablova i optičkih vlakana povezuje kuće sa ruterom Internet provajdera.
+Korisnici dele pristup ruteru, za razliku od DSL u kom svaki korisnik ima sopstveni pristup.
+
+Optički pristup se koristi za povezivanje preko optičkih vlakana.
+Koriste se dve optičke tehnologije: Passive Optical network i Active Optical network.
+Ostvaruju se mnogo veći protoci; moguć je prenos preko TV i telefonije.
+
+Bežični pristup se koristi za povezivanje preko radio talasa.
+Krajnji sistemi se povezuju sa ruterom u ovoj mreži preko bazne stanice (tačke pristupa, "access point").
+Bežični LAN-ovi imaju mali domet, ali veće brzine.
+Bežični prisup na širem području ima veći domet, ali manje brzine, 
+obezbeđen je od telekomunacionog operatera i služi za mobilnu telefoniju (3G, 4G, LTE).
+
+Ethernet pristupna mreža se koristi za povezivanje računara ili uređaja preko kabela.
+Tipično se koristi u kompanijama, na univerzitetima...
+Danas se krajnji sistemi obično povezuju na Ethernet svič.

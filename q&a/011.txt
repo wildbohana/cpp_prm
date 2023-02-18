@@ -1,0 +1,11 @@
+2.1. Komunikacija između procesa. Klijentski i serverski proces.
+
+Proces je program koji se izvršava na krajnjem uređaju.
+Procesi na različitim krajnjim uređajima međusobno komuniciraju 
+razmenom poruka kroz računarsku mrežu.
+
+Komunikacija između procesa je proces prenosa podataka 
+između dva ili više procesa na računaru ili u mreži.
+
+Klijentski proces je proces koji inicira zahtev za uslugom.
+Serverski proces je proces koji pruža tu uslugu.

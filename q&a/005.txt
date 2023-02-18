@@ -1,0 +1,19 @@
+1.5. Fizički medijumi: vođeni (bakarne parice, coax, optika) i slobodni medijum (vrste radio linkova)
+
+Fizički medijumi se odnose na materijale ili tehnologije koje se koriste 
+za fizičko povezivanje računara ili uređaja na mrežu ili Internet.
+
+Vođeni medijumi su oni koji koriste fizički kabl za prenos podataka, 
+kao što su bakarne parnice, coax (kabl sa centralnom žicom) ili optika (optički kabl).
+Ovi mediji su ograničeni u dometu i treba ih fizički povezati sa uređajima.
+Koaksijalni kabl - dva koncentrična bakarna provodnika.
+Optička vlakna - stakleno vlakno nosi svetlnosne impulse, svaki impuls je jedan bit.
+
+Slobodni medijumi su oni koji koriste radio talase za prenos podataka, 
+kao što su različiti radio linkovi (Wi-Fi, Bluetooth, cellular itd).
+Ovi medijumi ne zahtevaju fizičku vezu između uređaja i omogućavaju bežično povezivanje.
+Tipovi radio linkova:
+ - zemaljski mikrotalasi
+ - LAN (npr WiFi)
+ - široko područje (npr mobilna telefonija)
+ - satelitski (npr GEO)

@@ -1,0 +1,11 @@
+3.4. Tok komunikacije kod UDP protokola
+
+Tok komunikacije kod UDP protokola je jednostavan.
+Klijent šalje poruke serveru bez prethodnog uspostavljanja veze ili potvrde da su podaci stigli.
+
+Open - evidentiranje kod UDP drajvera
+Bind - omogućava prijem, definiše server
+SendTo/RecvFrom - nezavisna razmena paketa podataka, druga strana se specificira parom Adresa/Port 
+Close - obe strane ga mogu inicirati
+
+Aplikacija poziva funkcije UDP rukovaoca, koji je deo OS.

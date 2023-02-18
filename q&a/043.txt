@@ -1,0 +1,9 @@
+3.17. TCP brzo ponovno slanje (retransmisija) – kad se primenjuje i čemu služi?
+
+TCP brzo ponovno slanje (retransmisija) se primenjuje kada se otkrije gubitak paketa.
+Cilj je da se što pre ponovo pošalju izgubljeni paketi kako bi se izbeglo kašnjenje u prenosu podataka.
+
+Ako pošaljilac primi 3 dodatne ACK potvrde za isti segment, 
+on će ponovo poslati nepotvrđeni segment sa najmanjim rednim brojem.
+Vrlo je verovatno da je taj nepovrđen segment izgubljen, pa ne treba čekati njegov istek tajmera, 
+nego ga što pre poslati da bi paketi posle njega mogli uspešno da se pošalju.

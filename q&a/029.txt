@@ -1,0 +1,25 @@
+3.3. UDP protokol – namena, opis i glavne karakteristike
+
+UDP (User Datagram Protocol) je protokol bez uspostave veze koji se koristi za prenos podataka u mreži.
+U toku prenosa vrši najmanje što transportni protokol može da uradi:
+ - multipleksiranje
+ - demultipleksiranje
+ - proveru grešaka pri prenosu
+
+To je protokol bez uspostave veze (nema rukovanja između pošaljioca i primaoca).
+Ovo smanjuje vremenska kašnjenja.
+Nema kontrole zagušenja (omogućava slanje podataka velikom brzinom).
+Svaki UDP segment se prenosi nezavisno od drugih segmenata.
+Segmenti se isporučuju van redosleda u krajnjoj aplikaciji.
+
+UDP koriste aplikacije za protok multimedijalnih zapisa, koji su tolerantni na gubitke, a osetljivi na brzinu slanja.
+UDP koriste i DNS (prevođenje imena) i SNMP (upravljanje mrežom).
+
+Pouzdanost prenosa preko UDP se dodaje na aplikativnom sloju.
+Oporavak od greške se dodaje na aplikativnom nivou.
+
+Zaglavlje segmenta ima 32 bita, sadrži izvorni port, odredišni port, 
+dužinu celokupnog UDP segmenta (u bajtima) i kontrolnu sumu.
+
+UDP server je definisan parom [IP adresa, port].
+Svaki datagram sa tim odredištem će biti prihvaćen, bez obzira ko ga šalje.

@@ -1,0 +1,22 @@
+2.10. Protokoli za pristupanje e-pošti (POP3, IMAP, HTTP) – karakteristike i poređenje POP3 i IMAP
+
+SMTP - isporuka/čuvanje na serveru primaoca.
+Protokoli za pristupanje e-pošti - preuzimanje od servera.
+
+Protokoli za pristupanje pošti su:
+ - POP3 (Post Office Protocol version 3)
+ - IMAP (Internet Message Access Protocol)
+ - HTTP (Hypertext Transfer Protocol)
+
+POP3 se koristi za preuzimanje poruka sa mail servera.
+Osim preuzimanja poruka, obavlja i njihovo brisanje sa servera (download and delete režim).
+Koristi TCP (port 110).
+Ima fazu autorizacije, fazu transakcije, quit za kraj sesije i fazu ažuriranja.
+POP3 je stateless između sesija (one su međusobno nezavisne).
+
+IMAP omogućava pregled i upravljanje porukama na mail serveru.
+Kompleksniji je, porukama se može pristupiti sa raznih računara, jer poruke ne mogu da se brišu sa njega.
+Dozvoljava korisnicima da sami organizuju svoje poruke u foldere.
+Zato IMAP nije stateless (vodi računa o korisnicima).
+
+HTTP se koristi za pristupanje e-pošti preko web-sučelja.

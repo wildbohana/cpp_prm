@@ -1,0 +1,8 @@
+4.4. Opšti prikaz arhitekture rutera
+
+Arhitektura rutera obično se sastoji od:
+ - procesora rutiranja
+ - komutatorske mreže
+ - ulaznih/izlaznih portova rutera
+
+Ruteri su sposobni da rutiraju pakete između različitih mreža koristeći tablice rutiranja.

@@ -1,0 +1,14 @@
+4.1. Uloga i ključne funkcije mrežnog sloja
+
+Uloga mrežnog sloja je da omogući komunikaciju između računara na različitim mrežama.
+
+Na strani pošaljioca enkapsulira transportne segmente u IP datagrame i zatim ih šalje najbližem ruteru.
+Na strani primaoca prima datagrame od najbližeg rutera, 
+izdvaja segment transportnog sloja i isporučuje ga transportnom sloju.
+
+Protokoli mrežnog sloja postoje u svakom hostu (krajnjem uređaju) i ruteru.
+Ruteri ispisuju pola zaglavlja svih IP datagrama koji prođu kroz njih.
+
+Dve ključne funkcije mrežnog sloja su prosleđivanje i rutiranje.
+Prosleđivanje - premeštanje paketa sa ulaznog linka rutera do odgovarajučeg izlaznog linka rutera.
+Rutiranje - određivanje rute koje će paketi preći kroz celu mrežu od izvornog do odredišnog računara.

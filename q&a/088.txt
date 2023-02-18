@@ -1,0 +1,12 @@
+5.10. Rutiranje između AS–BGP protokola – uloga, karakteristike
+
+BGP (Border Gateway Protocol) je protokol za rutiranje između autonomnih sistema (AS) na internetu.
+To je "lepak koji drži internet povezanim" i korišćen je od strane svih rutera na internetu.
+
+BGP je decentralizovan i asinhron protokol koji koristi vektor rastojanja za rutiranje.
+Uloga BGP-a je da izačuna stavku u tabeli prosleđivanja za odredište izvan AS-a.
+U slučaju BGP, odredišta nisu računari već podmreže sa specifičnim prefiksom u CIDR šemi.
+
+BGP omogućva ruterima da pribave informacije o dostupnosti podmreža 
+do susednih AS-ova i da odrede "najbolju" rutu do određenih prefiksa.
+To se postiže kombinacijom informacija o dostupnosti i politike rutiranja.

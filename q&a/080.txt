@@ -1,0 +1,8 @@
+5.2. Šta je zadatak rutiranja? Putanja. Trošak putanje. Algoritam rutiranja.
+
+Zadatak rutiranja je da odredi putanju kojom će podaci putovati kroz mrežu, 
+koristeći algoritam za određivanje najbolje putanje, koji se zasniva na trošku putanje.
+Trošak putanje se odnosi na kriterijum koji se koristi za određivanje najbolje putanje, 
+kao što je npr. minimalan broj skokova ili minimalna propusnost.
+Algoritam rutiranja je algoritam koji se koristi za određivanje najbolje putanje 
+(putanju najmanjeg troška između dva čvora).

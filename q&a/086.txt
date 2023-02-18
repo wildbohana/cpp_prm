@@ -1,0 +1,9 @@
+5.8. Rutiranje unutar AS–OSPF protokola – koji algoritam koristi, kako se izvršava?
+
+OSPF (Open Shortest Path First) protokol je algoritam rutiranja koji se koristi za rutiranje unutar AS.
+On koristi LS algoritam i koristi se za određivanje putanje na osnovu najkraćeg puta.
+OSPF se izvršava tako što se u mreži kreiraju LS baze podataka 
+(topološka mapa celog AS, Dijkstra algoritam) i na osnovu njih se određuje putanja.
+
+Ruter povremeno šalje poruke ka svim ostalim ruterima u AS da ih obavesti 
+o trenutnom stanju, bez obzira da li se stanje likova promenilo.

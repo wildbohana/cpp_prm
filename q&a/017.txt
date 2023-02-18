@@ -1,0 +1,28 @@
+2.7. FTP protokol – osnovne karakteristike, namena, prenos komandi i podataka
+
+FTP (File Transfer Protocol) je protokol koji se koristi za prenos datoteka preko interneta.
+Osnovne karekteristike su:
+ - klijent-server arhitektura (klijent inicira prenos, serverski port 21)
+ - podrška za različite vrste prenosa (binarni, ASCII)
+ - podrška za kontrolu verzija
+
+FTP klijent koristi TCP, traži FTP servera na portu 21.
+Preko kontrolne konekcije se vrši autentifikacija klijenta.
+Zatim se vrši pregled udaljenog fajl direktorijuma i zahteva se prenos.
+Prenos se odvija preko druge TCP veze koju otvara server.
+Po prenosu jedne datoteke, server zatvara ovu konekciju.
+Za svaku novu datoteku koja se prenosi, otvara se nova konekcija.
+
+FTP server održava stanje korisnika u toku sesije (trenutno direktorijum gde se nalazi, prethodnu autentifikaciju isl).
+To usložnjava realizaciju FTP servera u smislu podrške istovremenom radu više korisnika.
+
+Prenos komandi i podataka se vrši preko dva kanala: kontrolnog kanala i kanala za podatke.
+FTP komande se šalju preko kontrolne veze kao ASCII tekst.
+Neke komande: USER username, PASS password, LIST, RETR filename, STOR filename...
+
+Povratni kodovi (status code and phase) postoje, isto kao u HTTP.
+Neki povratni kodovi:
+ - 331 Username OK, password required
+ - 125 data connection allready open 
+ - 425 can't open data connection
+ - 452 error writin file 

@@ -1,0 +1,9 @@
+4.17. Način dodeljivanja IP adresa – statički i dinamički
+
+Način dodeljivanja IP adresa se odnosi na to kako se 
+IP adrese dodeljuju računarima na mreži.
+
+Postoji statičko i dinamičko dodeljivanje IP adresa.
+Statičko dodeljivanje znači da se IP adresa ručno podešava za svaki računar.
+Dinamičko dodeljivanje koristi protokol kao što je DHCP 
+(Dynamic Host Configuration Protocol) za automatsku dodelu IP adresa.

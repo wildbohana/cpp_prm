@@ -1,0 +1,10 @@
+3.20. Uspostava veze kod TCP protokola. Trostruko rukovanje – opis i objašnjenje koraka.
+
+Pre razmene podataka, pošaljilac i primalac se "rukuju" tj. razmenjuju kontrolne TCP segmente kojim se:
+ - dogovaraju oko uspostave veze (daju na znanje da su spremni da uspostave vezu)
+ - dogovaraju oko parametara veze
+
+Uspostava veze kod TCP protokola se obavlja korišćenjem trostrukog rukovanja.
+Prvi korak je slanje zahteva za uspostavljanjem veze (SYN) od strane pošaljioca.
+Drugi korak je potvrda primanja zahteva (SYN-ACK) od strane primaoca.
+Treći korak je potvrda uspostavljanja veze (ACK) od strane pošaljioca.

@@ -1,0 +1,7 @@
+1.2. Šta su mrežni protokoli?
+
+Mrežni protokoli su pravila i standardi koji regulišu komunikaciju između računara na mreži.
+Protokoli definišu format poruka, redosled slanja i prijema poruka između mrežnih uređaja, 
+akcije koje se preduzimaju po slanju ili prijemu poruke...
+
+Primeri protokola: TCP/IP, HTTP, FTP, itd.

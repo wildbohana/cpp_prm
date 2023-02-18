@@ -1,0 +1,14 @@
+4.16. CIDR zapis IP adresa. Primer IP adresiranja
+
+CIDR (Classless Inter-Domain Routing) zapis IP adresa se koristi za 
+opisivanje raspona IP adresa koje pripadaju jednoj mreži.
+
+Korišćenje CIDR šeme uopštava adresiranje podmreža.
+Podmrežni deo adrese je proizvoljne dužine.
+Format adrese: a.b.c.d/x (x - broj bita u podmrežnom delu adrese)
+
+Dok CIDR šema nije bila prihvaćena, mrežni prefiks IP adrese 
+je morao da bude tačno 8, 16 ili 24 bita (puno klasno adresiranje).
+
+Primer IP adresiranja bi bio 192.168.0.0/24
+On označava da su sve adrese od 192.168.0.0 do 192.168.0.255 deo te mreže.

@@ -1,0 +1,26 @@
+5.17. Ciljevi upravljanja mrežom. Opis glavnih elemenata za upravljanje mrežom
+
+Autonomne sisteme (ili mreže) čini veliki broj hardverskih i sotverskih delova koji međusobno sarađuju.
+Ti delovi su linkovi, komutatori, ruteri, računari, brojni protokoli koji usklađuju i kontrolišu njihov rad...
+
+Upravljanje mrežom obuhvata postavljanje, spajanje i usklađivanje tih delova 
+i ljudskog faktora za nadzor i testiranje kako bi se postigli zahtevi u realnom vremenu i kvalitet usluge, 
+a sve uz razumne troškove.
+
+Upravljački server - aplikacija uz aktivno učešće operatera kontroliše prikupljanje, 
+obradu, analizu i prikazivanja informacija o upravljanju mrežom.
+Upravljani uređaj - računar, ruter, komutator, modem...
+Baza upravljačkih informacija - u njoj se prikupljaju informacije o svim upravljanim objektima unutar upravljanog uređaja.
+Agent za upravljanje mrežom - proces koji se izvršava na svakom upravljanom uređaju i komunicira sa upravljačkim serverom.
+Protokol za upravljanje mrežom - izvršava se između upravljačkog servera i upravljanog uređaja.
+
+Ciljevi upravljanja mrežom su:
+ - osigurati efikasnost mreže
+ - osigurati stabilnost mreže
+ - osigurati dostupnost mreže
+ - osigurati da se podaci prenose sa što manje kašnjenja i gubitka
+Glavni elementi za upravljanje mrežom su:
+ - monitoring
+ - konfiguracija
+ - dijagnostika
+ - upravljanje performansama

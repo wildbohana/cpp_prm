@@ -1,0 +1,18 @@
+4.11. Format IP datagrama – značenje pojedinih polja u IP zaglavlju
+
+Format IP datagrama se odnosi na strukturu podataka koji se koristi za prenos podataka preko mreže.
+Tipično, IP zaglavlje zauzima 20 bita.
+
+IP zaglavlje sadrži informacije kao što su:
+ - Version - verzija IP protokola koji se koristi (npr IPv4 ili IPv6)
+ - Header Length - dužina u 32-bitnim rečima
+ - Type of Service - informacije o prioritetu i tipu podataka u datagramu
+ - Length - ukupna dužina IP datagrama, uključuju zaglavlje i teret
+ - ID - jedinstveni identifikator za datagram koji pomaže pri ponovnom sastavljanju fragmentiranih paketa
+ - Flags - kontrolni flegovi za fragmentaciju
+ - Fragment Offset - offset trenutnog fragmenta u originalnog IP datagramu
+ - TimeToLive - maksimalan broj čvorova kroz koje paket sme da prođe pre nego što bude odbijen (istekne)
+ - Protocol - viši nivo protokola koji koristi IP datagram (npr. TCP, UDP)
+ - Header Checksum - provera sažetka za verifikaciju integriteta zaglavlja
+ - IP adresa pošaljioca
+ - IP adresa primaoca

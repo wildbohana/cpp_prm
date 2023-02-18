@@ -1,0 +1,17 @@
+3.14. TCP i postavljanje vremena tajmera.
+
+TCP koristi tajmere za otkrivanje gubitka paketa.
+Kada pošaljilac šalje paket, podešava tajmer.
+Ukoliko primalac ne potvrdi primanje paketa u određenom vremenu, 
+tajmer će se aktivirati i pošaljilac će ponovo poslati paket.
+
+Tajmer treba da bude duži nego vreme povratnog puta (RTT) za tu vezu.
+Ako je RTT prekratak, doći će do nepotrebnog ponovnog slanja.
+Ako je RTT predugačak, imaćemo spore reakcije na gubljenje segmenata.
+
+RTT može da se izmeri kao SampleRTT - pošalje se jedan segment 
+i čeka se prijem njegovog ACK (to vreme je RTT).
+Treba izvršiti više merenja (jer SampleRTT varira), pa računamo prosek.
+
+Takođe može i da se proceni EstimatedRTT.
+Tada će interval tajmera biti jednak procenjenom RTT i malim uvećanjem, dodatim za "rezervu".

@@ -1,0 +1,13 @@
+1.10. Šta je enkapsulacija paketa? Princip enkapsulacije.
+
+Enkapsulacija paketa je proces u kom se podaci iz jednog nivoa 
+protokola steka prekriva (enkapsulira) u podatke drugog nivoa.
+Princip ekapsulacije je da svaki nivo protokola dodaje svoj nivo podataka 
+(npr adresu, kontrolne informacije isl) na podatke prethodnog nivoa pre prenošenja preko mreže.
+
+Poruka aplikativnog sloja se prosleđuje transportnom sloju koji 
+dodaje sopstveno zaglavlje (dobija se segment transportnog sloja).
+Segment transportnog sloja se isporučuje mrežnom sloju koji 
+dodaje sopstveno zaglavlje (dobija se datagram mrežnog sloja).
+Datagram mrežnog sloja se prosleđuje sloju veze koji 
+dodaje svoje zaglavlje (dobija se okvir sloja veze).

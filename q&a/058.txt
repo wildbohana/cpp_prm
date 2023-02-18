@@ -1,0 +1,8 @@
+4.7. Tri tehnike komutiranja u ruteru
+
+Komutiranje je prosleđivanje paketa od ulaznog porta do odgovarajućeg izlaznog porta.
+
+Tri tehnike komutiranja u ruteru su:
+ - preko memorije (procesor rutiranja traži odgovarajući port i kopira paket u bafer izlaznog porta)
+ - preko magistrale (datagram sa ulaznog porta se prenosi na izlazni port preko zajedničke magistrale) (nadmetanje za magistralu)
+ - unakrsno (višestruko povezana mreža sa 2N magistrala koja ima N ulaznih i N izlaznih portova)

@@ -1,0 +1,12 @@
+5.4. Algoritam rutiranja zasnovan na stanju linkova (LS algoritam). Primer.
+
+LS algoritam (Link-State Routing) je centralizovani algoritam rutiranja 
+koji se zasniva na stanju linkova u mreži.
+On koristi LS bazu podataka za određivanje putanje.
+Primer LS algoritma je OSPF (Open Shortest Path First) protokol.
+
+Dijkstrin algoritam:
+ - svim čvorotima je poznata mrežna topologija i troškovi svih linkova
+ - izračunava se putanja najmanjeg troška od jednog čvora (izvora) ka svim ostalim čvorovima
+ - nakon k iteracija, poznate su putanje najmanjeg troška do k odredišnih čvorova
+ 

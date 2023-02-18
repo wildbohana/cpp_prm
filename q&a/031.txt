@@ -1,0 +1,26 @@
+3.5. Protokoli sa automatskim ponavljanjem zahteva (ARQ protokoli) – šta rešavaju i funkcionalnosti koje uključuju
+
+ARQ (Automatic Repeat Request) protokoli su protokoli za pouzdan prenos podataka 
+koji se zasnivaju na ponovnom slanju oštećenih paketa.
+Ovi protokoli se koriste za poboljšanje kvaliteta i sigurnosti prenosa podataka u komunikacionim mrežama. 
+
+ARQ protokoli rešavaju problem grešaka u prenosu podataka.
+Oni omogućavaju detekciju grešaka i korekciju grešaka u prenosu podataka.
+
+Funkcionalnosti koje uključuju ARQ protokoli su:
+ 1. detekcija grešaka na prijemu
+ 2. povratna informacija od primaoca ka pošaljiocu
+ 3. ponovno slanje
+
+Pošaljilac pravi paket koji sadrži podatke kao i kontrolnu sumu paketa, i zatim taj paket šalje.
+Detekcija grešaka na prijemu se vrši preko kontrolne sume (kod UDP protokola).
+
+Primalac šalje pošaljiocu pozitivne (ACK) ili negativne (NAK) potvrde prijema.
+
+Ako stigne ACK potvrda, paket je ispavno primljen, i pošaljilac pravi novi paket za slanje.
+Ako stigne NAK potvrda, pošaljilac ponovo šalje isti paket i čeka potvrdu od primaoca.
+Pošaljilac ne šalje novi paket sve dok se ne uveri da je 
+primalac ispravno primio tekući paket (stop and wait ARQ).
+
+ARQ protokoli su korisni u mrežama gde se očekuje da će biti grešaka u prenosu podataka, 
+kao što su bežične mreže i mreže sa slabošću signala.

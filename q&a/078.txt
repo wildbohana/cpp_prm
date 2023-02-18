@@ -1,0 +1,20 @@
+4.27. OpenFlow apstrakcija rutera, komutatora, mrežne barijere i NAT-a.
+
+OpenFlow apstrakcija rutera, komutatora, mrežnih barijere i NAT-a omogućava 
+upravljanje ovim uređajima korišćenjem jedinstvenog kontrolnog sloja.
+To olakšava automatizaciju i centralizaciju kontrole mreže.
+
+Pravilo podudaranja + delovanja objedinjuje različite vrste uređaja.
+
+Ruter:
+ - podudaranje - najduži prefiks IP odredišne adrese
+ - delovanje - prosledi na izlazni link
+Komutator:
+ - podudaranje - odredišna MAC adresa
+ - delovanje - prosledi ili pošalji svima
+Mrežna barijera:
+ - podudaranje - IP adrese i TCP/UDP brojevi portova
+ - delovanje - dozvoli ili odbij
+NAT:
+ - podudaranje - IP adresa i port
+ - delovanje - izmeni adresu i port

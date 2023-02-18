@@ -1,0 +1,14 @@
+4.10. Protokoli mrežnog sloja Interneta
+
+Protokoli mrežnog sloja Interneta su protkoli koji se koriste 
+za komunikaciju između računara na Internetu.
+Najpoznatiji su IP (Internet Protocol) i ICMP (Internet Control Message Protocol).
+
+IP protokol određuje:
+ - pravila adresiranja
+ - format datagrama
+ - pravila za rukovanje paketima
+
+ICMP protokol obuhvata:
+ - izveštaj o greškama
+ - signaliranje rutera

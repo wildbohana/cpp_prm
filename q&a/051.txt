@@ -1,0 +1,12 @@
+3.25. TCP algoritam za kontrolu zagušenja – objašnjenje sve tri faze (spori start, izbegavanje zagušenja, brz oporavak)
+
+TCP algoritam za kontrolu zagušenja se sastoji od tri faze:
+ 1. spori start - početna faza u kojoj se prozor zagušenja postavlja na 
+    malu veličinu i postepeno povećava dok se ne dobiju potvrde od primaoca
+ 2. izbegavanje zagušenja - faza u kojoj se prozor zagušenja prilagođava
+    dinamički na osnovu potvrde i gubitaka paketa
+ 3. brz oporavak - faza u kojoj se prozor zagušenja brzo vraća na 
+    veliku veličinu nakon što se otkloni zagušenje u mreži
+
+Spori start i izbegavanje zagušenja su obavezni delovi TCP protokola, 
+dok se brz oporavak preporučuje, ali se ne zahteva.

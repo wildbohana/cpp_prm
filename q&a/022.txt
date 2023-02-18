@@ -1,0 +1,22 @@
+2.12. DNS baza podataka – objašnjenje hijerarhije DNS servera. 
+Uloga svakog nivoa servera u hijerarhiji (korenski serveri, TLD serveri, nadležni serveri)
+
+DNS baza podataka se sastoji od hijerarhije DNS servera.
+Hijerarhija servera je sledeća:
+ - korenski serveri
+ - TLD (top-level domain) serveri
+ - nadležni (authoratitive) serveri
+
+Korenski serveri pohranjuju informacije o TLD serverima.
+Njima pristupaju lokalni name serveri kad ne mogu da prevedu ime.
+Ako mu ime nije poznato, on pristupa nižim DNS serverima, oni mu vraćaju 
+IP adresu TLD servera, i onda korenski server tu informaciju vraća lokalnom name serveru.
+
+TLD serveri pohranjuju informacije (IP adrese) o nadležnim DNS serverima (com, org, edu...).
+To su serveri domena najvišeg nivoa.
+
+Nadležni serveri pohranjuju informacije o specifičnim domenima (yahoo.com, pbs.org, poly.edu...).
+Nadležni server može održavati sama organizacije ili njen Internet servis provajder.
+
+Lokalni DNS serveri u principu nisu deo DNS hijerarhije.
+Kad neki računar postavi DNS upit, on se šalje lokalnom DNS serveru, koji deluje kao proksi server.

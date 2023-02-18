@@ -1,0 +1,18 @@
+4.21. Hijerarhijsko rutiranje – sažimanje ruta i određenije rute
+
+Hijerarhijsko rutiranje uključuje podelu velike mreže na manje podmreže 
+(poznate i kao autonomni sistemi ili domeni rutiranja).
+Svaka podmreža tada dobija svoj vlastiti ruter, koji je odgovoran za 
+upravljanje svim saobraćajem unutar te podmreže.
+Ova hijerarhijska struktura omogućava efikasnije rutiranje podataka, 
+kao i poboljšanu skalabilnost i jednostavnije upravljanje mrežom.
+
+Sažimanje ruta podrazumeva spajanje više ruta u jednu, opštiju rutu koja pokriva veći deo mreže.
+Ovo pomaže u smanjenju veličine tabele rutiranja i smanjuje količinu saobraćaja u mreži, 
+čime mreža postaje efikasnija.
+
+Određivanje rute se odnosi na proces odabira najboljeg puta za prenos podataka 
+iz jedne lokacije na drugu unutar mreže.
+Ruteri koriste protokole rutiranja, kao što su OSPF ili BGP, 
+za razmenu informacija među sobom i određivanje optimalnih ruta za prenos podataka.
+Ovo pomaže da se podaci prenose efikasno i brzo, čak i u velikim i kompleksnim mrežama.

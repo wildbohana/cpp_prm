@@ -1,0 +1,9 @@
+4.5. Funkcije ulaznih portova rutera
+
+Ulazni portovi rutera su portovi koji primaju pakete sa drugih mreža.
+Oni se koriste za proveru i filtriranje paketa pre nego što se oni prosleđuju dalje.
+
+Koristeći polja iz IP zaglavlja, pretražuje se tabela prosleđivanja kako bi se odredio izlazni port rutera.
+Preko komutatorske mreže se prosleđuju paketi ka izlaznom portu rutera.
+
+Ako datagrami pristižu brže nego što je brzina prosleđivanja, oni se smeštaju u red.

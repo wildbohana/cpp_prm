@@ -1,0 +1,13 @@
+4.3. Kontrolna ravan – tradicionalan i SDN pristup
+
+Tradicionalan pristup kontrolnoj ravni koristi hardverski definisane protokole za rutiranje i upravljanje prometom.
+SDN pristup koristi softverski definisane protokole koji omogućavaju fleksibilniju kontrolu mrežnog prometa.
+
+Kod tradicionalnog pristupa prosleđivanje i rutiranje su smešteni unutar rutera.
+Algoritam rutiranja određuje sadržaj tabele prosleđivanja.
+Algoritam rutiranja u svakom ruteru komunicira sa algoritmom rutiranja 
+u ostalim ruterima kako bi izračunao vrednosti za svoju tabelu prosleđivanja.
+
+Kod SDN (software defined networking) pristupa, udaljeni kontroler 
+izračunava i distribuira tabele prosleđivanja koje koriste svi ruteri.
+Ruter obavlja samo prosleđivanje paketa.

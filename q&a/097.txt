@@ -1,0 +1,21 @@
+6.1. Usluge sloja veze – pravljenje okvira, pristup linku, otkrivanje i ispravljanje grešaka
+
+Pravljenje okvira:
+ - enkapsulira datagram u okvir, dodajući mu zaglavlje sloja veze
+ - strukturu zaglavlja određuje protokol sloja veze
+Pristupanje linku:
+ - protokol za kontrolu pristupa medijumu (MAC - Media Access Control), ako je kanal deljeni
+ - fizičke MAC adrese se koriste u zaglavlju okvira da bi se identifikovao pošaljilac i primalac
+ - različito je od IP adresa
+Pouzdana isporuka između susednih čvorova:
+ - retko se koristi na linkovima sa malom verovatnoćom greške (optički kabel, upredene parnice)
+ - obično se koristi za bežične linkove koji imaju veću verovatnoću grešaka
+ - da bi se greške otklonile lokalno na linku gde se dese, umesto ponovnog prenosa sa kraja na kraj
+
+Detekcija grešaka:
+ - greške izazvane slabljenjem signala, šumom pri prenosu
+ - prijemna strana detektuje postojanje grešaka
+ - može da javi pošaljiocu radi retransmisije ili da odbaci okvir sa greškom
+Korekcija grešaka:
+ - prijemnik prepoznaje i ispravlja bitske greške bez potrebe zahteva za retransmisijom
+Polu-dupleksna i puna dupleksna komunikacija

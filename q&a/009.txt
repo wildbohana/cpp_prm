@@ -1,0 +1,16 @@
+1.9. Internet protokol stek – nivoi i kratki opis. 
+Koja je razlika Internet protokol steka i ISO/OSI referentnog modela?
+
+Internet protokol stek je skup protokola koji se koriste za komunikaciju na Internetu.
+Nivoi su:
+ - aplikacijski nivo - mrežne aplikacije (HTTP, FTP, itd.)
+ - transportni nivo - prenos poruke aplikacijskog sloja između dva krajnja procesa (TCP, UDP)
+ - mrežni nivo - rutiranje paketa od izvora do odredišta (IP)
+ - nivo linka - prenos podataka između susednih mrežnih elemenata (PPP, Ethernet, WiFi)
+ - fizički nivo - prenos pojedinačnih bita preko žice susednih čvorova
+
+Internet protokol stek ima manje nivoa i fokusira se na praktična rešenja za komunikaciju na Internetu.
+ISO/OSI (Open System Interconnection) referentni model ima više nivoa 
+(nivo prezentacije i nivo sesije) i služi kao teorijski okvir za razumevanje mrežnih komunikacija.
+Dodatne usluge koje su u sastavu OSI modela, ako su potrebne, 
+moraju biti implementirane u okviru aplikacije.

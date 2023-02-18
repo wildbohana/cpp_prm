@@ -1,0 +1,16 @@
+6.9. Protokoli sa smenjivanjem pristupa (protokol sa prozivanjem i protokol sa prosleđivanjem tokena)
+
+Protokoli sa smenjivanjem pristupa pokušavaju da iskoriste najbolje od 
+protokola sa deljenjem kanala i protokola sa slučajnim pristupom.
+
+Protokol sa prozivanjem koristi prozivanje računara da se osigura pristup linku.
+Glavni čvor vrši prozivku svih ostalih čvorova.
+Glavni čvor saopštava čvoru koliko najviše okvira može da pošalje, nakon čega se obavlja slanje iz tog čvora.
+Nema kolizija i praznih intervala, ali dolazi do kašnjenja usled prozivanja.
+Ako glavni čvor otkaže, ceo kanal prestaje da radi.
+Primer: Bluetooth
+
+Protokol sa prosleđivanjem tokena koristi prenos tokena da se osigura pristup linku.
+Kada čvor primi token zadržava ga samo ako ima okvira za slanje.
+U suprotnom, odmah dalje prosleđuje token.
+Primer: token ring, FDDI protokol

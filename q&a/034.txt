@@ -1,0 +1,9 @@
+3.8. Kako se rešava problem gubljenja paketa?
+
+Problem gubljenja paketa se može rešiti korišćenjem protokola sa 
+automatskim ponavljanjem zahteva (ARQ) koji obezbeđuje mehanizme 
+za potvrdu primanja i ponovno slanje u slučaju gubitka paketa.
+
+Takođe se može koristiti protokol sa kliznim prozorom koji 
+omogućava pošaljiocu da šalje više paketa bez potvrde primanja,
+što može povećati efikasnost prenosa podataka.

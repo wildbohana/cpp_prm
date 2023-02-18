@@ -1,0 +1,14 @@
+6.7. Protokoli za višestruki pristup sa prepoznavanjem nosioca (CSMA). CSMA sa otkrivanjem kolizija (CSMA/CD)
+
+Protokoli za višestruki pristup sa prepoznavanjem nosioca (CSMA) su protokoli 
+koji se koriste da se osigura da samo jedan računar ima pristup linku u datom trenutku.
+Ako je kanal slobodan, prenosi se čitav okvir.
+Ako je kanal zauzet, slanje se odlaže.
+
+Kolizije i dalje mogu da se dese (zbog kašnjenja usled prostiranja signala).
+CSMA sa otkrivanjem kolizija (CSMA/CD) otkriva kolizije u kratkom intervalu.
+Kada se otkrije kolizija, prekida se dalje slanje okvira, i time se smanjuje uzaludno korišćenje kanala.
+
+Otkrivanje kolizija je jednostavno u ožičenim LAN - meri se snaga signala, 
+poredi se primljeni signal sa onim što se šalje.
+Otkrivanje kolizija je otežano u bežičnim LAN - snaga primljenog signala je nadjačana snagom lokalnog prenosa.

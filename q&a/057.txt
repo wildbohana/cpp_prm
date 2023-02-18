@@ -1,0 +1,11 @@
+4.6. Tabela prosleđivanja. Prosleđivanje na osnovu odredišta. Podudaranje najdužeg prefiksa.
+
+Tabela prosleđivanja je tabela koja sadrži informacije o tome 
+kako da se paket prosleđuje kroz mrežu.
+
+Prosleđivanje na osnovu odredišta se odnosi na proces pronalaženja 
+najboljeg puta za prosleđivanje paketa do odredišta.
+
+Podudaranje najdužeg prefiksa se odnosi na proces određivanja 
+najboljeg puta za prosleđivanje paketa koristeći najduži prefiks 
+adrese iz tabele koji se poklapa sa odredišnom adresom.

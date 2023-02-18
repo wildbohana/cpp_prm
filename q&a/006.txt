@@ -1,0 +1,19 @@
+1.6. Komutacija kola – osnovne karakteristike. Šta je TDM I FDM?
+
+Komutacija kola (Circuit Switching) je tehnologija koja rezerviše 
+komunikacijski kanal za trajan period vremena dok se komunikacija vrši.
+Resursi od jednog do drugog kraja rezervisani za poziv su propusni opseg linka,
+memorija i procesorsko vreme mrežnih čvorova.
+Ovi resursi su namenjeni samo datoj vezi (nema deljenja).
+Neophodna je uspostava veze (i njeno raskidanje po završetku prenosa).
+
+Prednosti:
+ - malo i konstantno kašnjenje
+ - kada je kolo jednom uspostavljeno, čvorovi vrše samo prekidačku funkciju
+Mane:
+ - loša iskorišćenost kapaciteta dodeljene putanje
+ - potrebno je vreme za uspostavu kola
+
+TDM (Time Division Multiplexing) i FDM (Frequency Division Multiplexing) 
+su tehnike koje se koriste za deljenje jednog fizičkog kanala na više logičkih kanala.
+TDM - svaki host dobija isti slot u TDM ramu (??)

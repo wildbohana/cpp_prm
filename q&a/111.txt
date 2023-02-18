@@ -1,0 +1,6 @@
+6.15. Postupak prosleđivanja i filtriranja paketa u sviču. Opis sva tri moguća slučaja.
+
+Postupak prosleđivanja i filtriranja paketa u sviču se sastoji od tri moguća slučaja:
+ - ako svič prepozna ciljni uređaj na mreži, on će proslediti paket direktno tamo
+ - ako svič ne prepozna ciljni uređaj, on će proslediti paket svakom uređaju na mreži
+ - ako svič ne prepozna ni pošaljioca ni primaoca, on će odbaciti paket

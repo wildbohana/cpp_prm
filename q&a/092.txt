@@ -1,0 +1,14 @@
+5.14. BGP izbor rute. Rutiranje vrućeg krompira.
+
+BGP izbor rute se odnosi na proces odabira najbolje rute za prosleđivanje podataka.
+
+Ruter može da sazna više ruta ka prefiksu odredišta.
+Tada će BGP primeniti određena pravila odbacujući pojedine rute na osnovu lokalnog prioriteta.
+Od preostalih ruta se prvo bira ruta sa najkraćim atributom AS-PATH.
+Zatim se bira ruta sa najbližim NEXT-HOP ruterom (rutiranje vrućeg krompira).
+Ako i dalje ima više ruta, primenjuju se dodatni kriterijumi.
+
+Rutiranje vrućeg krompira:
+ - izabrati rutu sa najkraćim atributom AS-PATH
+ - izabrati rutu sa najmanjim troškom do NEXT-HOP rutera
+ - izabrati lokalni gateway ruter koji ima najmanji unutar-domenski trošak

@@ -1,0 +1,11 @@
+3.24. Principi TCP kontrole zagušenja. Prozor zagušenja. Događaj gubitka.
+
+TCP koristi kontrolu zagušenja s kraja na kraj.
+Pristup TCP - svaki pošaljilac se primorava da ograniči brzinu slanja u svojoj vezi u zavisnosti od uočenog zagušenja mreže.
+Na strani pošaljioca se održava posebna promenljiva - prozor zagušenja (congestion window, cwnd).
+Prozor zagušenja nameće ograničenje brzine slanja.
+
+Kako TCP pošaljilac prepoznaje zagušenja:
+ - po događaju gubitka zaključuje da postoji zagušenje mreže
+ - istek vremena tajmera
+ - primanje 3 duplikata ACK potvrde

@@ -1,0 +1,7 @@
+3.22. Tok aplikacije kod TCP protokola.
+
+Tok aplikacije kod TCP protokola podrazumeva:
+ - kreiranje struktura za održavanje TCP sesije
+ - slanje ili prijem kontrolnih segmenata koji imaju samo TCP zaglavlje
+ - slanje ili prijem segmenata sa podacima, 
+   pri čemu oni mogu nositi i kontrolnu informaciju (ACK na primer)

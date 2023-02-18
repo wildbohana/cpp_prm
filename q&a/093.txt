@@ -1,0 +1,19 @@
+5.15. BGP politika rutiranja pomoću objavljivanja
+
+-- slika --
+
+BGP politika rutiranja može se koristiti kako bi se odredilo koji ruteri će objavljivati i prihvatati BGP rute.
+
+U primeru sa slike, ISP želi da rutira samo pakete poslate iz/ka njegovoj mreži korisnika 
+(ne želi da prenosi tranzitni saobraćaj između drugih ISP-ova).
+
+ISP objavljuje rutu Aw ka B i ka C.
+Međutim, B ne objavljuje rutu BAw ka C, pošto ni C ni A i w nisu korisnici mreže B.
+Tako C neće saznati za rutu CBAw.
+Zbog toga će se C rutirati preko CAw (ne koristeći B).
+
+X, koja je dvo-domna mreža (povezana preko dva različita posrednika), 
+ne želi da rutira saobraćaj iz B poslat ka C.
+Zato neće objavljivati ka B da poseduje rutu ka C.
+X će funkcionisati kao pristupna mreža ako svojim susedima (B i C) 
+objavi da nema putanje ni za jedno odredište osim sebe samog.

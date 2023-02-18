@@ -1,0 +1,27 @@
+6.3. Tehnike za otkrivanje i ispravljanje grešaka (provera parnosti, kontrolna suma, ciklična provera redundanse). Primeri
+
+Na predajnoj strani podaci koji se štite od bitskih grešaka proširuju se bitovima za otkrivanje i ispravljanje grešaka.
+Podaci koji se štite obuhvataju najčešće i zaglavlje sloja veze i datagram prosleđen sa mrežnog sloja (ceo okvir).
+Otkrivanje greške nije uvek 100% pouzdano.
+
+Tehnike za otkrivanje i ispravljanje grešaka uključuju:
+ - proveru parnosti
+ - kontrolnu sumu (najčešće na transportnom sloju)
+ - cikličnu proveru redundanse (uobičajeno na sloju veze sa adapterima)
+ 
+Provera parnosti:
+ - detekcija neparnog broja bitskih grešaka
+ - dvodimenzionalna provera parnosti može da detektuje i ispravi grešku na jednom bitu
+
+Kontrolna suma:
+ - u TCP i UDP kontrolna suma se izračunava za ceo segment (zaglavlje + podaci)
+ - kod IP kontrolna suma se izračunava samo za polja zaglavlja
+ - pošaljilac izračuna vrednost kontrolne sume i smesti je u zaglavlje segmenta
+ - primalac računa kontrolnu sumu primljenog segmenta i proverava da li su te dve vrednosti jednake
+
+Ciklična provera redundanse:
+ - biti podataka se posmatraju kao binaran broj
+ - bira se generator
+ - određuju se CRC biti tako da pri deljenju sa generatorom imamo ostatak nula
+ - ako prijemnik pri proveri dobije nenulti ostatak pri deljenju sa istim generatorom, 
+   detektovao je grešku

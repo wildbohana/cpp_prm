@@ -1,0 +1,13 @@
+6.17. Virtuelne lokalne računarske mreže (VLAN) - razlozi postojanja, uloga, VLAN mreže zasnovane na portovima
+
+Virtuelne lokalne računarske mreže (VLAN) su logičke mreže koje se koriste 
+da se razdvoje različiti tipovi komunikacije unutar fizičke mreže.
+
+Svič koji podržava VLAN mreže omogućava da se više virtuelnih lokalnih mreža 
+uspostavi preko infrastrukture jedne fizičke lokalne računarske mreže.
+
+Kod VLAN mreža zasnovanih na portovima, portovi sviča su konfigurisani i grupisani 
+(pomoću softvera za upravljanje svičem) tako da se jedan fizički svič ponaša kao više virtuelnih svičeva.
+
+Razlozi postojanja VLAN-ova su da se omogući bolje upravljanje mrežom, 
+povećanje sigurnosti i omogućavanje razdvajanja različitih tipova komunikacije.

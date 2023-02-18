@@ -1,0 +1,11 @@
+3.15. Kako TCP obezbeđuje pouzdan prenos podataka? Kad se vrši ponovno slanje?
+
+TCP obezbeđuje pouzdan prenos podataka korišćenjem:
+ - rednih brojeva
+ - brojeva potvrde
+ - tajmera
+
+Ukoliko primalac primi paket sa pogrešnim rednim brojem ili brojem potvrde, 
+on će ga odbaciti i pošaljilac će ponovo poslati isti paket.
+Ukoliko primalac ne potvrdi primanje paketa u određenom vremenu, 
+tajmer će se aktivirati i pošaljilac će ponovo poslati paket.

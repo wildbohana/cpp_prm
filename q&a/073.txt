@@ -1,0 +1,16 @@
+4.22. NAT (prevođenje mrežnih adresa) – namena i prednosti
+
+NAT (Network Address Translation) omogućava prenos mrežnih adresa iz jednog adresnog domena u drugi.
+
+Svi datagrami koji napuštaju lokalnu mrežu imaju istu jedinstvenu izvornu NAT adresu, 
+a različite brojeve izvornog porta.
+Tako će lokalna mreža za ostatak mreže (Interneta) da izgleda kao jedan uređaj sa jednom IP adresom.
+
+Dobija se veća sigurnost i efikasnije iskorištavanje resursa mreže, 
+kao i sprečavanje problema sa adresiranjem u mreži.
+
+Prednosti:
+ - nije neophodan opseg adresa od strane Internet provajdera; dovolja je samo jedna IP adresa
+ - adrese uređaja u lokalnoj mreži mogu da se menjaju bez obaveštavanja ostatka Interneta
+ - Internet provajder može da se promeni bez promena adresa unutar lokalne mreže
+ - uređaji unutar lokalne mreže nisu direktno adresibilni iz spoljnog dela mreže (bezbednosni bonus)

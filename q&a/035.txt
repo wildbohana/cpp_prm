@@ -1,0 +1,12 @@
+3.9. Šta predstavlja protočno slanje paketa i koja su dva osnovna pristupa? Zašto se zovu protokoli sa kliznim prozorom?
+
+Protočno slanje paketa je način prenosa podataka gde se više paketa šalje u toku jedne veze bez potvrda primanja svakog paketa.
+Neophodno je povećanje raspona rednih brojeva paketa, kao i uvođenje bafera na strani primaoca i pošaljioca.
+
+Postoje dva osnovna pristupa protočnom slanju:
+ - vrati se za N
+ - selektivno ponavljanje
+
+Raspon dozvoljenih rednih brojeva za poslate, a još nepotvrđene pakete se posmatra kao prozor veličine N.
+Tokom rada ovaj prozor klizi unapred duž raspoloživih rednih brojeva.
+Zato se N naziva veličina prozora, a sami protokoli - protokoli sa kliznim prozorom.

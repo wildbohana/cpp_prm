@@ -1,0 +1,19 @@
+3.2. Kako funkcioniše multipleksiranje i demultipleksiranje podataka. 
+Koji su važni parametri da bi se obavilo demultipleksiranje bez uspostave veze i sa uspostavom veze?
+
+Multipleksiranje podataka se koristi kako bi se više komunikacijskih kanala 
+moglo koristiti istovremeno na jednom fizičkom linku.
+Taj link će onda preuzimati podatke sa više soketa i dodavati 
+transportno zaglavlje koje se kasnije koristi za demultipleksiranje.
+
+Demultipleksiranje podataka je proces odvajanja podataka koji su dolazili preko više kanala na odgovarajući kanal.
+Taj kanal koristi oznaku porta u zaglavlju primljenog segmenta da bi ga usmerio ka ispravnom soketu.
+
+Važni parametri za demultipleksiranje bez uspostave veze su:
+ - IP adresa odredišta
+ - broj porta odredišta
+Važni parametri za demultipleksiranje sa uspostavom veze su:
+ - IP adresa izvornog računara 
+ - broj izvornog porta
+ - IP adresa odredišta
+ - broj porta odredišta

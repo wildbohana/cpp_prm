@@ -1,0 +1,8 @@
+5.12. Postupak objavljivanja BGP ruta.
+
+Kada ruter u AS-u primi objavu BGP rute (koja se može objaviti putem eBGP ili iBGP veze), 
+ruter će je prihvatiti i prosleđivati dalje svim ruterima unutar AS-a.
+Zatim, zavisno od politike rutiranja, ruter može da šalje objavljenu BGP rutu 
+ka ruterima mrežnog prolaza iz drugih AS-ova.
+Nakon toga, ruter mrežnog prolaza će prosleđivati poruku o ruti 
+do ostalih rutera u svom AS-u pomoću iBGP konekcije.

@@ -1,0 +1,20 @@
+2.11. DNS protokol – namena i vrste DNS usluga
+
+DNS (Domain Name System) protokol se koristi za mapiranje imena računara u IP adrese.
+DNS je distribuirana baza podataka, implementirana hijerarhijskim skupom name servera.
+DNS aplikativni protokol omogućava komunikaciju između uređaja i name servera radi razrešenja referenci preko imena.
+
+Namena mu je da omogući ljudima lakše korišćenje Interneta, tako što 
+omogućava da se umesto IP adrese koriste ljudski razumljivi nazivi računara.
+Na primer, www.google.com umesto 216.58.194.174.
+
+Postoje različite vrste DNS usluga kao što su:
+ - rezolucija imena (hostname -> IP adresa)
+ - mapiranje imena u IP adrese
+ - mapiranje IP adresa u imena
+
+DNS ne može da se centralizuje iz više razloga koji negativno utiču na performanse:
+ - jedna tačka otkaza
+ - velik obim saobraćaja
+ - prisup udaljenoj centralnoj bazi
+ - otežano održavanje
